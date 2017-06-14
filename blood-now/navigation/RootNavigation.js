@@ -6,7 +6,11 @@ import {
   TabNavigation,
   TabNavigationItem,
 } from '@expo/ex-navigation';
-import { FontAwesome } from '@expo/vector-icons';
+import { 
+  FontAwesome,
+  MaterialCommunityIcons,
+  Ionicons
+ } from '@expo/vector-icons';
 
 import Alerts from '../constants/Alerts';
 import Colors from '../constants/Colors';
@@ -27,25 +31,25 @@ export default class RootNavigation extends React.Component {
       <TabNavigation tabBarHeight={56} initialTab="home">
         <TabNavigationItem
           id="home"
-          renderIcon={isSelected => this._renderIcon('home', isSelected)}>
+          renderIcon={isSelected => this._renderIconMaterialCommunityIcons('book-open-variant', isSelected)}>
           <StackNavigation initialRoute="home" />
         </TabNavigationItem>
 
         <TabNavigationItem
           id="notification"
-          renderIcon={isSelected => this._renderIcon('book', isSelected)}>
+          renderIcon={isSelected => this._renderIconMaterialCommunityIcons('earth', isSelected)}>
           <StackNavigation initialRoute="notification" />
         </TabNavigationItem>
         
         <TabNavigationItem
           id="friend"
-          renderIcon={isSelected => this._renderIcon('male', isSelected)}>
+          renderIcon={isSelected => this._renderIconIonicons('md-contacts', isSelected)}>
           <StackNavigation initialRoute="friend" />
         </TabNavigationItem>
 
         <TabNavigationItem
           id="profile"
-          renderIcon={isSelected => this._renderIcon('cog', isSelected)}>
+          renderIcon={isSelected => this._renderIconIonicons('md-person', isSelected)}>
           <StackNavigation initialRoute="profile" />
         </TabNavigationItem>
 
@@ -56,6 +60,26 @@ export default class RootNavigation extends React.Component {
   _renderIcon(name, isSelected) {
     return (
       <FontAwesome
+        name={name}
+        size={32}
+        color={isSelected ? Colors.tabIconSelected : Colors.tabIconDefault}
+      />
+    );
+  }
+
+  _renderIconMaterialCommunityIcons(name, isSelected) {
+    return (
+      <MaterialCommunityIcons
+        name={name}
+        size={32}
+        color={isSelected ? Colors.tabIconSelected : Colors.tabIconDefault}
+      />
+    );
+  }
+
+  _renderIconIonicons(name, isSelected) {
+    return (
+      <Ionicons
         name={name}
         size={32}
         color={isSelected ? Colors.tabIconSelected : Colors.tabIconDefault}

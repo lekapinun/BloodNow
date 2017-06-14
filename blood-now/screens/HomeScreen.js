@@ -15,17 +15,13 @@ import { MonoText } from '../components/StyledText';
 export default class HomeScreen extends React.Component {
   static route = {
     navigationBar: {
-      /*visible: false,*/
-      title: 'Home',
+      visible: false,
     },
   };
 
   render() {
     return (
-        <View style={{marginTop:30}}>
-                <Text>HOME SCREEN</Text>
-            </View>
-      /*<View style={styles.container}>
+      <View style={styles.container}>
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}>
@@ -82,7 +78,7 @@ export default class HomeScreen extends React.Component {
             </MonoText>
           </View>
         </View>
-      </View>*/
+      </View>
     );
   }
 
