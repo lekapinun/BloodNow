@@ -5,12 +5,13 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
+  WebView,
 } from 'react-native';
 
 export default class LoginScreen extends Component {
 
     state = { 
-        id: '',
+        email: '',
         password: '',
     };
 
@@ -22,8 +23,8 @@ export default class LoginScreen extends Component {
                     <TextInput
                         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                         autoCorrect={false}
-                        onChangeText={(id) => this.setState({id})}
-                        value={this.state.id}
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email}
                         placeholder="ชื่อผู้ใช้หรือเบอร์โทรศัพท์"
                     />
                     <TextInput
@@ -40,14 +41,27 @@ export default class LoginScreen extends Component {
                 <View style={{marginTop:30,backgroundColor: '#EF685E'}}>
                     <Button title="ลงทะเบียน" onPress={this._register} color="white" />    
                 </View>
-                
-               
             </View>
         );
     }
 
     _loginSuccess = () => {
-        this.props.navigator.push("rootNavigation");
+        console.log(this.state);
+        this.setState({
+            email: '',
+            password: '',
+        });
+        fetch('http://localhost:8000/login')
+        .then((response) => {
+            console.log(response);
+        })
+        /*.then((responseJson) => {
+            console.log(responseJson.movies);
+        })*/
+        .catch((error) => {
+            console.error(error);
+        });
+        //this.props.navigator.push("rootNavigation");
     };
 
     _register = () => {
