@@ -5,6 +5,12 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import RootNavigation from './RootNavigation';
 import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+import InformationScreen from '../screens/InformationScreen';
+import NotificationScreen from '../screens/NotificationScreen';
+import FriendScreen from '../screens/FriendScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import DonorScreen from '../screens/DonorScreen';
 
 export default createRouter(() => ({
   home: () => HomeScreen,
@@ -12,4 +18,10 @@ export default createRouter(() => ({
   settings: () => SettingsScreen,
   rootNavigation: () => RootNavigation,
   login: () => LoginScreen,
+  register: () => RegisterScreen,
+  information: () => InformationScreen, 
+  notification: () => NotificationScreen,
+  friend: () => FriendScreen,
+  profile: () => ProfileScreen,
+  donor: () => DonorScreen,
 }));

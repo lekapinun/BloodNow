@@ -32,21 +32,21 @@ export default class RootNavigation extends React.Component {
         </TabNavigationItem>
 
         <TabNavigationItem
-          id="links"
+          id="notification"
           renderIcon={isSelected => this._renderIcon('book', isSelected)}>
-          <StackNavigation initialRoute="links" />
+          <StackNavigation initialRoute="notification" />
         </TabNavigationItem>
         
         <TabNavigationItem
-          id="friends"
+          id="friend"
           renderIcon={isSelected => this._renderIcon('male', isSelected)}>
-          <StackNavigation initialRoute="settings" />
+          <StackNavigation initialRoute="friend" />
         </TabNavigationItem>
 
         <TabNavigationItem
-          id="settings"
+          id="profile"
           renderIcon={isSelected => this._renderIcon('cog', isSelected)}>
-          <StackNavigation initialRoute="settings" />
+          <StackNavigation initialRoute="profile" />
         </TabNavigationItem>
 
       </TabNavigation>
