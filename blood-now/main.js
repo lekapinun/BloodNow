@@ -22,7 +22,15 @@ class AppContainer extends React.Component {
         images: [require('./assets/images/expo-wordmark.png')],
         fonts: [
           FontAwesome.font,
-          { 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf') },
+          { 
+            'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),        
+          },
+          {
+            'CmPrasanmit': require('./assets/fonts/CmPrasanmit.ttf'),
+          },
+          {
+            'CmPrasanmitBold': require('./assets/fonts/CmPrasanmitBold.ttf'),
+          },
         ],
       });
     } catch (e) {

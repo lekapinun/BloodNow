@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   WebView,
+  Image
 } from 'react-native';
 
 export default class LoginScreen extends Component {
@@ -19,6 +20,11 @@ export default class LoginScreen extends Component {
         return(
             <View style={{marginTop:30}}>
                 <Text>LOGIN SCREEN</Text>
+                <View>
+                    <Image
+                        
+                    />
+                </View>
                 <View>
                     <TextInput
                         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
