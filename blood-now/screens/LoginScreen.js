@@ -67,13 +67,21 @@ export default class LoginScreen extends Component {
             email: '',
             password: '',
         });*/
-        console.log(this.state);
-        const myRequest = new Request('http://localhost:5555/login',{method: 'POST', body: '{"foo":"bar"}'});
-        console.log(myRequest.method);
+        const myRequest = new Request(
+            'http://localhost:5555/users',
+            {
+                method: 'POST',
+                 headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.state)
+            });
+        console.log(JSON.stringify(this.state));
         fetch(myRequest)
-        .then((response) => response.json())
-        .then((responseJson) => {
-            console.log(responseJson);
+        .then((response) => response.text())
+        .then((responseText) => {
+            console.log(responseText);
         })
         .catch((error) => {
             console.warn(error);
@@ -81,6 +89,15 @@ export default class LoginScreen extends Component {
     };
 
     _register = () => {
-        this.props.navigator.push("register");
+        //this.props.navigator.push("register");
+        const myRequest = new Request('http://localhost:5555/check');
+        fetch(myRequest)
+        .then((response) => response.text())
+        .then((responseText) => {
+            console.log(responseText);
+        })
+        .catch((error) => {
+            console.warn(error);
+        });
     };
 }
