@@ -5,23 +5,49 @@ import {
   StackNavigation,
   TabNavigation,
   TabNavigationItem,
+  ExNavigationState,
 } from '@expo/ex-navigation';
-import { 
+import {
   FontAwesome,
   MaterialCommunityIcons,
   Ionicons
  } from '@expo/vector-icons';
-
 import Alerts from '../constants/Alerts';
 import Colors from '../constants/Colors';
 import registerForPushNotificationsAsync
   from '../api/registerForPushNotificationsAsync';
+import { TestButton, NavigatorBackground } from '../components/common';
 
 export default class RootNavigation extends React.Component {
+
+  static route = {
+    navigationBar: {
+      renderRight: (state: ExNavigationState) => {
+        const { config: { eventEmitter }  } = state;
+
+        return (
+          <TestButton
+            onPress={() => eventEmitter.emit('done')}
+          />
+        );
+      },
+      renderBackground: props => <NavigatorBackground />
+    },
+  };
+
+   _handleDone = () => {
+   this.props.navigator.push("requestBlood");
+  }
+
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
   }
 
+  componentWillMount() {
+
+
+    this._subscriptionDone = this.props.route.getEventEmitter().addListener('done', this._handleDone);
+  }
   componentWillUnmount() {
     this._notificationSubscription && this._notificationSubscription.remove();
   }
@@ -40,7 +66,7 @@ export default class RootNavigation extends React.Component {
           renderIcon={isSelected => this._renderIconMaterialCommunityIcons('earth', isSelected)}>
           <StackNavigation initialRoute="notification" />
         </TabNavigationItem>
-        
+
         <TabNavigationItem
           id="friend"
           renderIcon={isSelected => this._renderIconIonicons('md-contacts', isSelected)}>

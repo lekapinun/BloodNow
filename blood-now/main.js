@@ -19,11 +19,15 @@ class AppContainer extends React.Component {
   async _loadAssetsAsync() {
     try {
       await cacheAssetsAsync({
-        images: [require('./assets/images/expo-wordmark.png')],
+        images: [
+          require('./assets/images/expo-wordmark.png'),
+          require('./assets/icons/logo.jpg'),
+          require('./assets/images/expo-icon@2x.png'),
+        ],
         fonts: [
           FontAwesome.font,
-          { 
-            'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),        
+          {
+            'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
           },
           {
             'CmPrasanmit': require('./assets/fonts/CmPrasanmit.ttf'),

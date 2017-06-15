@@ -8,10 +8,11 @@ import {
   WebView,
   Image
 } from 'react-native';
+import { getBackButtonManager } from '@expo/ex-navigation';
 
 export default class LoginScreen extends Component {
 
-    state = { 
+    state = {
         email: '',
         password: '',
     };
@@ -22,7 +23,7 @@ export default class LoginScreen extends Component {
                 <Text>LOGIN SCREEN</Text>
                 <View>
                     <Image
-                        
+
                     />
                 </View>
                 <View>
@@ -42,10 +43,10 @@ export default class LoginScreen extends Component {
                     />
                 </View>
                 <View style={{marginTop:30,backgroundColor: '#EF685E'}}>
-                    <Button title="เข้าสู่ระบบ" onPress={this._loginSuccess} color="white" />   
+                    <Button title="เข้าสู่ระบบ" onPress={this._loginSuccess} color="white" />
                 </View>
                 <View style={{marginTop:30,backgroundColor: '#EF685E'}}>
-                    <Button title="ลงทะเบียน" onPress={this._register} color="white" />    
+                    <Button title="ลงทะเบียน" onPress={this._register} color="white" />
                 </View>
             </View>
         );
@@ -68,11 +69,13 @@ export default class LoginScreen extends Component {
         /*.catch((error) => {
             console.error(error);
         });*/
-        //this.props.navigator.push("rootNavigation");
+        this.backButtonManager = getBackButtonManager();
+        this.backButtonManager.disable();
+        this.props.navigator.replace("rootNavigation");
         /*this.setState({
             email: '',
             password: '',
-        });*/
+        });
         const myRequest = new Request(
             'http://localhost:5555/users',
             {
@@ -91,7 +94,7 @@ export default class LoginScreen extends Component {
         })
         .catch((error) => {
             console.warn(error);
-        });
+        });*/
     };
 
     _register = () => {

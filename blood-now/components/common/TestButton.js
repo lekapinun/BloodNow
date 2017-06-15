@@ -6,7 +6,6 @@ const TestButton = ({onPress}) => {
     <TouchableOpacity onPress={onPress} style={styles.containerStyle} >
       <Image
         source={require('../../assets/images/expo-icon@2x.png')}
-        fadeDuration={0}
         style={{ width: 20, height: 20 }}
       />
     </TouchableOpacity>

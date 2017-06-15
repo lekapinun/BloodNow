@@ -11,6 +11,7 @@ import NotificationScreen from '../screens/NotificationScreen';
 import FriendScreen from '../screens/FriendScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import DonorScreen from '../screens/DonorScreen';
+import RequestBloodScreen from '../screens/RequestBloodScreen';
 
 export default createRouter(() => ({
   home: () => HomeScreen,
@@ -19,9 +20,10 @@ export default createRouter(() => ({
   rootNavigation: () => RootNavigation,
   login: () => LoginScreen,
   register: () => RegisterScreen,
-  information: () => InformationScreen, 
+  information: () => InformationScreen,
   notification: () => NotificationScreen,
   friend: () => FriendScreen,
   profile: () => ProfileScreen,
   donor: () => DonorScreen,
+  requestBlood: () => RequestBloodScreen,
 }));
