@@ -1,25 +1,32 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Button, TouchableOpacity, View, Text } from 'react-native';
+import { ScrollView, StyleSheet, Button, TouchableOpacity, View, Text, Image, Dimensions } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
-//import { TestButton } from '../components/common';
+import { TestButton } from '../components/common';
 
 export default class LinksScreen extends React.Component {
   static route = {
     navigationBar: {
-      title: 'Links',
+      //title: ,
       renderRight: (state: ExNavigationState) => {
         const { config: { eventEmitter }  } = state;
 
         return (
-          <Button
+          <TestButton
             //tintColor={state.getBarTintColor()}
-            title="Button"
             onPress={() => eventEmitter.emit('done')}
-          >
-            Done
-          </Button>
+          />
         );
       },
+        renderBackground: props => (
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', paddingBottom: '0.2%'}}>
+            <Image
+              style={{ width: 100, height: 45 ,  }}
+              source={require('../assets/images/logo.png')}
+              resizeMode={'cover'}
+            />
+          </View>
+
+        ),
     },
   };
   componentWillMount() {
@@ -27,7 +34,7 @@ export default class LinksScreen extends React.Component {
    }
    _handleDone = () => {
    this.props.navigator.push("requestBlood");
- }
+  }
 
 
   render() {

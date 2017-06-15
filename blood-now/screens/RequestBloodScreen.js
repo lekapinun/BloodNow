@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { StackNavigation, withNavigation } from '@expo/ex-navigation';
+import { StackNavigation } from '@expo/ex-navigation';
 
-@withNavigation
+//@withNavigation
 export default class RequestBloodScreen extends Component {
   static route = {
     navigationBar: {
