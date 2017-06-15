@@ -8,7 +8,7 @@ const NavigatorBackground = () => {
     <View style={backgroundStyle}>
       <Image
         style={imageStyle}
-        source={require('../../assets/images/logo.png')}
+        source={require('../../assets/icons/logo.png')}
         resizeMode={'cover'}
       />
     </View>
