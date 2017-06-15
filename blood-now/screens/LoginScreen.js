@@ -9,15 +9,18 @@ import {
   Image,
   StyleSheet
 } from 'react-native';
-import { getBackButtonManager } from '@expo/ex-navigation';
 
 import {
     Font
 } from 'expo';
 
+import {
+    getBackButtonManager
+} from '@expo/ex-navigation'
+
 export default class LoginScreen extends Component {
 
-    state = {
+    state = { 
         email: '',
         password: '',
     };
@@ -27,12 +30,8 @@ export default class LoginScreen extends Component {
             <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
                 <View>
                     <Image
-<<<<<<< HEAD
-
-=======
                         source={require('../assets/icons/logo.png')}
                         style={{width:250,height:120}}
->>>>>>> 6c02c01e0c6de84a23354b5cf2ef74282ff17fc4
                     />
                 </View>
                 <View style={{marginBottom:50,marginLeft:10}}>
@@ -59,24 +58,17 @@ export default class LoginScreen extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-<<<<<<< HEAD
-                <View style={{marginTop:30,backgroundColor: '#EF685E'}}>
-                    <Button title="เข้าสู่ระบบ" onPress={this._loginSuccess} color="white" />
-                </View>
-                <View style={{marginTop:30,backgroundColor: '#EF685E'}}>
-                    <Button title="ลงทะเบียน" onPress={this._register} color="white" />
-=======
                 <View style={{marginTop:10,backgroundColor: '#EF685E',height: 50, width:270,marginBottom:10,flexDirection: 'column',justifyContent: 'center' }}>
                     <Button style={[Font.style('CmPrasanmit')]} title="เข้าสู่ระบบ" onPress={this._loginSuccess} color="white" />   
                 </View>
                 <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A'}]}>หรือ</Text>
                 <View style={{backgroundColor: '#9FAC9B',height: 50, width:270,marginTop:10,flexDirection: 'column',justifyContent: 'center'}}>
                     <Button style={[Font.style('CmPrasanmit')]} title="ลงทะเบียน" onPress={this._register} color="white" />    
->>>>>>> 6c02c01e0c6de84a23354b5cf2ef74282ff17fc4
                 </View>
             </View>
         );
     }
+    
 
     _loginSuccess = () => {
 
@@ -95,23 +87,14 @@ export default class LoginScreen extends Component {
         /*.catch((error) => {
             console.error(error);
         });*/
-<<<<<<< HEAD
         this.backButtonManager = getBackButtonManager();
         this.backButtonManager.disable();
         this.props.navigator.replace("rootNavigation");
         /*this.setState({
             email: '',
             password: '',
-        });
-        const myRequest = new Request(
-=======
-        this.props.navigator.push("rootNavigation");
-        /*this.setState({
-            email: '',
-            password: '',
         });*/
         /*const myRequest = new Request(
->>>>>>> 6c02c01e0c6de84a23354b5cf2ef74282ff17fc4
             'http://localhost:5555/users',
             {
                 method: 'POST',
@@ -133,8 +116,8 @@ export default class LoginScreen extends Component {
     };
 
     _register = () => {
-        //this.props.navigator.push("register");
-        const myRequest = new Request('http://localhost:5555/check');
+        this.props.navigator.push("register");
+        /*const myRequest = new Request('http://localhost:5555/check');
         fetch(myRequest)
         .then((response) => response.text())
         .then((responseText) => {
@@ -142,7 +125,7 @@ export default class LoginScreen extends Component {
         })
         .catch((error) => {
             console.warn(error);
-        });
+        });*/
     };
 }
 

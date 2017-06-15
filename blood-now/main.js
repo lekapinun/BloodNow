@@ -21,7 +21,7 @@ class AppContainer extends React.Component {
       await cacheAssetsAsync({
         images: [
           require('./assets/images/expo-wordmark.png'),
-          require('./assets/icons/logo.jpg'),
+          require('./assets/icons/logo.png'),
           require('./assets/images/expo-icon@2x.png'),
         ],
         fonts: [

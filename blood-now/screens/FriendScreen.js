@@ -6,12 +6,6 @@ import {
 } from 'react-native';
 
 export default class FriendScreen extends Component {
-    static route = {
-        navigationBar: {
-        /*visible: false,*/
-        title: 'เพื่อน',
-        },
-    };
     render() {
         return(
             <View style={{marginTop:30}}>

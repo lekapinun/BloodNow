@@ -6,13 +6,6 @@ import {
 } from 'react-native';
 
 export default class NotificationScreen extends Component {
-    static route = {
-        navigationBar: {
-        /*visible: false,*/
-        title: 'ข่าวสาร',
-        },
-    };
-
     render() {
         return(
             <View style={{marginTop:30}}>

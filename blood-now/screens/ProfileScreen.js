@@ -6,13 +6,6 @@ import {
 } from 'react-native';
 
 export default class ProfileScreen extends Component {
-    static route = {
-        navigationBar: {
-        /*visible: false,*/
-        title: 'ข้อมูลส่วนตัว',
-        },
-    };
-
     render() {
         return(
             <View style={{marginTop:30}}>
