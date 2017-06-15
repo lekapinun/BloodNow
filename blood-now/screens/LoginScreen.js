@@ -46,7 +46,8 @@ export default class LoginScreen extends Component {
     }
 
     _loginSuccess = () => {
-        console.log(this.state);
+
+        /*console.log(this.state);
         this.setState({
             email: '',
             password: '',
@@ -54,14 +55,29 @@ export default class LoginScreen extends Component {
         fetch('http://localhost:8000/login')
         .then((response) => {
             console.log(response);
-        })
+        })*/
         /*.then((responseJson) => {
             console.log(responseJson.movies);
         })*/
-        .catch((error) => {
+        /*.catch((error) => {
             console.error(error);
-        });
+        });*/
         //this.props.navigator.push("rootNavigation");
+        /*this.setState({
+            email: '',
+            password: '',
+        });*/
+        console.log(this.state);
+        const myRequest = new Request('http://localhost:5555/login',{method: 'POST', body: '{"foo":"bar"}'});
+        console.log(myRequest.method);
+        fetch(myRequest)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            console.log(responseJson);
+        })
+        .catch((error) => {
+            console.warn(error);
+        });
     };
 
     _register = () => {
