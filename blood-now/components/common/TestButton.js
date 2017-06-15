@@ -15,10 +15,6 @@ const TestButton = ({onPress}) => {
 
 const styles = StyleSheet.create({
   containerStyle: {
-    /*justifyContent: 'center',
-    alignItems:'center',
-    //width: 100,
-    borderWidth: 1*/
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
