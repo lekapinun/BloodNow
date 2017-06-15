@@ -2,6 +2,10 @@ import { StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 import React from 'react';
 
 const TestButton = ({onPress}) => {
+  /*onButtonPress = () => {
+      //console.logging('props');
+      this.navigator.push("requestBlood");
+  }*/
   return(
     <TouchableOpacity onPress={onPress} style={styles.containerStyle} >
       <Image
