@@ -1,6 +1,6 @@
 import Expo from 'expo';
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
 import { NavigationProvider, StackNavigation } from '@expo/ex-navigation';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -13,7 +13,18 @@ class AppContainer extends React.Component {
   };
 
   componentWillMount() {
+    console.log('AsyncStorage');
     this._loadAssetsAsync();
+    this._userData();
+  }
+
+  async _userData(){
+    try {
+      await AsyncStorage.setItem('@name:key', 'thomas');
+      await AsyncStorage.setItem('@email:key', 'thomas@mail.com');
+    } catch ( error ) {
+      console.log('error');
+    }
   }
 
   async _loadAssetsAsync() {
