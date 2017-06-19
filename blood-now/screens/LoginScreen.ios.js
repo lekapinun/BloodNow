@@ -7,7 +7,8 @@ import {
   Button,
   WebView,
   Image,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage
 } from 'react-native';
 
 import {
@@ -24,6 +25,28 @@ export default class LoginScreen extends Component {
         email: '',
         password: '',
     };
+
+    componentWillMount() {
+        console.log('test');
+        this._test();
+    }
+        
+    async _test() {
+        try {
+            const value = await AsyncStorage.getItem('@name:key');
+            if (value !== null){
+                // We have data!!
+                console.log(value);
+            }
+            const email = await AsyncStorage.getItem('@email:key');
+            if (email !== null){
+                // We have data!!
+                console.log(email);
+            }
+        } catch ( error ){
+            console('error');
+        }
+    }
 
     render() {
         return(
@@ -71,6 +94,10 @@ export default class LoginScreen extends Component {
     
 
     _loginSuccess = () => {
+        /*this.backButtonManager = getBackButtonManager();
+        this.backButtonManager.disable();
+        this.props.navigator.replace("rootNavigation");*/
+
 
         /*console.log(this.state);
         this.setState({
@@ -87,9 +114,7 @@ export default class LoginScreen extends Component {
         /*.catch((error) => {
             console.error(error);
         });*/
-        this.backButtonManager = getBackButtonManager();
-        this.backButtonManager.disable();
-        this.props.navigator.replace("rootNavigation");
+       
         /*this.setState({
             email: '',
             password: '',
@@ -116,7 +141,7 @@ export default class LoginScreen extends Component {
     };
 
     _register = () => {
-        this.props.navigator.push("register");
+       /* this.props.navigator.push("register");*/
         /*const myRequest = new Request('http://localhost:5555/check');
         fetch(myRequest)
         .then((response) => response.text())
