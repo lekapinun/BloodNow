@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import {
   Text,
-  View,
+  ScrollView,
   TouchableOpacity,
   TextInput,
   Picker,
   StyleSheet,
-  DatePickerIOS
+  DatePickerIOS,
+  DatePickerAndroid,
+  Button
 } from 'react-native';
+import { Font } from 'expo';
 
 export default class RegisterScreen extends Component {
     state = {
@@ -26,7 +29,7 @@ export default class RegisterScreen extends Component {
     }
     render() {
         return(
-            <View style={{marginTop:30}}>
+            <ScrollView style={{marginTop:30}}>
                 <Text>REGISTER SCREEN</Text>
                 <TextInput
                     style={[Font.style('CmPrasanmit'),styles.input]}
@@ -49,9 +52,8 @@ export default class RegisterScreen extends Component {
                     value={this.state.passwordConfirmation}
                     placeholder="ยืนยันรหัสผ่าน"
                 />
-                <Picker>
-                  selectedValue={this.state.bloodType}
-                  onValueChange={(itemValue, itemIndex) => this.setState({bloodType: itemValue})}>
+                <Picker
+                  mode="dropdown" onValueChange={(itemValue, itemLabel) => this.setState({bloodType: itemValue})}>
                   <Picker.Item label="A" value="A" />
                   <Picker.Item label="B" value="B" />
                   <Picker.Item label="AB" value="AB" />
@@ -71,21 +73,26 @@ export default class RegisterScreen extends Component {
                     value={this.state.email}
                     placeholder="อีเมล์"
                 />
+                <DatePickerIOS
+                  date={new Date(this.state.date)}
+                  mode="date"
+                  onDateChange={this.onDateChange}
+                />
                 <Button
                   title="ลงทะเบียน"
                   onPress={() => this.onRegisterPress}
                 />
-            </View>
-            <DatePickerIOS
-               mode="date"
-               date={this.state.date}
-               onDateChange={(e) => this.setState({date})}
-            />
+            </ScrollView>
+
             /*<Picker>
               Province
             </Picker>
+            <DatePickerAndroid
+              mode="calendar"
+            />
             <DatePicker birthDate/>
-            <DatePicker recentDonateDate/>*/
+            <DatePicker recentDonateDate/>
+            */
         );
     }
 
