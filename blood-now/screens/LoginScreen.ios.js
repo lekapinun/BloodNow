@@ -20,19 +20,21 @@ import {
 } from '@expo/ex-navigation'
 
 export default class LoginScreen extends Component {
-
     state = {
-        name: '',
+        email: '',
         password: '',
-        really: '0',
     };
-
+    _handleDone = () => {
+      this.backButtonManager = getBackButtonManager();
+      this.backButtonManager.disable();
+      this.props.navigator.replace("rootNavigation");
+    }
     componentWillMount() {
         console.log('test');
-        //this._test();
+        this._test();
+        this._subscriptionDone = this.props.route.getEventEmitter().addListener('done', this._handleDone);
     }
 
-        
     async _test() {
         try {
             const value = await AsyncStorage.getItem('@name:key');
@@ -160,9 +162,7 @@ export default class LoginScreen extends Component {
                     really: '1',
                 });
                 console.log(this.state);*/
-                this.backButtonManager = getBackButtonManager();
-                this.backButtonManager.disable();
-                this.props.navigator.replace("rootNavigation"); 
+                () => eventEmitter.emit('done');
             }
             else
             {
@@ -174,7 +174,7 @@ export default class LoginScreen extends Component {
         })
         .catch((error) => {
             console.warn(error);
-        });         
+        });
     };
 
     _register = () => {
