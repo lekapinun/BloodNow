@@ -22,14 +22,16 @@ import {
 export default class LoginScreen extends Component {
 
     state = {
-        email: '',
+        name: '',
         password: '',
+        really: '0',
     };
 
     componentWillMount() {
         console.log('test');
-        this._test();
+        //this._test();
     }
+
         
     async _test() {
         try {
@@ -48,6 +50,43 @@ export default class LoginScreen extends Component {
         }
     }
 
+    async _login() {
+        /*const myRequest = new Request(
+            'http://localhost:8000/member/login',
+            {
+                method: 'POST',
+                 headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.state)
+            });
+        var test = '';
+        fetch(myRequest)
+        .then((response) => {
+            if( response._bodyInit != 'login fail')
+            {
+                test = JSON.parse(response._bodyInit);
+                console.log(test);
+                console.log(test.name);
+                this.setState({
+                    really: '1',
+                });
+                console.log(this.state);
+            }
+            else
+            {
+                this.setState({
+                    password: '',
+                });
+                console.log('login fail');
+            }
+        })
+        .catch((error) => {
+            console.warn(error);
+        }); */
+    }
+
     render() {
         return(
             <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
@@ -64,13 +103,16 @@ export default class LoginScreen extends Component {
                     <TextInput
                         style={[Font.style('CmPrasanmit'),styles.input]}
                         autoCorrect={false}
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email}
+                        autoCapitalize='none'
+                        onChangeText={(name) => this.setState({name})}
+                        value={this.state.name}
                         placeholder="ชื่อผู้ใช้หรือเบอร์โทรศัพท์"
                     />
                     <TextInput
                         style={[Font.style('CmPrasanmit'),styles.input]}
                         autoCorrect={false}
+                        secureTextEntry={true}
+                        autoCapitalize='none'
                         onChangeText={(password) => this.setState({password})}
                         value={this.state.password}
                         placeholder="รหัสผ่าน"
@@ -82,7 +124,7 @@ export default class LoginScreen extends Component {
                     </View>
                 </View>
                 <View style={{marginTop:10,backgroundColor: '#EF685E',height: 50, width:270,marginBottom:10,flexDirection: 'column',justifyContent: 'center' }}>
-                    <Button style={[Font.style('CmPrasanmit')]} title="เข้าสู่ระบบ" onPress={this._loginSuccess} color='white' />
+                    <Button style={[Font.style('CmPrasanmit')]} title="เข้าสู่ระบบ" onPress={this._loginPress} color='white' />
                 </View>
                 <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A'}]}>หรือ</Text>
                 <View style={{backgroundColor: '#9FAC9B',height: 50, width:270,marginTop:10,flexDirection: 'column',justifyContent: 'center'}}>
@@ -93,34 +135,9 @@ export default class LoginScreen extends Component {
     }
 
 
-    _loginSuccess = () => {
-        /*this.backButtonManager = getBackButtonManager();
-        this.backButtonManager.disable();
-        this.props.navigator.replace("rootNavigation");*/
-
-
-        /*console.log(this.state);
-        this.setState({
-            email: '',
-            password: '',
-        });
-        fetch('http://localhost:8000/login')
-        .then((response) => {
-            console.log(response);
-        })*/
-        /*.then((responseJson) => {
-            console.log(responseJson.movies);
-        })*/
-        /*.catch((error) => {
-            console.error(error);
-        });*/
-       
-        /*this.setState({
-            email: '',
-            password: '',
-        });*/
-        /*const myRequest = new Request(
-            'http://localhost:5555/users',
+    _loginPress = () => {
+        const myRequest = new Request(
+            'http://localhost:8000/member/login',
             {
                 method: 'POST',
                  headers: {
@@ -130,18 +147,38 @@ export default class LoginScreen extends Component {
                 body: JSON.stringify(this.state)
             });
         console.log(JSON.stringify(this.state));
+        var test = '';
         fetch(myRequest)
-        .then((response) => response.text())
-        .then((responseText) => {
-            console.log(responseText);
+        .then((response) => {
+            //console.log(response);
+            if( response._bodyInit != 'login fail')
+            {
+                test = JSON.parse(response._bodyInit);
+                console.log(test);
+                console.log(test.name);
+                /*this.setState({
+                    really: '1',
+                });
+                console.log(this.state);*/
+                this.backButtonManager = getBackButtonManager();
+                this.backButtonManager.disable();
+                this.props.navigator.replace("rootNavigation"); 
+            }
+            else
+            {
+                this.setState({
+                    password: '',
+                });
+                console.log('login fail');
+            }
         })
         .catch((error) => {
             console.warn(error);
-        });*/
+        });         
     };
 
     _register = () => {
-       /* this.props.navigator.push("register");*/
+        /*this.props.navigator.push("register");*/
         /*const myRequest = new Request('http://localhost:5555/check');
         fetch(myRequest)
         .then((response) => response.text())
