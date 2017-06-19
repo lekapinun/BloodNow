@@ -6,8 +6,11 @@ import {
   TextInput,
   Picker,
   StyleSheet,
-  DatePickerIOS
+  DatePickerIOS,
+  Button,
 } from 'react-native';
+import { Font } from 'expo';
+import DatePicker from 'react-native-datepicker';
 
 export default class RegisterScreen extends Component {
     state = {
@@ -18,7 +21,7 @@ export default class RegisterScreen extends Component {
         phoneNumber: '',
         email: '',
         //province: '',
-        date: '',
+        date:"2016-05-15",
         recentDonateDate: '',
     }
     onRegisterPress = () => {
@@ -49,7 +52,7 @@ export default class RegisterScreen extends Component {
                     value={this.state.passwordConfirmation}
                     placeholder="ยืนยันรหัสผ่าน"
                 />
-                <Picker>
+                <Picker
                   selectedValue={this.state.bloodType}
                   onValueChange={(itemValue, itemIndex) => this.setState({bloodType: itemValue})}>
                   <Picker.Item label="A" value="A" />
@@ -71,16 +74,36 @@ export default class RegisterScreen extends Component {
                     value={this.state.email}
                     placeholder="อีเมล์"
                 />
+                <DatePicker
+                  style={{width: 200}}
+                  date={this.state.date}
+                  mode="date"
+                  placeholder="select date"
+                  format="YYYY-MM-DD"
+                  minDate="2015-05-01"
+                  maxDate="2015-06-01"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  customStyles={{
+                    dateIcon: {
+                      position: 'absolute',
+                      left: 0,
+                      top: 4,
+                      marginLeft: 0
+                    },
+                    dateInput: {
+                      marginLeft: 36
+                    }
+                    // ... You can check the source to find the other keys.
+                  }}
+                  onDateChange={(date) => {this.setState({date: date})}}
+                />
+
                 <Button
                   title="ลงทะเบียน"
                   onPress={() => this.onRegisterPress}
                 />
             </View>
-            <DatePickerIOS
-               mode="date"
-               date={this.state.date}
-               onDateChange={(e) => this.setState({date})}
-            />
             /*<Picker>
               Province
             </Picker>
