@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {
   Text,
-  View,
+  ScrollView,
   TouchableOpacity,
   TextInput,
   Picker,
   StyleSheet,
-  DatePickerIOS,
   Button,
+  View,
 } from 'react-native';
 import { Font } from 'expo';
 import DatePicker from 'react-native-datepicker';
@@ -29,8 +29,11 @@ export default class RegisterScreen extends Component {
     }
     render() {
         return(
-            <View style={{marginTop:30}}>
+            <ScrollView style={{marginTop:30, }}>
+              <View style={styles.container}>
                 <Text>REGISTER SCREEN</Text>
+              </View>
+              <View style={styles.container}>
                 <TextInput
                     style={[Font.style('CmPrasanmit'),styles.input]}
                     autoCorrect={false}
@@ -38,6 +41,8 @@ export default class RegisterScreen extends Component {
                     value={this.state.username}
                     placeholder="ชื่อผู้ใช้์"
                 />
+              </View>
+              <View style={styles.container}>
                 <TextInput
                     style={[Font.style('CmPrasanmit'),styles.input]}
                     autoCorrect={false}
@@ -45,6 +50,8 @@ export default class RegisterScreen extends Component {
                     value={this.state.password}
                     placeholder="รหัสผ่าน"
                 />
+              </View>
+              <View style={styles.container}>
                 <TextInput
                     style={[Font.style('CmPrasanmit'),styles.input]}
                     autoCorrect={false}
@@ -52,14 +59,20 @@ export default class RegisterScreen extends Component {
                     value={this.state.passwordConfirmation}
                     placeholder="ยืนยันรหัสผ่าน"
                 />
+              </View>
+              <View style={{ width: 280, height: 50, alignSelf: 'center', borderBottomColor: '#47315a',
+borderBottomWidth: 1  }}>
                 <Picker
                   selectedValue={this.state.bloodType}
-                  onValueChange={(itemValue, itemIndex) => this.setState({bloodType: itemValue})}>
+                  onValueChange={(itemValue, itemIndex) => this.setState({bloodType: itemValue})}
+                >
                   <Picker.Item label="A" value="A" />
                   <Picker.Item label="B" value="B" />
                   <Picker.Item label="AB" value="AB" />
                   <Picker.Item label="O" value="O" />
                 </Picker>
+              </View>
+              <View style={styles.container}>
                 <TextInput
                     style={[Font.style('CmPrasanmit'),styles.input]}
                     autoCorrect={false}
@@ -67,6 +80,8 @@ export default class RegisterScreen extends Component {
                     value={this.state.phoneNumber}
                     placeholder="เบอร์โทรศัพท์"
                 />
+              </View>
+              <View style={styles.container}>
                 <TextInput
                     style={[Font.style('CmPrasanmit'),styles.input]}
                     autoCorrect={false}
@@ -74,6 +89,8 @@ export default class RegisterScreen extends Component {
                     value={this.state.email}
                     placeholder="อีเมล์"
                 />
+              </View>
+              <View style={[styles.container, {padding: 5}]}>
                 <DatePicker
                   style={{width: 200}}
                   date={this.state.date}
@@ -98,12 +115,14 @@ export default class RegisterScreen extends Component {
                   }}
                   onDateChange={(date) => {this.setState({date: date})}}
                 />
-
+              </View>
+              <View style={[styles.container,{padding: 5}]}>
                 <Button
                   title="ลงทะเบียน"
                   onPress={() => this.onRegisterPress}
                 />
-            </View>
+              </View>
+            </ScrollView>
             /*<Picker>
               Province
             </Picker>
@@ -124,5 +143,9 @@ const styles = StyleSheet.create({
     paddingLeft:10,
     fontSize: 23,
     backgroundColor: 'white',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
   },
 });
