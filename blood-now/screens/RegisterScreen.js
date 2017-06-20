@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Button,
   View,
+  Platform,
 } from 'react-native';
 import { Font } from 'expo';
 import DatePicker from 'react-native-datepicker';
@@ -29,7 +30,7 @@ export default class RegisterScreen extends Component {
     }
     render() {
         return(
-            <ScrollView style={{marginTop:30, }}>
+            <ScrollView style={{ marginTop: 30 }}>
               <View style={styles.container}>
                 <Text>REGISTER SCREEN</Text>
               </View>
@@ -60,10 +61,10 @@ export default class RegisterScreen extends Component {
                     placeholder="ยืนยันรหัสผ่าน"
                 />
               </View>
-              <View style={{ width: 270, height: 50, marginTop: 10, alignSelf: 'center', borderColor: 'grey', borderWidth: 1 }}>
-                <View style={{ width: 260, height: 50, alignSelf: 'center', borderBottomColor: '#47315a',
-  borderBottomWidth: 1  }}>
+              <View style={styles.pickerContainer}>
+                <View style={styles.pickerBody}>
                   <Picker
+                    style={{ height: 50 }}
                     selectedValue={this.state.bloodType}
                     onValueChange={(itemValue, itemIndex) => this.setState({bloodType: itemValue})}
                   >
@@ -148,7 +149,41 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   container: {
-    flex: 1,
-    alignItems: 'center',
+    ...Platform.select({
+      ios: {
+         alignSelf: 'center',
+      },
+      android: {
+        flex: 1,
+        alignItems: 'center',
+      },
+    }),
+  },
+  pickerContainer: {
+    ...Platform.select({
+      ios: {
+      },
+      android: {
+       width: 270,
+       height: 50,
+       marginTop: 10,
+       alignSelf: 'center',
+       borderColor: 'grey',
+       borderWidth: 1
+      },
+    }),
+  },
+  pickerBody: {
+    ...Platform.select({
+      ios: {
+      },
+      android: {
+        width: 260,
+        height: 50,
+        alignSelf: 'center',
+        borderBottomColor: '#47315a',
+        borderBottomWidth: 1
+      },
+    }),
   },
 });
