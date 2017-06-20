@@ -60,17 +60,20 @@ export default class RegisterScreen extends Component {
                     placeholder="ยืนยันรหัสผ่าน"
                 />
               </View>
-              <View style={{ width: 280, height: 50, alignSelf: 'center', borderBottomColor: '#47315a',
-borderBottomWidth: 1  }}>
-                <Picker
-                  selectedValue={this.state.bloodType}
-                  onValueChange={(itemValue, itemIndex) => this.setState({bloodType: itemValue})}
-                >
-                  <Picker.Item label="A" value="A" />
-                  <Picker.Item label="B" value="B" />
-                  <Picker.Item label="AB" value="AB" />
-                  <Picker.Item label="O" value="O" />
-                </Picker>
+              <View style={{ width: 270, height: 50, marginTop: 10, alignSelf: 'center', borderColor: 'grey', borderWidth: 1 }}>
+                <View style={{ width: 260, height: 50, alignSelf: 'center', borderBottomColor: '#47315a',
+  borderBottomWidth: 1  }}>
+                  <Picker
+                    selectedValue={this.state.bloodType}
+                    onValueChange={(itemValue, itemIndex) => this.setState({bloodType: itemValue})}
+                  >
+                    <Picker.Item label="Blood Type" value="" />
+                    <Picker.Item label="A" value="A" />
+                    <Picker.Item label="B" value="B" />
+                    <Picker.Item label="AB" value="AB" />
+                    <Picker.Item label="O" value="O" />
+                  </Picker>
+                </View>
               </View>
               <View style={styles.container}>
                 <TextInput
@@ -90,7 +93,7 @@ borderBottomWidth: 1  }}>
                     placeholder="อีเมล์"
                 />
               </View>
-              <View style={[styles.container, {padding: 5}]}>
+              <View style={[styles.container, {margin: 10}]}>
                 <DatePicker
                   style={{width: 200}}
                   date={this.state.date}
@@ -116,7 +119,7 @@ borderBottomWidth: 1  }}>
                   onDateChange={(date) => {this.setState({date: date})}}
                 />
               </View>
-              <View style={[styles.container,{padding: 5}]}>
+              <View style={[styles.container]}>
                 <Button
                   title="ลงทะเบียน"
                   onPress={() => this.onRegisterPress}
