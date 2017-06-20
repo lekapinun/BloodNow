@@ -20,74 +20,12 @@ import {
 } from '@expo/ex-navigation'
 
 export default class LoginScreen extends Component {
+
     state = {
-        email: '',
+        name: '',
         password: '',
+        really: '0',
     };
-    _handleDone = () => {
-      this.backButtonManager = getBackButtonManager();
-      this.backButtonManager.disable();
-      this.props.navigator.replace("rootNavigation");
-    }
-    componentWillMount() {
-        console.log('test');
-        this._test();
-        this._subscriptionDone = this.props.route.getEventEmitter().addListener('done', this._handleDone);
-    }
-
-    async _test() {
-        try {
-            const value = await AsyncStorage.getItem('@name:key');
-            if (value !== null){
-                // We have data!!
-                console.log(value);
-            }
-            const email = await AsyncStorage.getItem('@email:key');
-            if (email !== null){
-                // We have data!!
-                console.log(email);
-            }
-        } catch ( error ){
-            console('error');
-        }
-    }
-
-    async _login() {
-        /*const myRequest = new Request(
-            'http://localhost:8000/member/login',
-            {
-                method: 'POST',
-                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.state)
-            });
-        var test = '';
-        fetch(myRequest)
-        .then((response) => {
-            if( response._bodyInit != 'login fail')
-            {
-                test = JSON.parse(response._bodyInit);
-                console.log(test);
-                console.log(test.name);
-                this.setState({
-                    really: '1',
-                });
-                console.log(this.state);
-            }
-            else
-            {
-                this.setState({
-                    password: '',
-                });
-                console.log('login fail');
-            }
-        })
-        .catch((error) => {
-            console.warn(error);
-        }); */
-    }
 
     render() {
         return(
@@ -138,6 +76,8 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
+        console.log('xxxx');
+        console.log(this.state);
         const myRequest = new Request(
             'http://localhost:8000/member/login',
             {
@@ -148,7 +88,6 @@ export default class LoginScreen extends Component {
                 },
                 body: JSON.stringify(this.state)
             });
-        console.log(JSON.stringify(this.state));
         var test = '';
         fetch(myRequest)
         .then((response) => {
@@ -156,29 +95,35 @@ export default class LoginScreen extends Component {
             if( response._bodyInit != 'login fail')
             {
                 test = JSON.parse(response._bodyInit);
-                console.log(test);
-                console.log(test.name);
-                /*this.setState({
-                    really: '1',
-                });
-                console.log(this.state);*/
-                () => eventEmitter.emit('done');
+                console.log('login success');
+                /*this.backButtonManager = getBackButtonManager();
+                this.backButtonManager.disable();
+                this.props.navigator.replace("rootNavigation");*/
+                //this._login();
             }
             else
             {
-                this.setState({
-                    password: '',
-                });
+                this.setState({ password: '' });
                 console.log('login fail');
             }
         })
         .catch((error) => {
             console.warn(error);
-        });
+        }); 
+        if(true){
+            
+        }   
     };
 
+    _login = () => {
+        //this.backButtonManager = getBackButtonManager();
+        //this.backButtonManager.disable();
+        /*this.props.navigator.pop()
+        this.props.navigator.push("rootNavigation");*/
+    }
+
     _register = () => {
-        /*this.props.navigator.push("register");*/
+        this.props.navigator.push("register");
         /*const myRequest = new Request('http://localhost:5555/check');
         fetch(myRequest)
         .then((response) => response.text())
