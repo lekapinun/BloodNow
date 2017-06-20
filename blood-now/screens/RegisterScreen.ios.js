@@ -3,12 +3,15 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  TouchableHighlight,
   TextInput,
   Picker,
   StyleSheet,
   Button,
   View,
   Platform,
+  Modal,
+  Dimensions,
 } from 'react-native';
 import { Font } from 'expo';
 import DatePicker from 'react-native-datepicker';
@@ -19,11 +22,16 @@ export default class RegisterScreen extends Component {
         password: '',
         passwordConfirmation: '',
         bloodType: '',
+        bloodTypeTemp: '',
         phoneNumber: '',
         email: '',
         //province: '',
         date:"2016-05-15",
         recentDonateDate: '',
+        modalVisible: false,
+    }
+    setModalVisible(visible) {
+      this.setState({modalVisible: visible});
     }
     onRegisterPress = () => {
 
@@ -31,6 +39,38 @@ export default class RegisterScreen extends Component {
     render() {
         return(
             <ScrollView style={{ marginTop: 30 }}>
+              <Modal
+                styles={{ paddingTop: 300 }}
+                animationType={"slide"}
+                transparent={true}
+                visible={this.state.modalVisible}
+                >
+                <View style={{ flex: 1 , }}>
+                  <View style={{ flex: 0.65 }} />
+                  <View style={{ flex: 0.35, backgroundColor:'white', borderColor:'grey', borderWidth: 1 }} >
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' , alignItems:'flex-start',  }}>
+                      <Button title='Cancel' onPress={() => {
+                        this.setModalVisible(!this.state.modalVisible)
+                      }}/>
+                      <Button title='Confirm' onPress={() => {
+                        this.setState({bloodType: this.state.bloodTypeTemp});
+                        this.setModalVisible(!this.state.modalVisible);
+                      }}/>
+                    </View>
+                  <Picker
+                    selectedValue={this.state.bloodTypeTemp}
+                    onValueChange={(itemValue, itemIndex) => this.setState({bloodTypeTemp: itemValue})}
+                  >
+                    <Picker.Item label="A" value="A" />
+                    <Picker.Item label="B" value="B" />
+                    <Picker.Item label="AB" value="AB" />
+                    <Picker.Item label="O" value="O" />
+                  </Picker>
+                </View>
+               </View>
+              </Modal>
+
+
               <View style={styles.container}>
                 <Text>REGISTER SCREEN</Text>
               </View>
@@ -61,21 +101,13 @@ export default class RegisterScreen extends Component {
                     placeholder="ยืนยันรหัสผ่าน"
                 />
               </View>
-              <View style={styles.pickerContainer}>
-                <View style={styles.pickerBody}>
-                  <Picker
-                    style={{ height: 50 }}
-                    selectedValue={this.state.bloodType}
-                    onValueChange={(itemValue, itemIndex) => this.setState({bloodType: itemValue})}
-                  >
-                    <Picker.Item label="Blood Type" value="" />
-                    <Picker.Item label="A" value="A" />
-                    <Picker.Item label="B" value="B" />
-                    <Picker.Item label="AB" value="AB" />
-                    <Picker.Item label="O" value="O" />
-                  </Picker>
-                </View>
-              </View>
+              <TouchableOpacity
+                onPress={() => { this.setModalVisible(true) }}
+              >
+                <View style={styles.pickerContainer}>
+                    <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{'Blood Type: '+this.state.bloodType}</Text>
+                  </View>
+              </TouchableOpacity>
               <View style={styles.container}>
                 <TextInput
                     style={[Font.style('CmPrasanmit'),styles.input]}
@@ -115,7 +147,6 @@ export default class RegisterScreen extends Component {
                     dateInput: {
                       marginLeft: 36
                     }
-                    // ... You can check the source to find the other keys.
                   }}
                   onDateChange={(date) => {this.setState({date: date})}}
                 />
@@ -138,6 +169,11 @@ export default class RegisterScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  box: {
+    padding: 25,
+    backgroundColor: 'steelblue',
+    margin: 5,
+  },
   input: {
     height: 50,
     width:270,
@@ -148,42 +184,22 @@ const styles = StyleSheet.create({
     fontSize: 23,
     backgroundColor: 'white',
   },
+  pickerText:{
+    marginTop:10,
+    paddingLeft:10,
+    fontSize: 23,
+  },
   container: {
-    ...Platform.select({
-      ios: {
-         alignSelf: 'center',
-      },
-      android: {
-        flex: 1,
-        alignItems: 'center',
-      },
-    }),
+    alignSelf: 'center',
   },
   pickerContainer: {
-    ...Platform.select({
-      ios: {
-      },
-      android: {
-       width: 270,
-       height: 50,
-       marginTop: 10,
-       alignSelf: 'center',
-       borderColor: 'grey',
-       borderWidth: 1
-      },
-    }),
+    width: 270,
+    height: 50,
+    marginTop: 10,
+    alignSelf: 'center',
+    borderColor: '#EEEDEE',
+    borderWidth: 1
   },
   pickerBody: {
-    ...Platform.select({
-      ios: {
-      },
-      android: {
-        width: 260,
-        height: 50,
-        alignSelf: 'center',
-        borderBottomColor: '#47315a',
-        borderBottomWidth: 1
-      },
-    }),
   },
 });
