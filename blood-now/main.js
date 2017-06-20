@@ -15,7 +15,7 @@ import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 class AppContainer extends React.Component {
   state = {
     appIsReady: false,
-    test: false,
+    currentPage: 'login',
     name: '',
     password: '',
   };
@@ -68,7 +68,7 @@ class AppContainer extends React.Component {
 
   render() {
     if (this.state.appIsReady) {
-      if(!this.state.test)
+      if(this.state.currentPage === 'login')
       {
         return(
           <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
@@ -111,13 +111,21 @@ class AppContainer extends React.Component {
                 </View>
                 <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A'}]}>หรือ</Text>
                 <View style={{backgroundColor: '#9FAC9B',height: 50, width:270,marginTop:10,flexDirection: 'column',justifyContent: 'center'}}>
-                    <Button style={[Font.style('CmPrasanmit')]} title="ลงทะเบียน" onPress={this._login} color='white' />
+                    <Button style={[Font.style('CmPrasanmit')]} title="ลงทะเบียน" onPress={this._register} color='white' />
                 </View>
             </View>     
           </View>
         );
       }
-      else
+      else if(this.state.currentPage === 'register')
+      {
+        return (
+          <View style={styles.container}>
+            <Text>register</Text>
+          </View>
+        );
+      }
+      else if(this.state.currentPage === 'app')
       {
         return (
         <View style={styles.container}>
@@ -139,8 +147,11 @@ class AppContainer extends React.Component {
     }
   }
 
+  _register = () => {
+        this.setState({currentPage: 'register'});
+  };
+
   _login = () => {
-        console.log('xxxx');
         console.log(this.state);
         const myRequest = new Request(
             'http://localhost:8000/member/login',
@@ -160,7 +171,7 @@ class AppContainer extends React.Component {
             {
                 test = JSON.parse(response._bodyInit);
                 console.log('login success');
-                this.setState({test: true});
+                this.setState({currentPage: 'app'});
             }
             else
             {
