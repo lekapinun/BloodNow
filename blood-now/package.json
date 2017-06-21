@@ -16,7 +16,8 @@
     "expo": "17.0.0",
     "react": "16.0.0-alpha.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-17.0.0.tar.gz",
-    "react-native-datepicker": "^1.6.0"
+    "react-native-datepicker": "^1.6.0",
+    "react-native-maps": "^0.15.2"
   },
   "devDependencies": {
     "jest-expo": "~1.0.1"

@@ -11,7 +11,6 @@ import {
   View,
   Platform,
   Modal,
-  Dimensions,
 } from 'react-native';
 import { Font } from 'expo';
 import DatePicker from 'react-native-datepicker';
@@ -42,7 +41,7 @@ export default class RegisterScreen extends Component {
         return(
             <ScrollView style={{ marginTop: 30 }}>
               <Modal
-                styles={{ paddingTop: 300 }}
+                style={{ paddingTop: 300 }}
                 animationType={"slide"}
                 transparent={true}
                 visible={this.state.modalVisible}

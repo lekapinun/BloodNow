@@ -9,22 +9,39 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
+import MapView from 'react-native-maps';
 import { MonoText } from '../components/StyledText';
 
-export default class HomeScreen extends React.Component {
-  static route = {
-    navigationBar: {
-      visible: false,
+export default class App extends React.Component {
+  state = {
+    region: {
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
     },
   };
 
-  render() {
-    return (
-      <View style={{marginTop:30}}>
-         <Text>HOME SCREEN</Text>
-      </View>
-    );
+  onRegionChange(region) {
+    console.log(this.state.region);
+    this.setState({ region });
   }
 
+  render() {
+    return (
+      <MapView
+        style={{ flex: 1 }}
+        region={this.state.region}
+        onRegionChange={this.onRegionChange.bind(this)}
+      >
+        {this.state.markers.map(marker => (
+          <MapView.Marker
+            coordinate={marker.latlng}
+            title={marker.title}
+            description={marker.description}
+          />
+        ))}
+      </MapView>
+    );
+  }
 }

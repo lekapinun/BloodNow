@@ -15,7 +15,7 @@ import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 class AppContainer extends React.Component {
   state = {
     appIsReady: false,
-    currentPage: 'login',
+    currentPage: 'app',
     name: '',
     password: '',
   };
@@ -115,7 +115,7 @@ class AppContainer extends React.Component {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>     
+            </View>
           /*</View>*/
         );
       }
@@ -185,7 +185,7 @@ class AppContainer extends React.Component {
         .catch((error) => {
           console.log('xxx');
         });
-        
+
   }
 }
 
@@ -216,8 +216,8 @@ const styles = StyleSheet.create({
   buttonLogin: {
     marginTop:10,
     marginBottom:10,
-    justifyContent: 'center', 
-    height: 50, 
+    justifyContent: 'center',
+    height: 50,
     width: 260,
     alignItems: 'center'
   },
