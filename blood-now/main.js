@@ -83,6 +83,7 @@ class AppContainer extends React.Component {
                   onChangeText={(name) => this.setState({name})}
                   value={this.state.name}
                   placeholder="ชื่อผู้ใช้หรือเบอร์โทรศัพท์"
+                  underlineColorAndroid='rgba(0,0,0,0)'
                 />
                 <TextInput
                   style={[Font.style('CmPrasanmit'),styles.input]}
@@ -92,6 +93,7 @@ class AppContainer extends React.Component {
                   onChangeText={(password) => this.setState({password})}
                   value={this.state.password}
                   placeholder="รหัสผ่าน"
+                  underlineColorAndroid='rgba(0,0,0,0)'
                 />
                 <View style={{height: 50, marginTop:10,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
                   <TouchableOpacity>
@@ -147,10 +149,10 @@ class AppContainer extends React.Component {
   }
 
   _register = () => {
-        /*this.setState({currentPage: 'register'});*/
+        this.setState({currentPage: 'register'});
   };
 
-  _login = () => {/*
+  _login = () => {
         console.log(this.state);
         const myRequest = new Request(
             'http://localhost:8000/member/login',
@@ -181,7 +183,7 @@ class AppContainer extends React.Component {
             console.warn(error);
         });
         
-  */}
+  }
 }
 
 const styles = StyleSheet.create({
