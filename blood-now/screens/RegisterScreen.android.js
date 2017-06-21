@@ -94,15 +94,14 @@ export default class RegisterScreen extends Component {
                     placeholder="อีเมล์"
                 />
               </View>
-              <View style={[styles.container, {margin: 10}]}>
+              <View style={[styles.container, {margin: 10}]} >
                 <DatePicker
                   style={{width: 200}}
-                  date={this.state.date}
+                  date={this.state.recentDonateDate}
                   mode="date"
-                  placeholder="select date"
                   format="YYYY-MM-DD"
-                  minDate="2015-05-01"
-                  maxDate="2015-06-01"
+                  maxDate= {new Date()}
+                  minDate= "2015-01-01"
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   customStyles={{
@@ -115,9 +114,8 @@ export default class RegisterScreen extends Component {
                     dateInput: {
                       marginLeft: 36
                     }
-                    // ... You can check the source to find the other keys.
                   }}
-                  onDateChange={(date) => {this.setState({date: date})}}
+                  onDateChange={(date) => {this.setState({recentDonateDate: date})}}
                 />
               </View>
               <View style={[styles.container]}>

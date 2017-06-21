@@ -26,10 +26,12 @@ export default class RegisterScreen extends Component {
         phoneNumber: '',
         email: '',
         //province: '',
-        date:"2016-05-15",
+        birthYear: '',
         recentDonateDate: '',
         modalVisible: false,
     }
+
+
     setModalVisible(visible) {
       this.setState({modalVisible: visible});
     }
@@ -126,15 +128,24 @@ export default class RegisterScreen extends Component {
                     placeholder="อีเมล์"
                 />
               </View>
-              <View style={[styles.container, {margin: 10}]}>
+              <View style={styles.container}>
+                <TextInput
+                    style={[Font.style('CmPrasanmit'),styles.input]}
+                    autoCorrect={false}
+                    onChangeText={(birthYear) => this.setState({birthYear})}
+                    value={this.state.birthYear}
+                    placeholder="ปีเกิด(พ.ศ.)"
+                    keyboardType= "numeric"
+                />
+              </View>
+              <View style={[styles.container, {margin: 10}]} >
                 <DatePicker
                   style={{width: 200}}
-                  date={this.state.date}
+                  date={this.state.recentDonateDate}
                   mode="date"
-                  placeholder="select date"
                   format="YYYY-MM-DD"
-                  minDate="2015-05-01"
-                  maxDate="2015-06-01"
+                  maxDate= {new Date()}
+                  minDate= "2015-01-01"
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   customStyles={{
@@ -148,7 +159,7 @@ export default class RegisterScreen extends Component {
                       marginLeft: 36
                     }
                   }}
-                  onDateChange={(date) => {this.setState({date: date})}}
+                  onDateChange={(date) => {this.setState({recentDonateDate: date})}}
                 />
               </View>
               <View style={[styles.container]}>
@@ -161,8 +172,7 @@ export default class RegisterScreen extends Component {
             /*<Picker>
               Province
             </Picker>
-            <DatePicker birthDate/>
-            <DatePicker recentDonateDate/>*/
+            <DatePicker birthYear/>*/
         );
     }
 
