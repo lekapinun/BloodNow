@@ -21,6 +21,7 @@ class AppContainer extends React.Component {
   };
 
   componentWillMount() {
+    console.log('START TEST');
     this._loadAssetsAsync();
     this._userData();
   }
@@ -149,13 +150,14 @@ class AppContainer extends React.Component {
   }
 
   _register = () => {
+    console.log('regis');
         this.setState({currentPage: 'register'});
   };
 
   _login = () => {
         console.log(this.state);
         const myRequest = new Request(
-            'http://localhost:8000/member/login',
+            'http://localhost:8000/login',
             {
                 method: 'POST',
                  headers: {
@@ -167,6 +169,7 @@ class AppContainer extends React.Component {
         var test = '';
         fetch(myRequest)
         .then((response) => {
+            console.log(response);
             if( response._bodyInit != 'login fail')
             {
                 test = JSON.parse(response._bodyInit);
@@ -180,7 +183,7 @@ class AppContainer extends React.Component {
             }
         })
         .catch((error) => {
-            console.warn(error);
+          console.log('xxx');
         });
         
   }
