@@ -15,7 +15,7 @@ import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 class AppContainer extends React.Component {
   state = {
     appIsReady: false,
-    currentPage: 'app',
+    currentPage: 'register',
     name: '',
     password: '',
   };
@@ -68,11 +68,23 @@ class AppContainer extends React.Component {
   }
 
   render() {
+
     if (this.state.appIsReady) {
+      return(<View style={{flex: 1}}>
+      <NavigationProvider router={Router}>
+        <StackNavigation
+          id="root"
+          initialRoute="register"
+        />
+      </NavigationProvider>
+      {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+      {Platform.OS === 'android' &&
+        <View style={styles.statusBarUnderlay} />}
+    </View>);
+      /*
       if(this.state.currentPage === 'login')
       {
         return(
-          /*<View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>*/
             <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
               <Image source={require('./assets/icons/logo.png')} style={{width:190,height:90}}/>
               <Text style={[Font.style('CmPrasanmit'),styles.caption]}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</Text>
@@ -116,16 +128,11 @@ class AppContainer extends React.Component {
                 </View>
               </View>
             </View>
-          /*</View>*/
         );
       }
       else if(this.state.currentPage === 'register')
       {
-        return (
-          <View style={styles.container}>
-            <Text>register</Text>
-          </View>
-        );
+        this.props.navigator.push("register");
       }
       else if(this.state.currentPage === 'app')
       {
@@ -143,7 +150,7 @@ class AppContainer extends React.Component {
             <View style={styles.statusBarUnderlay} />}
         </View>
         );
-      }
+      }*/
     } else {
       return <Expo.AppLoading />;
     }

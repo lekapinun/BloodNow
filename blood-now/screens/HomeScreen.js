@@ -34,13 +34,6 @@ export default class App extends React.Component {
         region={this.state.region}
         onRegionChange={this.onRegionChange.bind(this)}
       >
-        {this.state.markers.map(marker => (
-          <MapView.Marker
-            coordinate={marker.latlng}
-            title={marker.title}
-            description={marker.description}
-          />
-        ))}
       </MapView>
     );
   }

@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { Font } from 'expo';
 import DatePicker from 'react-native-datepicker';
+import {ProvincePicker} from '../components/common';
 
 export default class RegisterScreen extends Component {
     state = {
@@ -24,12 +25,11 @@ export default class RegisterScreen extends Component {
         bloodTypeTemp: '',
         phoneNumber: '',
         email: '',
-        //province: '',
+        province: '',
         birthYear: '',
         recentDonateDate: '',
         modalVisible: false,
     }
-
 
     setModalVisible(visible) {
       this.setState({modalVisible: visible});
@@ -71,6 +71,8 @@ export default class RegisterScreen extends Component {
                </View>
               </Modal>
 
+
+              <ProvincePicker navigator={this.props.navigator} />
 
               <View style={styles.container}>
                 <Text>REGISTER SCREEN</Text>
