@@ -11,26 +11,32 @@ import { ScrollView,
         } from 'react-native';
 import { Font } from 'expo';
 import { StackNavigation } from '@expo/ex-navigation';
+import { Map } from '../components/common';
 
 //@withNavigation
 export default class RequestBloodScreen extends Component {
   static route = {
     navigationBar: {
-      title: 'RequestBlood',
     }
   };
   state = {
     name: '',
     patientID: '',
-
+    bloodType: '',
+    bloodUnit: '',
+    description: '',
+    hostpital: '', //text
     ConfirmationModalVisible: false,
   }
   setModalVisible(visible) {
     this.setState({ConfirmationModalVisible: visible});
   }
+  onRequsetPress() {
+    console.log("RequestBlood");
+  }
   render() {
     return(
-      <ScrollView>
+      <ScrollView style={{ }}>
           <Modal
             styles={{ paddingTop: 300 }}
             animationType={"slide"}
@@ -82,19 +88,19 @@ export default class RequestBloodScreen extends Component {
           </View>
           <View style={styles.bodyContainerStyle}>
             <TextInput
-              style={styles.inputStyle}
+              style={[Font.style('CmPrasanmit'),styles.inputStyle]}
               placeholder="ชื่อผู้ขอรับบริจาค"
-              onChangeText={(password) => this.setState({password})}
-              value={this.state.password}
+              onChangeText={(name) => this.setState({name})}
+              value={this.state.name}
             />
           </View>
 
           <View style={styles.bodyContainerStyle}>
             <TextInput
-              style={styles.inputStyle}
+              style={[Font.style('CmPrasanmit'),styles.inputStyle]}
               placeholder="รหัสผู้ป่วย"
-              onChangeText={(password) => this.setState({password})}
-              value={this.state.password}
+              onChangeText={(patientID) => this.setState({patientID})}
+              value={this.state.patientID}
             />
           </View>
 
@@ -108,28 +114,32 @@ export default class RequestBloodScreen extends Component {
 
           <View style={styles.bodyContainerStyle}>
             <TextInput
-              style={styles.inputStyle}
+              style={[Font.style('CmPrasanmit'),styles.inputStyle]}
               placeholder="จำนวนเลือดที่ต้องการ(ยูนิต)"
-              onChangeText={(password) => this.setState({password})}
-              value={this.state.password}
+              keyboardType= "numeric"
+              onChangeText={(bloodUnit) => this.setState({bloodUnit})}
+              value={this.state.bloodUnit}
             />
           </View>
+          <TextInput
+            multiline
+            style={[Font.style('CmPrasanmit'),styles.bodyMultiLineContainerStyle]}
+            placeholder="รายละเอียด"
+            onChangeText={(description) => this.setState({description})}
+            value={this.state.description}
+          />
 
-          <View style={styles.bodyContainerStyle, {
-            alignSelf:'center',
-
-            borderWidth: 1,
-            width: '80%',
-            height: '30%',}
-          }>
+          <View style={styles.bodyContainerStyle}>
             <TextInput
-              multiline
-              style={styles.bodyMultiLineContainerStyle}
-              placeholder="รายละเอียด"
-              onChangeText={(password) => this.setState({password})}
-              value={this.state.password}
+              style={[Font.style('CmPrasanmit'),styles.inputStyle]}
+              placeholder="สถานพยาบาล"
+              onChangeText={(hostpital) => this.setState({hostpital})}
+              value={this.state.hostpital}
             />
           </View>
+
+          <Map />
+          <Button  title="ขอรับบริจาคเลือด" onPress={this.onRequsetPress.bind(this)} />
       </ScrollView>
     );
   }
@@ -154,11 +164,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: '#EEEDEE',
     borderBottomWidth: 1,
+    margin: 10,
   },
   bodyMultiLineContainerStyle: {
-    alignSelf: 'center',
     borderColor: '#EEEDEE',
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    alignSelf: 'center',
+    width: 300,
+    height: 150,
+    padding: 10,
+    fontSize: 23,
   },
   pickerText:{
     marginTop:10,

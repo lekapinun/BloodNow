@@ -15,7 +15,7 @@ import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 class AppContainer extends React.Component {
   state = {
     appIsReady: false,
-    currentPage: 'register',
+    currentPage: 'home',
     name: '',
     password: '',
   };
@@ -74,7 +74,7 @@ class AppContainer extends React.Component {
       <NavigationProvider router={Router}>
         <StackNavigation
           id="root"
-          initialRoute="register"
+          initialRoute="rootNavigation"
         />
       </NavigationProvider>
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
