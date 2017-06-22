@@ -16,7 +16,7 @@ export default class RegisterScreen extends Component {
     };
 
     state = {
-        name: null,
+        name: '',
         password: '',
         password_confirmation: '',
         blood: '',
@@ -57,6 +57,7 @@ export default class RegisterScreen extends Component {
         return( <ActivityIndicator size="large" color='#E84A5F'/> );
       }
       return(
+        <View>
         <Button
           title='สร้างบัญชี'
           buttonColor='#E84A5F'
@@ -65,18 +66,77 @@ export default class RegisterScreen extends Component {
           ButtonWidth={300}
           ButtonHeight={50}
         />
+        <Button
+          touchable={true}
+          title='สร้างบัญชี'
+          buttonColor='#F6B6BF'
+          sizeFont={25}
+          onPress={() => {}}
+          ButtonWidth={300}
+          ButtonHeight={50}
+        />
+        </View>
       );
+    }
+
+    renderValidatedUsername(){
+      let temp = this.state.name;
+      if(temp !== ''){
+        if(temp.search(/[^A-Za-z]/) !== -1){
+          return <Text>ไม่สามารถใช้ตัวเลขหรือเว้นวรรคได้</Text>;
+        }
+      }
+      return <Text/>;
+    }
+
+    renderValidatedPhone(){
+      if(this.state.phone !== ''){
+        if(this.state.phone.search(/[^0-9]/) !== -1){
+          return <Text>กรุณาตรวจสอบเบอร์โทรศัพท์</Text>;
+        }
+      }
+      return <Text/>;
+    }
+
+    renderValidatedEmail(){
+      let temp = this.state.email;
+      if(temp !== ''){
+        if(temp.search('@') === -1){
+          return <Text>กรุณาใส่ e-mail</Text>;
+        }
+      }
+      return <Text/>;
+    }
+
+    renderValidatedBirthYear(){
+      let today = new Date();
+      if(this.state.birthyear !== ''){
+        if(this.state.birthyear.toString() > (today.getFullYear()+543).toString()){
+          return <Text>กรุณาตรวจสอบปีเกิด</Text>;
+        }else if(this.state.birthyear.search(/[^0-9]/) !== -1){
+          return <Text>กรุณาตรวจสอบปีเกิด</Text>;
+        }
+      }
+      return <Text/>;
     }
 
     renderValidatedPasswordCon(){
       if(this.state.password !== this.state.password_confirmation && this.state.password !== '' && this.state.password_confirmation !== ''){
-        return( <Text>รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน</Text> );
+        return <Text>รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน</Text> ;
       }
-      return ( <Text/>);
+      return <Text/>;
+    }
+
+    renderValidatedPassword(){
+      if(this.state.password !== '' && this.state.password.length < 6){
+        return <Text>รหัสผ่านต้องมากกว่า 5 ตัวอักษร</Text> ;
+      }
+      return  <Text/>;
     }
 
     render() {
         let blood;
+        let xxx;
         if(this.state.blood !== ''){
             blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.blood + this.state.blood_type }</Text>;
         }else{
@@ -136,6 +196,7 @@ export default class RegisterScreen extends Component {
                         onChangeText={(name) => this.setState({name})}
                         maxLength={20}
                       />
+                      {this.renderValidatedUsername()}
                       <RegisterInput
                         label='รหัสผ่าน'
                         value={this.state.password}
@@ -164,6 +225,7 @@ export default class RegisterScreen extends Component {
                         keyboardType='numeric'
                         maxLength={10}
                       />
+                      {this.renderValidatedPhone()}
                       <RegisterInput
                         label='อีเมลล์'
                         value={this.state.email}
@@ -171,6 +233,7 @@ export default class RegisterScreen extends Component {
                         keyboardType='email-address'
                         maxLength={30}
                       />
+                      {this.renderValidatedEmail()}
                       <RegisterInput
                         label='ปีเกิด(พ.ศ.)'
                         value={this.state.birthyear}
@@ -178,6 +241,7 @@ export default class RegisterScreen extends Component {
                         keyboardType='numeric'
                         maxLength={4}
                       />
+                      {this.renderValidatedBirthYear()}
                       <PickerPartTouch
                         label='บริจาคครั้งล่าสุด'
                         onPress={() => { this.setModalDateVisible(true) }}
@@ -270,5 +334,3 @@ const styles = StyleSheet.create({
     fontSize: 25,
   }
 });
-
-
