@@ -9,13 +9,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { MonoText } from '../components/StyledText';
-import { Map } from '../components/common';
 
-export default class App extends React.Component {
+import { MonoText } from '../components/StyledText';
+
+export default class HomeScreen extends React.Component {
+  static route = {
+    navigationBar: {
+      visible: false,
+    },
+  };
+
   render() {
     return (
-      <View />
+      <View style={{marginTop:30}}>
+         <Text>HOME SCREEN</Text>
+      </View>
     );
   }
+
 }

@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
-import {  View, Button, Picker, Modal } from 'react-native';
+import { Picker } from 'react-native';
 
-const ProvincePicker = ({province, onChange}) => {
-  const modalVisible = true;
-  return (
-    <View style={{paddingTop: 300, backgroundColor: 'white'}}>
-      <Modal
-        style={{ paddingTop: 300,backgroundColor: 'white' }}
-        animationType={"slide"}
-        transparent={true}
-        visible={this.modalVisible}
-      >
-        <Button title="confirm" onPress={ () => {this.modalVisible = false}} />
-        <Picker
+class ProvincePicker extends Component {
+  render = ({province}) => {
+    return (
+      <Picker
         selectedValue={province}
-        onValueChange={onChange}
-        >
+        onValueChange={(itemValue, itemIndex) => {this.province} }
+      >
         <Picker.Item label="กรุงเทพมหานคร" value="กรุงเทพมหานคร" />
         <Picker.Item label="กระบี่" value="กระบี่" />
         <Picker.Item label="กาญจนบุรี" value="กาญจนบุรี" />
@@ -94,12 +86,8 @@ const ProvincePicker = ({province, onChange}) => {
         <Picker.Item label="อุบลราชธานี" value="อุบลราชธานี" />
         <Picker.Item label="อำนาจเจริญ" value="อำนาจเจริญ" />
       </Picker>
-
-    </Modal>
-  </View>
-  );
+    );
+}
 }
 
-export  {ProvincePicker};
-/*
-*/
+export {ProvincePicker};
