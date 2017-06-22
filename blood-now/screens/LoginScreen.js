@@ -24,22 +24,14 @@ export default class LoginScreen extends Component {
     state = {
         name: '',
         password: '',
-        really: '0',
     };
 
     render() {
         return(
             <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
-                <View>
-                    <Image
-                        source={require('../assets/icons/logo.png')}
-                        style={{width:250,height:120}}
-                    />
-                </View>
-                <View style={{marginBottom:50,marginLeft:10}}>
-                    <Text style={[Font.style('CmPrasanmit'), { fontSize: 30,color:'#95989A',letterSpacing:8}]}>มากกว่าการให้เลือด</Text>
-                </View>
-                <View>
+                <Image source={require('../assets/icons/logo.png')} style={{width:190,height:90}}/>
+                <Text style={[Font.style('CmPrasanmit'),styles.caption]}>ม า ก ก ว่ า ก า ร ใ ห้ เ ลื อ ด</Text>
+                <View style={{width: 260}}>
                     <TextInput
                         style={[Font.style('CmPrasanmit'),styles.input]}
                         autoCorrect={false}
@@ -47,6 +39,7 @@ export default class LoginScreen extends Component {
                         onChangeText={(name) => this.setState({name})}
                         value={this.state.name}
                         placeholder="ชื่อผู้ใช้หรือเบอร์โทรศัพท์"
+                        underlineColorAndroid='rgba(0,0,0,0)'
                     />
                     <TextInput
                         style={[Font.style('CmPrasanmit'),styles.input]}
@@ -56,30 +49,35 @@ export default class LoginScreen extends Component {
                         onChangeText={(password) => this.setState({password})}
                         value={this.state.password}
                         placeholder="รหัสผ่าน"
+                        underlineColorAndroid='rgba(0,0,0,0)'
                     />
-                    <View style={{height: 50, width:270,marginTop:10,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
+                    <View style={{height: 50, marginTop:10,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
                         <TouchableOpacity>
                             <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A',}]}>ลืมรหัสผ่าน?</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={[styles.buttonLogin,{backgroundColor: '#EF685E'}]}>
+                        <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._login}>
+                            <Text style={[Font.style('CmPrasanmitBold'),{fontSize: 25,color: 'white'}]}>เข้าสู่ระบบ</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{justifyContent: 'center',alignItems: 'center'}}>
+                        <Text style={[Font.style('CmPrasanmit'),{ fontSize: 23,color:'#95989A',marginBottom:5,marginTop:5}]}>หรือ</Text>
+                    </View>
+                    <View style={[styles.buttonLogin,{backgroundColor: '#9FAC9B'}]}>
+                        <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._register}>
+                            <Text style={[Font.style('CmPrasanmitBold'),{fontSize: 25,color: 'white'}]}>ลงทะเบียน</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={{marginTop:10,backgroundColor: '#EF685E',height: 50, width:270,marginBottom:10,flexDirection: 'column',justifyContent: 'center' }}>
-                    <Button style={[Font.style('CmPrasanmit')]} title="เข้าสู่ระบบ" onPress={this._loginPress} color='white' />
-                </View>
-                <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A'}]}>หรือ</Text>
-                <View style={{backgroundColor: '#9FAC9B',height: 50, width:270,marginTop:10,flexDirection: 'column',justifyContent: 'center'}}>
-                    <Button style={[Font.style('CmPrasanmit')]} title="ลงทะเบียน" onPress={this._register} color='white' />
-                </View>
-            </View>
+            </View> 
         );
     }
 
 
     _loginPress = () => {
-        console.log('xxxx');
-        console.log(this.state);
         const myRequest = new Request(
-            'http://localhost:8000/member/login',
+            'http://localhost:8000/login',
             {
                 method: 'POST',
                  headers: {
@@ -91,15 +89,11 @@ export default class LoginScreen extends Component {
         var test = '';
         fetch(myRequest)
         .then((response) => {
-            //console.log(response);
             if( response._bodyInit != 'login fail')
             {
                 test = JSON.parse(response._bodyInit);
                 console.log('login success');
-                /*this.backButtonManager = getBackButtonManager();
-                this.backButtonManager.disable();
-                this.props.navigator.replace("rootNavigation");*/
-                //this._login();
+                this.props.navigator.push("rootNavigation");
             }
             else
             {
@@ -109,42 +103,36 @@ export default class LoginScreen extends Component {
         })
         .catch((error) => {
             console.warn(error);
-        }); 
-        if(true){
-            
-        }   
+        });  
     };
-
-    _login = () => {
-        //this.backButtonManager = getBackButtonManager();
-        //this.backButtonManager.disable();
-        /*this.props.navigator.pop()
-        this.props.navigator.push("rootNavigation");*/
-    }
 
     _register = () => {
         this.props.navigator.push("register");
-        /*const myRequest = new Request('http://localhost:5555/check');
-        fetch(myRequest)
-        .then((response) => response.text())
-        .then((responseText) => {
-            console.log(responseText);
-        })
-        .catch((error) => {
-            console.warn(error);
-        });*/
     };
 }
 
 const styles = StyleSheet.create({
+  caption: {
+    fontSize: 27,
+    color:'#95989A',
+    marginBottom:40,
+    marginTop:7,
+  },
   input: {
     height: 50,
-    width:270,
     borderColor: '#EEEDEE',
     borderWidth: 1,
     marginTop:10,
     paddingLeft:10,
     fontSize: 23,
     backgroundColor: 'white',
+  },
+  buttonLogin: {
+    marginTop:10,
+    marginBottom:10,
+    justifyContent: 'center', 
+    height: 50, 
+    width: 260,
+    alignItems: 'center'
   },
 });
