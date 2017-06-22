@@ -57,7 +57,7 @@ export default class LoginScreen extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.buttonLogin,{backgroundColor: '#EF685E'}]}>
-                        <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._login}>
+                        <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._loginPress}>
                             <Text style={[Font.style('CmPrasanmitBold'),{fontSize: 25,color: 'white'}]}>เข้าสู่ระบบ</Text>
                         </TouchableOpacity>
                     </View>
@@ -92,6 +92,7 @@ export default class LoginScreen extends Component {
             if( response._bodyInit != 'login fail')
             {
                 test = JSON.parse(response._bodyInit);
+                console.log(response);
                 console.log('login success');
                 this.props.navigator.push("rootNavigation");
             }
