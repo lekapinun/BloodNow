@@ -26,13 +26,15 @@ export default class RequestBloodScreen extends Component {
     bloodUnit: '',
     description: '',
     hostpital: '', //text
+    bloodTypeModalVisible: false,
     ConfirmationModalVisible: false,
+    confirm: false,
   }
-  setModalVisible(visible) {
+  setBloodTypeModalVisible(visible) {
+    this.setState({bloodTypeModalVisible: visible});
+  }
+  setConfrimationModalVisible(visible) {
     this.setState({ConfirmationModalVisible: visible});
-  }
-  onRequsetPress() {
-    console.log("RequestBlood");
   }
   render() {
     return(
@@ -41,18 +43,18 @@ export default class RequestBloodScreen extends Component {
             styles={{ paddingTop: 300 }}
             animationType={"slide"}
             transparent={true}
-            visible={this.state.ConfirmationModalVisible}
+            visible={this.state.bloodTypeModalVisible}
             >
             <View style={{ flex: 1 , }}>
               <TouchableOpacity style={{ flex: 0.65 }} onPress={()=>{this.setModalVisible(!this.state.ConfirmationModalVisible)}} />
               <View style={{ flex: 0.35, backgroundColor:'white', borderColor:'grey', borderWidth: 1 ,}} >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' , alignItems:'flex-start',  }}>
                   <Button title='Cancel' onPress={() => {
-                    this.setModalVisible(!this.state.ConfirmationModalVisible)
+                    this.setBloodTypeModalVisible(!this.state.bloodTypeModalVisible)
                   }}/>
                   <Button title='Confirm' onPress={() => {
                     this.setState({bloodType: this.state.bloodTypeTemp});
-                    this.setModalVisible(!this.state.ConfirmationModalVisible);
+                    this.setBloodTypeModalVisible(!this.state.bloodTypeModalVisible);
                   }}/>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row',  justifyContent: 'space-around'}} >
@@ -80,6 +82,54 @@ export default class RequestBloodScreen extends Component {
             </View>
            </View>
           </Modal>
+
+
+          <Modal
+            animationType={"slide"}
+            transparent={true}
+            visible={this.state.ConfirmationModalVisible}
+          >
+            <View
+              style={{backgroundColor:'rgba(131, 145, 146,0.7)', flex:1,flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ backgroundColor:'white', width: 300, height: 300,flexDirection: 'column', justifyContent: 'space-between', }}>
+              <View style={{ paddingTop: 15}}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
+                  <Text>{"ชื่อผู้ป่วย"}</Text>
+                  <Text>{this.state.name}</Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
+                  <Text>{"รหัสผู้ป่วย"}</Text>
+                  <Text>{this.state.patientID}</Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
+                  <Text>{"กรุ๊ปเลือด "}</Text>
+                  <Text>{this.state.bloodType}</Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
+                  <Text>{"จำนวน(ยูนิต)"}</Text>
+                  <Text>{this.state.bloodUnit}</Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
+                  <Text>{"รายละเอียด"}</Text>
+                  <Text>{this.state.description}</Text>
+                </View><View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
+                  <Text>{"สถานพยาบาล"}</Text>
+                  <Text>{this.state.hostpital}</Text>
+                </View>
+              </View>
+              <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start', borderColor: 'black', borderWidth: 1}}>
+                <Button title='Cancel' onPress={() => {
+                  this.setConfrimationModalVisible(!this.state.ConfirmationModalVisible)
+                }}/>
+                <Button title='Confirm' onPress={() => {
+                  this.setState({confirm: this.state.bloodTypeTemp});
+                  this.setConfrimationModalVisible(!this.state.ConfirmationModalVisible)
+                }}/>
+              </View>
+            </View>
+          </View>
+          </Modal>
+
 
           <View style={styles.headerContainerStyle}>
             <Text style={styles.headerStyle}>
@@ -139,7 +189,7 @@ export default class RequestBloodScreen extends Component {
           </View>
 
           <Map />
-          <Button  title="ขอรับบริจาคเลือด" onPress={this.onRequsetPress.bind(this)} />
+          <Button  title="ขอรับบริจาคเลือด" onPress={() => {this.setConfrimationModalVisible(true)}} />
       </ScrollView>
     );
   }
