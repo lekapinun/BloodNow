@@ -19,12 +19,18 @@ import {
     getBackButtonManager
 } from '@expo/ex-navigation'
 
+import addressServer from '../utilities/addressServer';
+
 export default class LoginScreen extends Component {
 
     state = {
         name: '',
         password: '',
     };
+
+    componentWillMount() {
+        console.log(addressServer.IPMac);
+    }
 
     render() {
         return(
@@ -57,7 +63,7 @@ export default class LoginScreen extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.buttonLogin,{backgroundColor: '#EF685E'}]}>
-                        <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._login}>
+                        <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._loginPress}>
                             <Text style={[Font.style('CmPrasanmitBold'),{fontSize: 25,color: 'white'}]}>เข้าสู่ระบบ</Text>
                         </TouchableOpacity>
                     </View>
@@ -74,10 +80,28 @@ export default class LoginScreen extends Component {
         );
     }
 
+    async _userData(userData){
+        try {
+            console.log(userData);
+            await AsyncStorage.setItem('@name:key', userData.name.toString());
+            await AsyncStorage.setItem('@email:key', userData.email.toString());
+            await AsyncStorage.setItem('@blood:key', userData.blood.toString());
+            await AsyncStorage.setItem('@blood_type:key', userData.blood_type.toString());
+            await AsyncStorage.setItem('@birthyear:key', userData.birthyear.toString());
+            await AsyncStorage.setItem('@phone:key', userData.phone.toString());
+            await AsyncStorage.setItem('@province:key',userData.province.toString());
+            await AsyncStorage.setItem('@last_date_donate:key', userData.last_date_donate.toString());
+        } catch ( error ) {
+            console.log('error');
+        }
+    }
+
 
     _loginPress = () => {
+        console.log(addressServer.IPMac.toString() + '/login');
+        const api = addressServer.IPMac.toString() + '/login';
         const myRequest = new Request(
-            'http://localhost:8000/login',
+            api,
             {
                 method: 'POST',
                  headers: {
@@ -86,14 +110,16 @@ export default class LoginScreen extends Component {
                 },
                 body: JSON.stringify(this.state)
             });
-        var test = '';
+        var userData = '';
         fetch(myRequest)
-        .then((response) => {
-            if( response._bodyInit != 'login fail')
+        .then((response) => response.text())
+        .then((responseText) => {
+            if( responseText != 'login fail')
             {
-                test = JSON.parse(response._bodyInit);
+                userData = JSON.parse(responseText);
                 console.log('login success');
-                this.props.navigator.push("rootNavigation");
+                this._userData(userData);
+                this.props.navigator.replace("rootNavigation");
             }
             else
             {

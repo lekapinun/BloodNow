@@ -19,35 +19,10 @@ import registerForPushNotificationsAsync
 import { TestButton, NavigatorBackground } from '../components/common';
 
 export default class RootNavigation extends React.Component {
-
-  static route = {
-    navigationBar: {
-      renderRight: (state: ExNavigationState) => {
-        const { config: { eventEmitter }  } = state;
-
-        return (
-          <TestButton
-            onPress={() => eventEmitter.emit('done')}
-          />
-        );
-      },
-      renderBackground: props => <NavigatorBackground />
-    },
-  };
-
-   _handleDone = () => {
-   this.props.navigator.push("requestBlood");
-  }
-
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
   }
 
-  componentWillMount() {
-
-
-    this._subscriptionDone = this.props.route.getEventEmitter().addListener('done', this._handleDone);
-  }
   componentWillUnmount() {
     this._notificationSubscription && this._notificationSubscription.remove();
   }
