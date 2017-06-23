@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator } from 'react-native';
 import { Font } from 'expo';
+import DatePicker from 'react-native-datepicker';
 import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince } from '../components/common';
 
 import addressServer from '../utilities/addressServer';
@@ -47,10 +48,6 @@ export default class RegisterScreen extends Component {
       this.setState({modalDateVisible: visible});
     }
 
-    setModalRegisterVisible(visible){
-      this.setState({modalRegisterVisible: visible});
-    }
-
     setModalProvinceVisible(visible) {
       this.setState({modalProvinceVisible: visible});
     }
@@ -61,33 +58,6 @@ export default class RegisterScreen extends Component {
 
     clickOkay(){
       this.props.navigator.pop();
-    }
-
-    renderButton(){
-      if(this.state.load === true){
-        return( <ActivityIndicator size="large" color='#E84A5F'/> );
-      }
-      return(
-        <View>
-        <Button
-          title='สร้างบัญชี'
-          buttonColor='#E84A5F'
-          sizeFont={25}
-          onPress={this._register}
-          ButtonWidth={300}
-          ButtonHeight={50}
-        />
-        <Button
-          touchable={true}
-          title='สร้างบัญชี'
-          buttonColor='#F6B6BF'
-          sizeFont={25}
-          onPress={() => {}}
-          ButtonWidth={300}
-          ButtonHeight={50}
-        />
-        </View>
-      );
     }
 
     renderValidatedUsername(){
@@ -147,60 +117,12 @@ export default class RegisterScreen extends Component {
 
     render() {
         let blood;
-        let xxx;
-    }
-
-    renderValidatedEmail(){
-      let temp = this.state.email;
-      if(temp !== ''){
-        if(temp.search('@') === -1){
-          return <Text>กรุณาใส่ e-mail</Text>;
-        }
-      }
-      return <Text/>;
-    }
-
-    renderValidatedBirthYear(){
-      let today = new Date();
-      if(this.state.birthyear !== ''){
-        if(this.state.birthyear.toString() > (today.getFullYear()+543).toString()){
-          return <Text>กรุณาตรวจสอบปีเกิด</Text>;
-        }else if(this.state.birthyear.search(/[^0-9]/) !== -1){
-          return <Text>กรุณาตรวจสอบปีเกิด</Text>;
-        }
-      }
-      return <Text/>;
-    }
-
-    renderValidatedPasswordCon(){
-      if(this.state.password !== this.state.password_confirmation && this.state.password !== '' && this.state.password_confirmation !== ''){
-        return <Text>รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน</Text> ;
-      }
-      return <Text/>;
-    }
-
-    renderValidatedPassword(){
-      if(this.state.password !== '' && this.state.password.length < 6){
-        return <Text>รหัสผ่านต้องมากกว่า 5 ตัวอักษร</Text> ;
-      }
-      return  <Text/>;
-    }
-
-    render() {
-        let blood;
         if(this.state.blood !== ''){
             blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.blood + this.state.blood_type }</Text>;
         }else{
             blood = <Text />
         }
         let recentDate;
-        if(this.state.last_date_donate !== ''){
-            recent = new Date(this.state.last_date_donate);
-            this.state.last_date_donateTemp = recent.getFullYear().toString() + '-' + (recent.getMonth()+1).toString() + '-' + recent.getDate().toString();
-            recentDate = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.last_date_donateTemp}</Text>
-        }else{
-            recentDate = <Text />
-        }
         if(this.state.date_donate !== ''){
             recent = new Date(this.state.date_donate);
             this.state.date_donateTemp = recent.getFullYear().toString() + '-' + (recent.getMonth()+1).toString() + '-' + recent.getDate().toString();
@@ -249,6 +171,7 @@ export default class RegisterScreen extends Component {
           }
         }
         
+
         return(
             <ScrollView style={{flex:1, paddingTop: 15 ,backgroundColor: '#FAFAFA' }}>
                 <ModalRegister
@@ -260,27 +183,8 @@ export default class RegisterScreen extends Component {
                   pickerVisible = {this.state.modalDateVisible}
                   onPressCancel = {() => { this.setModalDateVisible(!this.state.modalDateVisible) }}
                   onPressSubmit = {() => {
-                      this.setState({last_date_donate: this.state.last_date_donateTemp});
+                      this.setState({date_donate: this.state.date_donateTemp});
                       this.setModalDateVisible(!this.state.modalDateVisible);
-                  }}
-                  selectOne = {this.state.last_date_donateTemp}
-                  onChangeOne = {date => this.setState({ last_date_donateTemp: date })}
-                />
-                <PickerModalBlood
-                  pickerVisible = {this.state.modalVisible}
-                  onPressCancel = {() => { this.setModalVisible(!this.state.modalVisible)}}
-                  onPressSubmit = {() => {
-                    if(this.state.bloodTemp === ''){
-                      this.setState({blood: 'A'});
-                    }else{
-                      this.setState({blood: this.state.bloodTemp});
-                    }
-                    if(this.state.blood_typeTemp === ''){
-                      this.setState({blood_type: '+'});
-                    }else{
-                      this.setState({blood_type: this.state.blood_typeTemp});
-                    }
-                    this.setModalVisible(!this.state.modalVisible);
                   }}
                   selectOne = {this.state.date_donateTemp}
                   onChangeOne = {date => this.setState({ date_donateTemp: date })}
@@ -382,52 +286,12 @@ export default class RegisterScreen extends Component {
                       />
                   </View>
                   <View style={{marginTop: 30}}>
-                    {this.renderButton()}
                     {ButtonSubmit}
                   </View>
                 <View style={{height:50}}/>
               </View>
             </ScrollView>
         );
-    }
-
-    _register = () => {
-      console.log(this.state);
-      this.setState({load: true});
-      if( this.state.password === this.state.password_confirmation){
-        const myRequest = new Request(
-          'http://localhost:8000/register',
-          {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state)
-          });
-        fetch(myRequest)
-        .then((response) => {
-          if( response._bodyInit != 'login fail')
-          {
-            console.log('register success');
-            setTimeout(() => {
-              this.setState({modalRegisterVisible: true});
-              this.setState({load: false});
-            },2500);
-          }
-          else
-          {
-            console.log('fail');
-          }
-        })
-        .catch((error) => {
-            console.log('fail resgister');
-        });
-      }
-      else {
-        console.log('fail resgister');
-      }
-
     }
 
     _register = () => {
@@ -493,7 +357,7 @@ const ModalRegister = ({pickerVisible,onPress}) => {
                 sizeFont={20}
                 ButtonWidth={200}
               />
-            </View>
+            </View> 
           </View>
         </View>
       </Modal>
