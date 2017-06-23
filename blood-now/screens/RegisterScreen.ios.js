@@ -15,6 +15,9 @@ export default class RegisterScreen extends Component {
             titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
             tintColor: 'white',
         },
+        style : {
+            gettures: null,
+        }
     };
 
     state = {
