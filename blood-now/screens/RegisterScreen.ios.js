@@ -172,7 +172,6 @@ export default class RegisterScreen extends Component {
 
         return(
             <ScrollView style={{flex:1, paddingTop: 15 ,backgroundColor: '#FAFAFA' }}>
-              <Text>{canSubmit}</Text>
                 <ModalRegister
                   pickerVisible = {this.state.modalRegisterVisible}
                   onPress = { () => this.clickOkay() }

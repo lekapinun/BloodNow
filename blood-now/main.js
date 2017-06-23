@@ -20,17 +20,17 @@ class AppContainer extends React.Component {
   componentWillMount() {
     console.log('START TEST');
     this._loadAssetsAsync();
-    this._userData();
+    //this._userData();
   }
 
-  async _userData(){
+/*  async _userData(){
     try {
       await AsyncStorage.setItem('@name:key', 'thomas');
       await AsyncStorage.setItem('@email:key', 'thomas@mail.com');
     } catch ( error ) {
       console.log('error');
     }
-  }
+  }*/
 
   async _loadAssetsAsync() {
     try {

@@ -74,6 +74,22 @@ export default class LoginScreen extends Component {
         );
     }
 
+    async _userData(userData){
+        try {
+            console.log(userData);
+            await AsyncStorage.setItem('@name:key', userData.name);
+            await AsyncStorage.setItem('@email:key', userData.email);
+            await AsyncStorage.setItem('@blood:key', userData.blood);
+            await AsyncStorage.setItem('@blood_type:key', userData.blood_type);
+            await AsyncStorage.setItem('@birthyear:key', userData.birthyear.toString());
+            await AsyncStorage.setItem('@phone:key', userData.phone);
+            await AsyncStorage.setItem('@province:key',userData.province);
+            await AsyncStorage.setItem('@last_date_donate:key', userData.last_date_donate);
+        } catch ( error ) {
+            console.log('error');
+        }
+    }
+
 
     _loginPress = () => {
         const myRequest = new Request(
@@ -86,14 +102,15 @@ export default class LoginScreen extends Component {
                 },
                 body: JSON.stringify(this.state)
             });
-        var test = '';
+        var userData = '';
         fetch(myRequest)
         .then((response) => {
             if( response._bodyInit != 'login fail')
             {
-                test = JSON.parse(response._bodyInit);
-                console.log(response);
+                userData = JSON.parse(response._bodyInit);
+                //console.log(response);
                 console.log('login success');
+                this._userData(userData);
                 this.props.navigator.push("rootNavigation");
             }
             else
