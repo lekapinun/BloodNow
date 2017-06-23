@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
-import { ScrollView,
-          View,
-          Text,
-          TextInput,
-          Modal,
-          TouchableOpacity,
-          Button,
-          Picker,
-          StyleSheet,
-        } from 'react-native';
+import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Button, Picker, StyleSheet,} from 'react-native';
 import { Font } from 'expo';
-import { StackNavigation } from '@expo/ex-navigation';
+import { StackNavigation, withNavigation } from '@expo/ex-navigation';
 import { Map } from '../components/common';
+import Colors from '../constants/Colors';
 
-//@withNavigation
+
 export default class RequestBloodScreen extends Component {
   static route = {
     navigationBar: {
-    }
+      title: 'คำร้องขอรับบริจาค',
+      backgroundColor: Colors.routeColor,
+      titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:28}],
+      tintColor: 'white',
+    },
   };
+
   state = {
     name: '',
     patientID: '',

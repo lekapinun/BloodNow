@@ -47,7 +47,7 @@ export default class NotificationScreen extends Component {
         navigationBar: {
         title: 'การแจ้งเตือน',
         backgroundColor: Colors.routeColor,
-        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
+        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:28}],
         tintColor: 'white',
         renderRight: () => <ExponentButton />,
         },

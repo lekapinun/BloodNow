@@ -46,7 +46,7 @@ export default class HomeScreen extends React.Component {
     navigationBar: {
       title: 'ข้อควรรู้เกี่ยวกับการบริจาคโลหิต',
       backgroundColor: Colors.routeColor,
-      titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
+      titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:28}],
       tintColor: 'white',
       renderRight: () => <ExponentButton />,
     },

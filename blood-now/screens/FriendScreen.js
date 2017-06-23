@@ -47,7 +47,7 @@ export default class FriendScreen extends Component {
         navigationBar: {
         title: 'เพื่อน',
         backgroundColor: Colors.routeColor,
-        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
+        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:28}],
         tintColor: 'white',
         renderRight: () => <ExponentButton />,
         },
