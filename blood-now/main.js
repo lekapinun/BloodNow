@@ -15,25 +15,28 @@ import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 class AppContainer extends React.Component {
   state = {
     appIsReady: false,
+<<<<<<< HEAD
     currentPage: 'home',
     name: '',
     password: '',
+=======
+>>>>>>> maintain_login
   };
 
   componentWillMount() {
     console.log('START TEST');
     this._loadAssetsAsync();
-    this._userData();
+    //this._userData();
   }
 
-  async _userData(){
+/*  async _userData(){
     try {
       await AsyncStorage.setItem('@name:key', 'thomas');
       await AsyncStorage.setItem('@email:key', 'thomas@mail.com');
     } catch ( error ) {
       console.log('error');
     }
-  }
+  }*/
 
   async _loadAssetsAsync() {
     try {
@@ -42,6 +45,7 @@ class AppContainer extends React.Component {
           require('./assets/images/expo-wordmark.png'),
           require('./assets/icons/logo.png'),
           require('./assets/images/expo-icon@2x.png'),
+          require('./assets/icons/correct.png')
         ],
         fonts: [
           FontAwesome.font,
@@ -70,6 +74,7 @@ class AppContainer extends React.Component {
   render() {
 
     if (this.state.appIsReady) {
+<<<<<<< HEAD
       return(<View style={{flex: 1}}>
       <NavigationProvider router={Router}>
         <StackNavigation
@@ -136,12 +141,14 @@ class AppContainer extends React.Component {
       }
       else if(this.state.currentPage === 'app')
       {
+=======
+>>>>>>> maintain_login
         return (
         <View style={styles.container}>
           <NavigationProvider router={Router}>
             <StackNavigation
               id="root"
-              initialRoute="rootNavigation"
+              initialRoute="login"
             />
           </NavigationProvider>
 
@@ -150,11 +157,15 @@ class AppContainer extends React.Component {
             <View style={styles.statusBarUnderlay} />}
         </View>
         );
+<<<<<<< HEAD
       }*/
+=======
+>>>>>>> maintain_login
     } else {
       return <Expo.AppLoading />;
     }
   }
+<<<<<<< HEAD
 
   _register = () => {
     console.log('regis');
@@ -194,6 +205,8 @@ class AppContainer extends React.Component {
         });
 
   }
+=======
+>>>>>>> maintain_login
 }
 
 const styles = StyleSheet.create({
@@ -201,16 +214,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  caption: {
-    fontSize: 27,
-    color:'#95989A',
-    marginBottom:40,
-    marginTop:7,
-  },
   statusBarUnderlay: {
     height: 24,
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
+<<<<<<< HEAD
   input: {
     height: 50,
     borderColor: '#EEEDEE',
@@ -228,6 +236,8 @@ const styles = StyleSheet.create({
     width: 260,
     alignItems: 'center'
   },
+=======
+>>>>>>> maintain_login
 });
 
 Expo.registerRootComponent(AppContainer);

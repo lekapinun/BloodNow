@@ -17,7 +17,13 @@ import {
 
 import {
     getBackButtonManager
+<<<<<<< HEAD
 } from '@expo/ex-navigation'
+=======
+} from '@expo/ex-navigation';
+
+import addressServer from '../utilities/addressServer';
+>>>>>>> maintain_login
 
 export default class LoginScreen extends Component {
 
@@ -26,6 +32,13 @@ export default class LoginScreen extends Component {
         password: '',
     };
 
+<<<<<<< HEAD
+=======
+    componentWillMount() {
+        console.log(addressServer.IPMac);
+    }
+
+>>>>>>> maintain_login
     render() {
         return(
             <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
@@ -57,7 +70,11 @@ export default class LoginScreen extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.buttonLogin,{backgroundColor: '#EF685E'}]}>
+<<<<<<< HEAD
                         <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._login}>
+=======
+                        <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._loginPress}>
+>>>>>>> maintain_login
                             <Text style={[Font.style('CmPrasanmitBold'),{fontSize: 25,color: 'white'}]}>เข้าสู่ระบบ</Text>
                         </TouchableOpacity>
                     </View>
@@ -74,10 +91,35 @@ export default class LoginScreen extends Component {
         );
     }
 
+<<<<<<< HEAD
 
     _loginPress = () => {
         const myRequest = new Request(
             'http://localhost:8000/login',
+=======
+    async _userData(userData){
+        try {
+            console.log(userData);
+            await AsyncStorage.setItem('@name:key', userData.name);
+            await AsyncStorage.setItem('@email:key', userData.email);
+            await AsyncStorage.setItem('@blood:key', userData.blood);
+            await AsyncStorage.setItem('@blood_type:key', userData.blood_type);
+            await AsyncStorage.setItem('@birthyear:key', userData.birthyear.toString());
+            await AsyncStorage.setItem('@phone:key', userData.phone);
+            await AsyncStorage.setItem('@province:key',userData.province);
+            await AsyncStorage.setItem('@last_date_donate:key', userData.last_date_donate);
+        } catch ( error ) {
+            console.log('error');
+        }
+    }
+
+
+    _loginPress = () => {
+        console.log(addressServer.IPMac.toString() + '/login');
+        const api = addressServer.IPMac.toString() + '/login';
+        const myRequest = new Request(
+            api,
+>>>>>>> maintain_login
             {
                 method: 'POST',
                  headers: {
@@ -86,6 +128,7 @@ export default class LoginScreen extends Component {
                 },
                 body: JSON.stringify(this.state)
             });
+<<<<<<< HEAD
         var test = '';
         fetch(myRequest)
         .then((response) => {
@@ -93,7 +136,17 @@ export default class LoginScreen extends Component {
             {
                 test = JSON.parse(response._bodyInit);
                 console.log('login success');
-                this.props.navigator.push("rootNavigation");
+=======
+        var userData = '';
+        fetch(myRequest)
+        .then((response) => response.text())
+        .then((responseText) => {
+            if( responseText != 'login fail')
+            {
+                userData = JSON.parse(responseText);
+                console.log('login success');
+                this._userData(userData);
+                this.props.navigator.replace("rootNavigation");
             }
             else
             {
@@ -101,6 +154,26 @@ export default class LoginScreen extends Component {
                 console.log('login fail');
             }
         })
+        /*.then((response) => {
+            if( response._bodyInit != 'login fail')
+            {
+                userData = JSON.parse(response._bodyInit);
+                //console.log(response);
+                console.log('login success');
+                this._userData(userData);
+>>>>>>> maintain_login
+                this.props.navigator.push("rootNavigation");
+            }
+            else
+            {
+                this.setState({ password: '' });
+                console.log('login fail');
+            }
+<<<<<<< HEAD
+        })
+=======
+        })*/
+>>>>>>> maintain_login
         .catch((error) => {
             console.warn(error);
         });  
