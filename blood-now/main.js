@@ -75,7 +75,7 @@ class AppContainer extends React.Component {
       <NavigationProvider router={Router}>
         <StackNavigation
           id="root"
-          initialRoute="login"
+          initialRoute="rootNavigation"
         />
       </NavigationProvider>
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
