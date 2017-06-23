@@ -1,23 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator } from 'react-native';
 import { Font } from 'expo';
-<<<<<<< HEAD
-import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood } from '../components/common';
-=======
-import DatePicker from 'react-native-datepicker';
 import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince } from '../components/common';
 
 import addressServer from '../utilities/addressServer';
->>>>>>> maintain_login
 
 export default class RegisterScreen extends Component {
 
     static route = {
-<<<<<<< HEAD
-        navigationBar: {
-=======
         navigationBar: { 
->>>>>>> maintain_login
             title: 'ลงทะเบียน',
             backgroundColor: '#E84A5F',
             titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
@@ -35,15 +26,6 @@ export default class RegisterScreen extends Component {
         blood_typeTemp: '',
         phone: '',
         email: '',
-<<<<<<< HEAD
-        province: 'เชียงใหม่',
-        birthyear: '',
-        last_date_donate: '',
-        last_date_donateTemp: new Date(),
-        modalVisible: false,
-        modalDateVisible: false,
-        modalRegisterVisible: false,
-=======
         province: '',
         provinceTemp: 'กรุงเทพมหานคร',
         birthyear: '',
@@ -54,7 +36,6 @@ export default class RegisterScreen extends Component {
         modalDateVisible: false,
         modalRegisterVisible: false,
         modalProvinceVisible: false,
->>>>>>> maintain_login
         load: false,
     }
 
@@ -66,24 +47,22 @@ export default class RegisterScreen extends Component {
       this.setState({modalDateVisible: visible});
     }
 
-<<<<<<< HEAD
     setModalRegisterVisible(visible){
       this.setState({modalRegisterVisible: visible});
-=======
+    }
+
     setModalProvinceVisible(visible) {
       this.setState({modalProvinceVisible: visible});
     }
 
     setModalRegisterVisible(visible){
       this.setState({modalProvinceVisible: visible});
->>>>>>> maintain_login
     }
 
     clickOkay(){
       this.props.navigator.pop();
     }
 
-<<<<<<< HEAD
     renderButton(){
       if(this.state.load === true){
         return( <ActivityIndicator size="large" color='#E84A5F'/> );
@@ -111,8 +90,6 @@ export default class RegisterScreen extends Component {
       );
     }
 
-=======
->>>>>>> maintain_login
     renderValidatedUsername(){
       let temp = this.state.name;
       if(temp !== ''){
@@ -130,7 +107,6 @@ export default class RegisterScreen extends Component {
         }
       }
       return <Text/>;
-<<<<<<< HEAD
     }
 
     renderValidatedEmail(){
@@ -172,7 +148,6 @@ export default class RegisterScreen extends Component {
     render() {
         let blood;
         let xxx;
-=======
     }
 
     renderValidatedEmail(){
@@ -213,14 +188,12 @@ export default class RegisterScreen extends Component {
 
     render() {
         let blood;
->>>>>>> maintain_login
         if(this.state.blood !== ''){
             blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.blood + this.state.blood_type }</Text>;
         }else{
             blood = <Text />
         }
         let recentDate;
-<<<<<<< HEAD
         if(this.state.last_date_donate !== ''){
             recent = new Date(this.state.last_date_donate);
             this.state.last_date_donateTemp = recent.getFullYear().toString() + '-' + (recent.getMonth()+1).toString() + '-' + recent.getDate().toString();
@@ -228,7 +201,6 @@ export default class RegisterScreen extends Component {
         }else{
             recentDate = <Text />
         }
-=======
         if(this.state.date_donate !== ''){
             recent = new Date(this.state.date_donate);
             this.state.date_donateTemp = recent.getFullYear().toString() + '-' + (recent.getMonth()+1).toString() + '-' + recent.getDate().toString();
@@ -277,8 +249,6 @@ export default class RegisterScreen extends Component {
           }
         }
         
-
->>>>>>> maintain_login
         return(
             <ScrollView style={{flex:1, paddingTop: 15 ,backgroundColor: '#FAFAFA' }}>
                 <ModalRegister
@@ -290,7 +260,6 @@ export default class RegisterScreen extends Component {
                   pickerVisible = {this.state.modalDateVisible}
                   onPressCancel = {() => { this.setModalDateVisible(!this.state.modalDateVisible) }}
                   onPressSubmit = {() => {
-<<<<<<< HEAD
                       this.setState({last_date_donate: this.state.last_date_donateTemp});
                       this.setModalDateVisible(!this.state.modalDateVisible);
                   }}
@@ -312,10 +281,6 @@ export default class RegisterScreen extends Component {
                       this.setState({blood_type: this.state.blood_typeTemp});
                     }
                     this.setModalVisible(!this.state.modalVisible);
-                  }}
-=======
-                      this.setState({date_donate: this.state.date_donateTemp});
-                      this.setModalDateVisible(!this.state.modalDateVisible);
                   }}
                   selectOne = {this.state.date_donateTemp}
                   onChangeOne = {date => this.setState({ date_donateTemp: date })}
@@ -346,7 +311,6 @@ export default class RegisterScreen extends Component {
                     }          
                     this.setModalVisible(!this.state.modalVisible);
                   }}
->>>>>>> maintain_login
                   selectOne = {this.state.bloodTemp}
                   onChangeOne = {(itemValue, itemIndex) => this.setState({bloodTemp: itemValue})}
                   selectTwo = {this.state.blood_typeTemp}
@@ -398,14 +362,11 @@ export default class RegisterScreen extends Component {
                         maxLength={30}
                       />
                       {this.renderValidatedEmail()}
-<<<<<<< HEAD
-=======
                       <PickerPartTouch
                         label='จังหวัด'
                         onPress={() => this.setModalProvinceVisible(true)}
                         information={<Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.province}</Text>}
                       />
->>>>>>> maintain_login
                       <RegisterInput
                         label='ปีเกิด(พ.ศ.)'
                         value={this.state.birthyear}
@@ -421,18 +382,15 @@ export default class RegisterScreen extends Component {
                       />
                   </View>
                   <View style={{marginTop: 30}}>
-<<<<<<< HEAD
                     {this.renderButton()}
-=======
                     {ButtonSubmit}
->>>>>>> maintain_login
                   </View>
                 <View style={{height:50}}/>
               </View>
             </ScrollView>
         );
     }
-s
+
     _register = () => {
       console.log(this.state);
       this.setState({load: true});
@@ -471,10 +429,7 @@ s
       }
 
     }
-}
 
-<<<<<<< HEAD
-=======
     _register = () => {
       recent2 = new Date(this.state.date_donate);
       this.state.last_date_donate = recent2.getFullYear().toString() + '-' + (recent2.getMonth()+1).toString() + '-' + recent2.getDate().toString();
@@ -518,7 +473,6 @@ s
     }
 }
 
->>>>>>> maintain_login
 const ModalRegister = ({pickerVisible,onPress}) => {
   return(
       <Modal
@@ -539,11 +493,7 @@ const ModalRegister = ({pickerVisible,onPress}) => {
                 sizeFont={20}
                 ButtonWidth={200}
               />
-<<<<<<< HEAD
             </View>
-=======
-            </View> 
->>>>>>> maintain_login
           </View>
         </View>
       </Modal>
