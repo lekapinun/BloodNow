@@ -1,13 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, ScrollView, StyleSheet, View, Modal, Image, ActivityIndicator } from 'react-native';
 import { Font } from 'expo';
-import DatePicker from 'react-native-datepicker';
 import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood } from '../components/common';
 
 export default class RegisterScreen extends Component {
 
     static route = {
-        navigationBar: { 
+        navigationBar: {
             title: 'ลงทะเบียน',
             backgroundColor: '#E84A5F',
             titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:29}],
@@ -175,12 +174,12 @@ export default class RegisterScreen extends Component {
                       this.setState({blood: 'A'});
                     }else{
                       this.setState({blood: this.state.bloodTemp});
-                    }  
+                    }
                     if(this.state.blood_typeTemp === ''){
                       this.setState({blood_type: '+'});
                     }else{
                       this.setState({blood_type: this.state.blood_typeTemp});
-                    }          
+                    }
                     this.setModalVisible(!this.state.modalVisible);
                   }}
                   selectOne = {this.state.bloodTemp}
@@ -293,7 +292,7 @@ s
       else {
         console.log('fail resgister');
       }
-        
+
     }
 }
 
@@ -317,7 +316,7 @@ const ModalRegister = ({pickerVisible,onPress}) => {
                 sizeFont={20}
                 ButtonWidth={200}
               />
-            </View> 
+            </View>
           </View>
         </View>
       </Modal>
