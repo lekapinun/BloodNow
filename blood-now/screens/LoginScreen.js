@@ -17,7 +17,9 @@ import {
 
 import {
     getBackButtonManager
-} from '@expo/ex-navigation'
+} from '@expo/ex-navigation';
+
+import addressServer from '../utilities/addressServer';
 
 export default class LoginScreen extends Component {
 
@@ -25,6 +27,10 @@ export default class LoginScreen extends Component {
         name: '',
         password: '',
     };
+
+    componentWillMount() {
+        console.log(addressServer.IPMac);
+    }
 
     render() {
         return(
@@ -92,8 +98,10 @@ export default class LoginScreen extends Component {
 
 
     _loginPress = () => {
+        console.log(addressServer.IPMac.toString() + '/login');
+        const api = addressServer.IPMac.toString() + '/login';
         const myRequest = new Request(
-            'http://localhost:8000/login',
+            api,
             {
                 method: 'POST',
                  headers: {
@@ -104,7 +112,22 @@ export default class LoginScreen extends Component {
             });
         var userData = '';
         fetch(myRequest)
-        .then((response) => {
+        .then((response) => response.text())
+        .then((responseText) => {
+            if( responseText != 'login fail')
+            {
+                userData = JSON.parse(responseText);
+                console.log('login success');
+                this._userData(userData);
+                this.props.navigator.replace("rootNavigation");
+            }
+            else
+            {
+                this.setState({ password: '' });
+                console.log('login fail');
+            }
+        })
+        /*.then((response) => {
             if( response._bodyInit != 'login fail')
             {
                 userData = JSON.parse(response._bodyInit);
@@ -118,7 +141,7 @@ export default class LoginScreen extends Component {
                 this.setState({ password: '' });
                 console.log('login fail');
             }
-        })
+        })*/
         .catch((error) => {
             console.warn(error);
         });  

@@ -4,6 +4,8 @@ import { Font } from 'expo';
 import DatePicker from 'react-native-datepicker';
 import { NavigatorBackground, Button, RegisterInput, PickerPartTouch, PickerModalDate, PickerModalBlood, PickerModalProvince } from '../components/common';
 
+import addressServer from '../utilities/addressServer';
+
 export default class RegisterScreen extends Component {
 
     static route = {
@@ -297,9 +299,11 @@ export default class RegisterScreen extends Component {
       this.state.last_date_donate = recent2.getFullYear().toString() + '-' + (recent2.getMonth()+1).toString() + '-' + recent2.getDate().toString();
       console.log(this.state);
       this.setState({load: true});
+      console.log(addressServer.IPMac.toString() + '/register');
+      const api = addressServer.IPMac.toString() + '/register';
       if( this.state.password === this.state.password_confirmation){
         const myRequest = new Request(
-          'http://localhost:8000/register',
+          api,
           {
             method: 'POST',
             headers: {
