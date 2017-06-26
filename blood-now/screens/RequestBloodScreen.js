@@ -13,7 +13,6 @@ import { Font } from 'expo';
 import { StackNavigation } from '@expo/ex-navigation';
 import { Map } from '../components/common';
 
-//@withNavigation
 export default class RequestBloodScreen extends Component {
   static route = {
     navigationBar: {
@@ -25,7 +24,7 @@ export default class RequestBloodScreen extends Component {
     bloodType: '',
     bloodUnit: '',
     description: '',
-    hostpital: '', //text
+    hostpital: '',
     bloodTypeModalVisible: false,
     ConfirmationModalVisible: false,
     confirm: false,

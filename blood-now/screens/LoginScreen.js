@@ -1,35 +1,42 @@
 import React, { Component, PropTypes } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Button,
-  WebView,
-  Image,
-  StyleSheet,
-  AsyncStorage
-} from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, AsyncStorage } from 'react-native';
 
-import {
-    Font
-} from 'expo';
-
-import {
-    getBackButtonManager
-} from '@expo/ex-navigation'
+import { Font } from 'expo';
 
 import addressServer from '../utilities/addressServer';
+
+import { Button } from '../components/common';
 
 export default class LoginScreen extends Component {
 
     state = {
         name: '',
         password: '',
+        error: false,
     };
 
     componentWillMount() {
         console.log(addressServer.IPMac);
+        /*this._checkLogin();*/
+    }
+
+/*    async _checkLogin() {
+      try {
+            const name = await AsyncStorage.getItem('@name:key');
+            if (name !== null) {
+                console.log(name);
+                this.props.navigator.push('rootNavigation'); 
+            }
+        } catch ( error ) {
+            console.log('error');
+        }
+    }*/
+
+    renderErrorMessage() {
+        if(!this.state.error){
+            return <Text />
+        }
+        return <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'red',}]}>ลองใหม่อีกครั้ง</Text>
     }
 
     render() {
@@ -57,24 +64,31 @@ export default class LoginScreen extends Component {
                         placeholder="รหัสผ่าน"
                         underlineColorAndroid='rgba(0,0,0,0)'
                     />
+                    {this.renderErrorMessage()}
                     <View style={{height: 50, marginTop:10,justifyContent: 'flex-start',alignItems: 'flex-end'}}>
                         <TouchableOpacity>
                             <Text style={[Font.style('CmPrasanmit'),{ fontSize: 20,color:'#95989A',}]}>ลืมรหัสผ่าน?</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={[styles.buttonLogin,{backgroundColor: '#EF685E'}]}>
-                        <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._loginPress}>
-                            <Text style={[Font.style('CmPrasanmitBold'),{fontSize: 25,color: 'white'}]}>เข้าสู่ระบบ</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <Button
+                        title='เข้าสู่ระบบ'
+                        buttonColor='#EF685E'
+                        sizeFont={25}
+                        onPress={this._loginPress}
+                        ButtonWidth={260}
+                        ButtonHeight={50}
+                    />
                     <View style={{justifyContent: 'center',alignItems: 'center'}}>
                         <Text style={[Font.style('CmPrasanmit'),{ fontSize: 23,color:'#95989A',marginBottom:5,marginTop:5}]}>หรือ</Text>
                     </View>
-                    <View style={[styles.buttonLogin,{backgroundColor: '#9FAC9B'}]}>
-                        <TouchableOpacity style={[styles.buttonLogin,{marginTop:-10,marginBottom:-10,}]} onPress={this._register}>
-                            <Text style={[Font.style('CmPrasanmitBold'),{fontSize: 25,color: 'white'}]}>ลงทะเบียน</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <Button
+                        title='ลงทะเบียน'
+                        buttonColor='#9FAC9B'
+                        sizeFont={25}
+                        onPress={this._register}
+                        ButtonWidth={260}
+                        ButtonHeight={50}
+                    />
                 </View>
             </View> 
         );
@@ -100,6 +114,7 @@ export default class LoginScreen extends Component {
     _loginPress = () => {
         console.log(addressServer.IPMac.toString() + '/login');
         const api = addressServer.IPMac.toString() + '/login';
+        this.setState({error : false});
         const myRequest = new Request(
             api,
             {
@@ -119,12 +134,13 @@ export default class LoginScreen extends Component {
                 userData = JSON.parse(responseText);
                 console.log('login success');
                 this._userData(userData);
-                this.props.navigator.replace("rootNavigation");
+                this.props.navigator.push("rootNavigation");
             }
             else
             {
                 this.setState({ password: '' });
                 console.log('login fail');
+                this.setState({error : true});
             }
         })
         .catch((error) => {
@@ -152,13 +168,5 @@ const styles = StyleSheet.create({
     paddingLeft:10,
     fontSize: 23,
     backgroundColor: 'white',
-  },
-  buttonLogin: {
-    marginTop:10,
-    marginBottom:10,
-    justifyContent: 'center', 
-    height: 50, 
-    width: 260,
-    alignItems: 'center'
   },
 });

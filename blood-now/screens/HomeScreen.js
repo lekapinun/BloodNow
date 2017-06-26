@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import { Font } from 'expo'
 
-import { withNavigation } from '@expo/ex-navigation';
-import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
+import { withNavigation, getNavigator } from '@expo/ex-navigation';
+import { TestButton, NavigatorBackground,ExNavigationState, Button} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 
@@ -55,13 +55,14 @@ export default class HomeScreen extends React.Component {
 
   async _userData(){
     try {
-      const value = await AsyncStorage.getItem('@name:key');
-      if (value !== null){
-        // We have data!!
-        console.log(value);
-      } else {
-        console.log('O_O');
-      }
+      const name = await AsyncStorage.getItem('@name:key');
+      if (name !== null){ console.log(name); } else { console.log('O_O'); }
+      const email = await AsyncStorage.getItem('@email:key');
+      if (email !== null){ console.log(email); } else { console.log('O_O'); }
+      const blood = await AsyncStorage.getItem('@blood:key');
+      if (blood !== null){ console.log(blood); } else { console.log('O_O'); }
+      const phone = await AsyncStorage.getItem('@phone:key');
+      if (phone !== null){ console.log(phone); } else { console.log('O_O'); }
     } catch ( error ) {
       console.log('error');
     }
@@ -76,8 +77,38 @@ export default class HomeScreen extends React.Component {
       <View style={{marginTop:30}}>
          <Text>HOME SCREEN</Text>
 
+         <Button
+          title='ออกจากระบบ'
+          buttonColor='#9FAC9B'
+          sizeFont={25}
+          onPress={this._logout}
+          ButtonWidth={260}
+          ButtonHeight={50}
+          />
       </View>
     );
+  }
+
+  _logout = () => {
+    this._clearUserData();
+    //this.props.navigator.pop();
+    this.props.navigator.replace('login');
+    //rootNavigator.immediateReserStack(['login'],0);
+  }
+
+  async _clearUserData(){
+    try {
+        await AsyncStorage.removeItem('@name:key');
+        await AsyncStorage.removeItem('@email:key');
+        await AsyncStorage.removeItem('@blood:key');
+        await AsyncStorage.removeItem('@blood_type:key');
+        await AsyncStorage.removeItem('@birthyear:key');
+        await AsyncStorage.removeItem('@phone:key');
+        await AsyncStorage.removeItem('@province:key');
+        await AsyncStorage.removeItem('@last_date_donate:key');
+      } catch ( error ) {
+        console.log('error');
+    }
   }
 
 }

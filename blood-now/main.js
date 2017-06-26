@@ -18,13 +18,27 @@ class AppContainer extends React.Component {
     currentPage: 'home',
     name: '',
     password: '',
+    init: 'login'
   };
 
   componentWillMount() {
     console.log('START TEST');
     this._loadAssetsAsync();
     //this._userData();
+    this._checkLogin();
   }
+
+  async _checkLogin() {
+      try {
+            const name = await AsyncStorage.getItem('@name:key');
+            if (name !== null) {
+                console.log(name);
+                this.setState({init: 'rootNavigation'});
+            }
+        } catch ( error ) {
+            console.log('error');
+        }
+    }
 
 /*  async _userData(){
     try {
@@ -42,7 +56,8 @@ class AppContainer extends React.Component {
           require('./assets/images/expo-wordmark.png'),
           require('./assets/icons/logo.png'),
           require('./assets/images/expo-icon@2x.png'),
-          require('./assets/icons/correct.png')
+          require('./assets/icons/correct.png'),
+          require('./assets/icons/exponent-icon.png'),
         ],
         fonts: [
           FontAwesome.font,
@@ -75,7 +90,7 @@ class AppContainer extends React.Component {
       <NavigationProvider router={Router}>
         <StackNavigation
           id="root"
-          initialRoute="rootNavigation"
+          initialRoute={this.state.init}
         />
       </NavigationProvider>
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
