@@ -75,6 +75,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={{marginTop:30}}>
          <Text>HOME SCREEN</Text>
+
       </View>
     );
   }
