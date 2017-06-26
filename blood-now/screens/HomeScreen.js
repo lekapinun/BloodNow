@@ -11,16 +11,27 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Font } from 'expo'
-
+import { Router } from '../navigation/Router';
 import { withNavigation, getNavigator } from '@expo/ex-navigation';
 import { TestButton, NavigatorBackground,ExNavigationState, Button} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 
 @withNavigation class ExponentButton extends Component {
+  static route = {
+
+  }
+
   _handlePress = () => {
     this.props.navigator.push('requestBlood');
   };
+
+  _logOut = () => {
+    this.props.navigation.performAction(({ tabs, stacks }) => {
+      tabs('tab-navigation').jumpToTab('second');
+    });
+  };
+
   render() {
     return (
       <TouchableOpacity
@@ -81,7 +92,7 @@ export default class HomeScreen extends React.Component {
           title='ออกจากระบบ'
           buttonColor='#9FAC9B'
           sizeFont={25}
-          onPress={this._logout}
+          onPress={ () => this._logout(navigation=this.props.navigation) } //console.log(this.props.navigation)// }
           ButtonWidth={260}
           ButtonHeight={50}
           />
@@ -89,11 +100,14 @@ export default class HomeScreen extends React.Component {
     );
   }
 
-  _logout = () => {
+  _logout = (navigation) => {
+    const rootNavigator = this.props.navigation.getNavigator('root');
+    console.log(this.props);
+    //console.log(navigator);
     this._clearUserData();
     //this.props.navigator.pop();
-    this.props.navigator.replace('login');
-    //rootNavigator.immediateReserStack(['login'],0);
+    //this.props.navigator.replace('login');
+    rootNavigator.replace("login");
   }
 
   async _clearUserData(){
