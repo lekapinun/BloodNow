@@ -25,7 +25,7 @@ class AppContainer extends React.Component {
     console.log('START TEST');
     this._loadAssetsAsync();
     //this._userData();
-    this._checkLogin();
+    //this._checkLogin();
   }
 
   async _checkLogin() {

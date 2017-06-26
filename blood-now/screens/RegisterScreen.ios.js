@@ -119,7 +119,62 @@ export default class RegisterScreen extends Component {
     }
 
     render() {
-        let blood;
+      return(
+        
+        <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
+          <View style={{marginTop: 20}}/>
+          <Text style={{color: '#E84A5F'}}>● ○</Text>
+          <RegisterInput
+            label='ชื่อผู้ใช้'
+            value={this.state.name}
+            onChangeText={(name) => this.setState({name})}
+            maxLength={20}
+          />
+          {this.renderValidatedUsername()}
+          <RegisterInput
+            label='รหัสผ่าน'
+            value={this.state.password}
+            onChangeText={(password) => this.setState({password})}
+            secureTextEntry={true}
+            maxLength={20}
+          />
+          {this.renderValidatedPassword()}
+          <RegisterInput
+            label='ยืนยันรหัสผ่าน'
+            value={this.state.password_confirmation}
+            onChangeText={(password_confirmation) => this.setState({password_confirmation})}
+            secureTextEntry={true}
+            maxLength={20}
+          />
+          {this.renderValidatedPasswordCon()}
+          <RegisterInput
+            label='อีเมลล์'
+            value={this.state.email}
+            onChangeText={(email) => this.setState({email})}
+            keyboardType='email-address'
+            maxLength={30}
+          />
+          {this.renderValidatedEmail()}
+          <RegisterInput
+            label='เบอร์โทรศัพท์'
+            value={this.state.phone}
+            onChangeText={(phone) => this.setState({phone})}
+            keyboardType='numeric'
+            maxLength={10}
+          />
+          {this.renderValidatedPhone()}
+          <View style={{marginTop: 40}}/>
+          <Button
+            title='ถัดไป'
+            buttonColor='#E84A5F'
+            sizeFont={25}
+            onPress={() => {this.props.navigator.push('register2')}}
+            ButtonWidth={300}
+            ButtonHeight={50}
+          />
+        </View>
+      );
+        /*let blood;
         if(this.state.blood !== ''){
             blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.blood + this.state.blood_type }</Text>;
         }else{
@@ -294,7 +349,7 @@ export default class RegisterScreen extends Component {
                 <View style={{height:50}}/>
               </View>
             </ScrollView>
-        );
+        );*/
     }
 
     _register = () => {
