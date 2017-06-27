@@ -187,7 +187,9 @@ export default class RequestBloodScreen extends Component {
             />
           </View>
 
-          <Map />
+          <Map marker={{
+            latitude: 18.788488,
+            longitude: 98.971420,}}/>
           <Button  title="ขอรับบริจาคเลือด" onPress={() => {this.setConfrimationModalVisible(true)}} />
       </ScrollView>
     );
