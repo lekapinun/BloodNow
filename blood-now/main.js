@@ -57,6 +57,7 @@ class AppContainer extends React.Component {
           require('./assets/icons/logo.png'),
           require('./assets/images/expo-icon@2x.png'),
           require('./assets/icons/cr.png'),
+          require('./assets/icons/ex.png'),
           require('./assets/icons/exponent-icon.png'),
         ],
         fonts: [

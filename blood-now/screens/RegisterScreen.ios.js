@@ -32,12 +32,18 @@ export default class RegisterScreen extends Component {
     render() {
       let canSubmit = '00000';
       (this.state.name !== '' && this.state.name.search(/[^A-Za-z]/) === -1) ? canSubmit = canSubmit.replaceAt(0,'1') : canSubmit = canSubmit.replaceAt(0,'0') ;
-      (this.state.password === this.state.password_confirmation && this.state.password !== '' && this.state.password_confirmation !== '') ? canSubmit = canSubmit.replaceAt(1,'1') : canSubmit = canSubmit.replaceAt(1,'0');
-      (this.state.password !== '' && this.state.password.length > 5) ? canSubmit = canSubmit.replaceAt(2,'1') : canSubmit = canSubmit.replaceAt(2,'0');
+      (this.state.password === this.state.password_confirmation && this.state.password !== '' && this.state.password_confirmation !== '') ? canSubmit = canSubmit.replaceAt(2,'1') : canSubmit = canSubmit.replaceAt(2,'0');
+      (this.state.password !== '' && this.state.password.length > 5) ? canSubmit = canSubmit.replaceAt(1,'1') : canSubmit = canSubmit.replaceAt(1,'0');
       (this.state.phone !== '' && this.state.phone.search(/[^0-9]/) === -1) ? canSubmit = canSubmit.replaceAt(3,'1') : canSubmit = canSubmit.replaceAt(3,'0') ;
       (this.state.email !== '' && this.state.email.search("@") !== -1 && this.state.email.search(".com") !== -1) ? canSubmit = canSubmit.replaceAt(4,'1') : canSubmit = canSubmit.replaceAt(4,'0') ;
+      let checkInput = '00000';
+      (this.state.name !== '') ? checkInput = checkInput.replaceAt(0,'1') : checkInput = checkInput.replaceAt(0,'0') ;
+      (this.state.password !== '' ) ? checkInput = checkInput.replaceAt(1,'1') : checkInput = checkInput.replaceAt(1,'0');
+      (this.state.password_confirmation !== '' ) ? checkInput = checkInput.replaceAt(2,'1') : checkInput = checkInput.replaceAt(2,'0');
+      (this.state.phone !== '' ) ? checkInput = checkInput.replaceAt(3,'1') : checkInput = checkInput.replaceAt(3,'0') ;
+      (this.state.email !== '' ) ? checkInput = checkInput.replaceAt(4,'1') : checkInput = checkInput.replaceAt(4,'0') ;
       let ButtonSubmit;
-      if(canSubmit === '11111'){
+      if(canSubmit.search("0") === -1){
         ButtonSubmit = 
           <Button
             title='ถัดไป'
@@ -72,6 +78,7 @@ export default class RegisterScreen extends Component {
             onChangeText={(name) => this.setState({name})}
             maxLength={20}
             placeholder='เฉพาะตัวอักษร'
+            validate = {canSubmit.charAt(0) + checkInput.charAt(0)}
           />
           <RegisterInput
             label='รหัสผ่าน'
@@ -80,6 +87,7 @@ export default class RegisterScreen extends Component {
             secureTextEntry={true}
             maxLength={30}
             placeholder='อย่างน้อย 6 ตัว'
+            validate = {canSubmit.charAt(1) + checkInput.charAt(1)}
           />
           <RegisterInput
             label='ยืนยันรหัสผ่าน'
@@ -87,6 +95,7 @@ export default class RegisterScreen extends Component {
             onChangeText={(password_confirmation) => this.setState({password_confirmation})}
             secureTextEntry={true}
             maxLength={20}
+            validate = {canSubmit.charAt(2) + checkInput.charAt(2)}
           />
           <RegisterInput
             label='อีเมลล์'
@@ -94,13 +103,15 @@ export default class RegisterScreen extends Component {
             onChangeText={(email) => this.setState({email})}
             keyboardType='email-address'
             maxLength={30}
+            validate = {canSubmit.charAt(4) + checkInput.charAt(4)}
           />
           <RegisterInput
             label='เบอร์โทรศัพท์'
             value={this.state.phone}
             onChangeText={(phone) => this.setState({phone})}
-            keyboardType='numeric'
+            keyboardType='number-pad'
             maxLength={10}
+            validate = {canSubmit.charAt(3) + checkInput.charAt(3)}
           />
           <View style={{marginTop: 40}}/>
           {ButtonSubmit}

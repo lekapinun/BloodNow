@@ -91,6 +91,7 @@ export default class RegisterScreen extends Component {
       }else{
         blood = <Text />
       }
+
       let recentDate;
         if(this.state.date_donate !== ''){
         recent = new Date(this.state.date_donate);
@@ -107,6 +108,14 @@ export default class RegisterScreen extends Component {
       ((parseInt(this.state.birthyear.toString()) > parseInt((today.getFullYear()+443).toString())) && (parseInt(this.state.birthyear.toString()) < parseInt((today.getFullYear()+543).toString()))) ? canSubmit = canSubmit.replaceAt(3,'1') : canSubmit = canSubmit.replaceAt(3,'0');
       (this.state.date_donate !== '') ? canSubmit = canSubmit.replaceAt(4,'1') : canSubmit = canSubmit.replaceAt(4,'0');
       (this.state.province !== '') ? canSubmit = canSubmit.replaceAt(5,'1') : canSubmit = canSubmit.replaceAt(5,'0');
+
+      let checkInput = '000000';
+      (this.state.real_name !== '') ? checkInput = checkInput.replaceAt(0,'1') : checkInput = checkInput.replaceAt(0,'0');
+      (this.state.real_surname !== '' ) ? checkInput = checkInput.replaceAt(1,'1') : checkInput = checkInput.replaceAt(1,'0');
+      (this.state.blood !== '' ) ? checkInput = checkInput.replaceAt(2,'1') : checkInput = checkInput.replaceAt(2,'0');
+      (this.state.birthyear !== '') ? checkInput = checkInput.replaceAt(3,'1') : checkInput = checkInput.replaceAt(3,'0');
+      (this.state.date_donate !== '') ? checkInput = checkInput.replaceAt(4,'1') : checkInput = checkInput.replaceAt(4,'0');
+      (this.state.province !== '') ? checkInput = checkInput.replaceAt(5,'1') : checkInput = checkInput.replaceAt(5,'0');
 
       if(canSubmit === '111111'){
         ButtonSubmit = 
@@ -189,6 +198,7 @@ export default class RegisterScreen extends Component {
                     onChangeText={(real_name) => this.setState({real_name})}
                     maxLength={30}
                     placeholder='เฉพาะตัวอักษร'
+                    validate = {canSubmit.charAt(0) + checkInput.charAt(0)}
                 />
                 <RegisterInput
                     label='นามสกุล'
@@ -196,6 +206,7 @@ export default class RegisterScreen extends Component {
                     onChangeText={(real_surname) => this.setState({real_surname})}
                     maxLength={30}
                     placeholder='เฉพาะตัวอักษร'
+                    validate = {canSubmit.charAt(1) + checkInput.charAt(1)}
                 />
                 <PickerPartTouch
                     label='กรุ๊ปเลือด'
@@ -213,6 +224,7 @@ export default class RegisterScreen extends Component {
                     onChangeText={(birthyear) => this.setState({birthyear})}
                     keyboardType='numeric'
                     maxLength={4}
+                    validate = {canSubmit.charAt(3) + checkInput.charAt(3)}
                 />
                 <PickerPartTouch
                     label='บริจาคครั้งล่าสุด'
