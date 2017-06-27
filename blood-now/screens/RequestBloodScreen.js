@@ -90,7 +90,7 @@ export default class RequestBloodScreen extends Component {
           >
             <View
               style={{backgroundColor:'rgba(131, 145, 146,0.7)', flex:1,flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-            <View style={{ backgroundColor:'white', width: 300, height: 300,flexDirection: 'column', justifyContent: 'space-between', }}>
+            <View style={{ backgroundColor:'white',flexDirection: 'column', justifyContent: 'space-between', }}>
               <View style={{ paddingTop: 15}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
                   <Text>{"ชื่อผู้ป่วย"}</Text>
@@ -115,6 +115,13 @@ export default class RequestBloodScreen extends Component {
                   <Text>{"สถานพยาบาล"}</Text>
                   <Text>{this.state.hostpital}</Text>
                 </View>
+              </View>
+
+              <View>
+                <Map marker={{
+                  //ขอlat, long จากระบบ
+                  latitude: 18.788488,
+                  longitude: 98.971420,}}/>
               </View>
               <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start', borderColor: 'black', borderWidth: 1}}>
                 <Button title='Cancel' onPress={() => {
@@ -187,9 +194,7 @@ export default class RequestBloodScreen extends Component {
             />
           </View>
 
-          <Map marker={{
-            latitude: 18.788488,
-            longitude: 98.971420,}}/>
+
           <Button  title="ขอรับบริจาคเลือด" onPress={() => {this.setConfrimationModalVisible(true)}} />
       </ScrollView>
     );

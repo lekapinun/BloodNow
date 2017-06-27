@@ -25,7 +25,7 @@ export class Map extends React.Component {
     const url="http://maps.google.com/maps?daddr=("+ this.state.region.latitude + "," + this.state.region.longitude + ")";
     return (
       <MapView
-        style={{height: 200, width: 200, alignSelf: 'center' }}
+        style={{height: 250, width: 300, alignSelf: 'center' }}
         provider={PROVIDER_GOOGLE}
         region={this.state.region}
         onRegionChange={this.onRegionChange.bind(this)}
