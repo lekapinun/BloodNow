@@ -77,6 +77,7 @@ export default class LoginScreen extends Component {
                         onPress={this._loginPress}
                         ButtonWidth={260}
                         ButtonHeight={50}
+                        colorFont='white'
                     />
                     <View style={{justifyContent: 'center',alignItems: 'center'}}>
                         <Text style={[Font.style('CmPrasanmit'),{ fontSize: 23,color:'#95989A',marginBottom:5,marginTop:5}]}>หรือ</Text>
@@ -88,6 +89,7 @@ export default class LoginScreen extends Component {
                         onPress={this._register}
                         ButtonWidth={260}
                         ButtonHeight={50}
+                        colorFont='white'
                     />
                 </View>
             </View> 
@@ -97,14 +99,7 @@ export default class LoginScreen extends Component {
     async _userData(userData){
         try {
             console.log(userData);
-            await AsyncStorage.setItem('@name:key', userData.name.toString());
-            await AsyncStorage.setItem('@email:key', userData.email.toString());
-            await AsyncStorage.setItem('@blood:key', userData.blood.toString());
-            await AsyncStorage.setItem('@blood_type:key', userData.blood_type.toString());
-            await AsyncStorage.setItem('@birthyear:key', userData.birthyear.toString());
-            await AsyncStorage.setItem('@phone:key', userData.phone.toString());
-            await AsyncStorage.setItem('@province:key',userData.province.toString());
-            await AsyncStorage.setItem('@last_date_donate:key', userData.last_date_donate.toString());
+            await AsyncStorage.setItem('@userData:key', JSON.stringify(userData));
         } catch ( error ) {
             console.log('error');
         }
