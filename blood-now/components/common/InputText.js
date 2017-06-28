@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View, Image, Text } from 'react-native';
 import { Font } from 'expo'
 import { RegisterTitle } from './RegisterTitle'
 
-const InputText = ({label,secureTextEntry,onChangeText,value,keyboardType,maxLength,placeholder}) => {
+const InputText = ({label,secureTextEntry,onChangeText,value,keyboardType,maxLength,placeholder,onEndEditing}) => {
   return(
     <View>
       <View style={styles.underline}> 
@@ -19,6 +19,7 @@ const InputText = ({label,secureTextEntry,onChangeText,value,keyboardType,maxLen
             autoCapitalize='none'
             maxLength={maxLength}
             placeholder={placeholder}
+            onEndEditing={onEndEditing}
           />
         </View>
       </View> 

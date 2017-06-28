@@ -25,6 +25,8 @@ export default class RequestBloodScreen extends Component {
     hostpital: '',
     bloodTemp: 'A',
     blood_Temp: '+',
+    lat: 18.788488,
+    lng: 98.971420,
     modalBloodVisible: false,
     ConfirmationModalVisible: false,
     confirm: false,
@@ -146,14 +148,15 @@ export default class RequestBloodScreen extends Component {
                 label = 'สถานพยาบาล'
                 onChangeText={(hostpital) => this.setState({hostpital})}
                 value={this.state.hostpital}
+                onEndEditing={this._findLocation}
               />
             </View>
             <View style={{marginTop:40}}></View>
-            <Map />
+            <Map marker={{ latitude: this.state.lat, longitude: this.state.lng }}/>
             <View style={{marginTop:40}}></View>
             <Button
-              title="ส่งคำขอ"
-              onPress={() => {}}
+              title="ส่งคำร้องขอ"
+              onPress={() => { this.props.navigator.push('requestBloodSubmit')}}
               buttonColor='#E84A5F'
               sizeFont={25}
               ButtonWidth={300}
@@ -163,6 +166,24 @@ export default class RequestBloodScreen extends Component {
             </View>
       </ScrollView>
     );
+  }
+   _findLocation = () => {
+    let nameLocation = this.state.hostpital
+    const API_KEY = 'AIzaSyAuyEycAxVaRvLY5CuQ84d3eFXU0PSf1Jg&libraries=places'
+    let APIGeocodingRequest = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + nameLocation + '&key=' + API_KEY
+    console.log(APIGeocodingRequest)
+    fetch(APIGeocodingRequest)
+    .then((response) => response.json())
+    .then((responseJSON) => {
+      console.log(responseJSON.results[0].geometry.location.lat)
+      console.log(responseJSON.results[0].geometry.location.lng)
+      this.setState({lat : responseJSON.results[0].geometry.location.lat});
+      this.setState({lng : responseJSON.results[0].geometry.location.lng});
+      console.log(this.state)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 }
 

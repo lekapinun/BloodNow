@@ -14,6 +14,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import DonorScreen from '../screens/DonorScreen';
 import RequestBloodScreen from '../screens/RequestBloodScreen';
 import RequestBloodHistoryScreen from '../screens/RequestBloodHistoryScreen';
+import RequestBloodSubmitScreen from '../screens/RequestBloodSubmitScreen'
 
 export default createRouter(() => ({
   home: () => HomeScreen,
@@ -30,4 +31,5 @@ export default createRouter(() => ({
   donor: () => DonorScreen,
   requestBlood: () => RequestBloodScreen,
   requestBloodHistory: () => RequestBloodHistoryScreen,
+  requestBloodSubmit: () => RequestBloodSubmitScreen,
 }));
