@@ -26,11 +26,11 @@ import Colors from '../constants/Colors';
     this.props.navigator.push('requestBlood');
   };
 
-  _logOut = () => {
+  /*_logOut = () => {
     this.props.navigation.performAction(({ tabs, stacks }) => {
       tabs('tab-navigation').jumpToTab('second');
     });
-  };
+  };*/
 
   render() {
     return (

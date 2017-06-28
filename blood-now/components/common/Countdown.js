@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Font } from 'expo';
 
 const Countdown = ({recentDonateDate}) => {
-  const timeRemaining = ((new Date()) - (new Date(recentDonateDate)))
+  const timeRemaining = (7776000000 -( (new Date()) - (new Date(recentDonateDate))))
     / (24*60*60*1000);
   return (
     <View style={styles.countdownContainerStyle}>

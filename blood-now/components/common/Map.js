@@ -28,14 +28,14 @@ export class Map extends React.Component {
         onPress={() => Linking.openURL(url)}
       >
         <View pointerEvents="none" style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent'}}>
-          <Image style={{width:50, height: 50}} pointerEvents="none" source={require('../../assets/icons/exponent-icon.png')}/>
+          <Image style={{width:50, height: 50, rotate: 180,}} pointerEvents="none" source={require('../../assets/icons/exponent-icon.png')}/>
         </View>
       </MapView>
     );
   }
 
 }
-/*  Marker with animation 
+/*  Marker with animation
 <MapView.Marker
   title="TEST"
   description="test descriptionp"
