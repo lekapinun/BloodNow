@@ -117,6 +117,8 @@ export default class RegisterScreen extends Component {
       (this.state.date_donate !== '') ? checkInput = checkInput.replaceAt(4,'1') : checkInput = checkInput.replaceAt(4,'0');
       (this.state.province !== '') ? checkInput = checkInput.replaceAt(5,'1') : checkInput = checkInput.replaceAt(5,'0');
 
+      let subValidated = '000000';
+
       if(canSubmit === '111111'){
         ButtonSubmit = 
           <Button
@@ -198,7 +200,7 @@ export default class RegisterScreen extends Component {
                     onChangeText={(real_name) => this.setState({real_name})}
                     maxLength={30}
                     placeholder='เฉพาะตัวอักษร'
-                    validate = {canSubmit.charAt(0) + checkInput.charAt(0)}
+                    validate = {canSubmit.charAt(0) + checkInput.charAt(0) + subValidated.charAt(0)}
                 />
                 <RegisterInput
                     label='นามสกุล'
@@ -206,7 +208,7 @@ export default class RegisterScreen extends Component {
                     onChangeText={(real_surname) => this.setState({real_surname})}
                     maxLength={30}
                     placeholder='เฉพาะตัวอักษร'
-                    validate = {canSubmit.charAt(1) + checkInput.charAt(1)}
+                    validate = {canSubmit.charAt(1) + checkInput.charAt(1) + subValidated.charAt(1)}
                 />
                 <PickerPartTouch
                     label='กรุ๊ปเลือด'
@@ -224,14 +226,14 @@ export default class RegisterScreen extends Component {
                     onChangeText={(birthyear) => this.setState({birthyear})}
                     keyboardType='numeric'
                     maxLength={4}
-                    validate = {canSubmit.charAt(3) + checkInput.charAt(3)}
+                    validate = {canSubmit.charAt(3) + checkInput.charAt(3) + + subValidated.charAt(3)}
                 />
                 <PickerPartTouch
                     label='บริจาคครั้งล่าสุด'
                     onPress={() => { this.setModalDateVisible(true) }}
                     information={recentDate}
                 />
-                <View style={{marginTop: 40}}/>
+                <View style={{marginTop: 20}}/>
                 {ButtonSubmit}
             {/*</View>*/}
         </View>

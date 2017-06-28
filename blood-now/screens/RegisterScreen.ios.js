@@ -26,6 +26,7 @@ export default class RegisterScreen extends Component {
         password_confirmation: '',
         phone: '',
         email: '',
+        subValidated: '00000'
     }
 
 
@@ -42,7 +43,6 @@ export default class RegisterScreen extends Component {
       (this.state.password_confirmation !== '' ) ? checkInput = checkInput.replaceAt(2,'1') : checkInput = checkInput.replaceAt(2,'0');
       (this.state.phone !== '' ) ? checkInput = checkInput.replaceAt(3,'1') : checkInput = checkInput.replaceAt(3,'0') ;
       (this.state.email !== '' ) ? checkInput = checkInput.replaceAt(4,'1') : checkInput = checkInput.replaceAt(4,'0') ;
-      let ButtonSubmit;
       if(canSubmit.search("0") === -1){
         ButtonSubmit = 
           <Button
@@ -75,60 +75,120 @@ export default class RegisterScreen extends Component {
           <RegisterInput
             label='ชื่อผู้ใช้'
             value={this.state.name}
-            onChangeText={(name) => this.setState({name})}
+            onChangeText={(name) => {
+              this.setState({name})
+              this.setState({subValidated : this.state.subValidated.replaceAt(0,'0')})
+            }}
             maxLength={20}
             placeholder='เฉพาะตัวอักษร'
-            validate = {canSubmit.charAt(0) + checkInput.charAt(0)}
+            validate = {canSubmit.charAt(0) + checkInput.charAt(0) + this.state.subValidated.charAt(0)}
+            subvalidate = 'ชื่อผู้ใช้มีอยู่แล้ว'
           />
           <RegisterInput
             label='รหัสผ่าน'
             value={this.state.password}
-            onChangeText={(password) => this.setState({password})}
+            onChangeText={(password) => {
+              this.setState({password})
+              this.setState({subValidated : this.state.subValidated.replaceAt(1,'0')})
+            }}
             secureTextEntry={true}
             maxLength={30}
             placeholder='อย่างน้อย 6 ตัว'
-            validate = {canSubmit.charAt(1) + checkInput.charAt(1)}
+            validate = {canSubmit.charAt(1) + checkInput.charAt(1) + this.state.subValidated.charAt(1)}
           />
           <RegisterInput
             label='ยืนยันรหัสผ่าน'
             value={this.state.password_confirmation}
-            onChangeText={(password_confirmation) => this.setState({password_confirmation})}
+            onChangeText={(password_confirmation) => {
+              this.setState({password_confirmation})
+              this.setState({subValidated : this.state.subValidated.replaceAt(2,'0')})
+            }}
             secureTextEntry={true}
             maxLength={20}
-            validate = {canSubmit.charAt(2) + checkInput.charAt(2)}
+            validate = {canSubmit.charAt(2) + checkInput.charAt(2) + this.state.subValidated.charAt(2)}
           />
           <RegisterInput
             label='อีเมลล์'
             value={this.state.email}
-            onChangeText={(email) => this.setState({email})}
+            onChangeText={(email) => {
+              this.setState({email})
+              this.setState({subValidated : this.state.subValidated.replaceAt(4,'0')})
+            }}
             keyboardType='email-address'
             maxLength={30}
-            validate = {canSubmit.charAt(4) + checkInput.charAt(4)}
+            validate = {canSubmit.charAt(4) + checkInput.charAt(4) + this.state.subValidated.charAt(4)}
+            placeholder='address@example.com'
+            subvalidate = 'อีเมลล์นี้มีอยู่แล้ว'
           />
           <RegisterInput
             label='เบอร์โทรศัพท์'
             value={this.state.phone}
-            onChangeText={(phone) => this.setState({phone})}
+            onChangeText={(phone) => {
+              this.setState({phone})
+              this.setState({subValidated : this.state.subValidated.replaceAt(3,'0')})
+            }}
             keyboardType='number-pad'
             maxLength={10}
-            validate = {canSubmit.charAt(3) + checkInput.charAt(3)}
+            validate = {canSubmit.charAt(3) + checkInput.charAt(3) + this.state.subValidated.charAt(3)}
+            subvalidate = 'เบอร์โทรศัพท์นี้มีอยู่แล้ว'
           />
-          <View style={{marginTop: 40}}/>
+          <View style={{marginTop: 20}}/>
           {ButtonSubmit}
         </View>
       );
     }
     
     _goToRegister2 = () => {
-      const data = this.state;
-      AsyncStorage.setItem('@RegisData:key', JSON.stringify(data))
-      .then(() => {
-        this.props.navigator.push('register2');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      console.log(this.state);
+      console.log(addressServer./*IPMac*/localhost.toString() + '/checkregis');
+      const api = addressServer./*IPMac*/localhost.toString() + '/checkregis';
+      const myRequest = new Request(
+          api,
+          {
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state)
+          });
+      fetch(myRequest)
+        .then((response) => response.text())
+        .then((responseText) => {
+          console.log(responseText)
+          if(responseText.length > 0){
+            console.log('fail')
+            if(responseText.search('The name has already been taken.') !== -1){
+              this.setState({subValidated: this.state.subValidated.replaceAt(0,'1')})
+            }
+            if(responseText.search('The email has already been taken.') !== -1){
+              this.setState({subValidated: this.state.subValidated.replaceAt(4,'1')})
+            }
+            if(responseText.search('The phone has already been taken.') !== -1){
+              this.setState({subValidated: this.state.subValidated.replaceAt(3,'1')})
+            }
+          } else {
+            AsyncStorage.setItem('@RegisData:key', JSON.stringify(this.state))
+            .then(() => {
+              this.props.navigator.push('register2');
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     };
+
+    async _register1(){
+      try {
+
+      } catch (error) {
+        
+      }
+    }
 }
 
 const styles = StyleSheet.create({
