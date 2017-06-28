@@ -18,19 +18,15 @@ import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 
 @withNavigation class ExponentButton extends Component {
-  static route = {
-
-  }
-
   _handlePress = () => {
     this.props.navigator.push('requestBlood');
   };
 
-  _logOut = () => {
+/*  _logOut = () => {
     this.props.navigation.performAction(({ tabs, stacks }) => {
       tabs('tab-navigation').jumpToTab('second');
     });
-  };
+  };*/
 
   render() {
     return (
@@ -109,16 +105,9 @@ export default class HomeScreen extends React.Component {
 
   async _clearUserData(){
     try {
-        await AsyncStorage.removeItem('@name:key');
-        await AsyncStorage.removeItem('@email:key');
-        await AsyncStorage.removeItem('@blood:key');
-        await AsyncStorage.removeItem('@blood_type:key');
-        await AsyncStorage.removeItem('@birthyear:key');
-        await AsyncStorage.removeItem('@phone:key');
-        await AsyncStorage.removeItem('@province:key');
-        await AsyncStorage.removeItem('@last_date_donate:key');
-      } catch ( error ) {
-        console.log('error');
+      await AsyncStorage.removeItem('@userData:key');
+    } catch ( error ) {
+      console.log('error');
     }
   }
 

@@ -140,8 +140,8 @@ export default class RegisterScreen extends Component {
     
     _goToRegister2 = () => {
       console.log(this.state);
-      console.log(addressServer./*IPMac*/localhost.toString() + '/checkregis');
-      const api = addressServer./*IPMac*/localhost.toString() + '/checkregis';
+      console.log(addressServer.IPMac.toString() + '/checkregis');
+      const api = addressServer.IPMac.toString() + '/checkregis';
       const myRequest = new Request(
           api,
           {
