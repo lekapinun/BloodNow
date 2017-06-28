@@ -22,8 +22,12 @@ class AppContainer extends React.Component {
   };
 
   componentWillMount() {
-    console.log('START TEST');
-    this._loadAssetsAsync();
+    console.log('START TEST')
+    this._loadAssetsAsync()
+    AsyncStorage.getItem('@userData:key')
+    .then(( response ) => {
+      ( response !== null ) ? this.setState({init : 'rootNavigation'}) : console.log('please login') 
+    })
     //this._userData();
     //this._checkLogin();
   }

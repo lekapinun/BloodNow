@@ -9,6 +9,8 @@ export class Map extends React.Component {
       longitude: 98.953058,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
+      latitude: this.props.marker.latitude, // 18.792636,
+      longitude: this.props.marker.longitude, // 98.953058,
     },
   };
 
@@ -30,6 +32,11 @@ export class Map extends React.Component {
         <View pointerEvents="none" style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent'}}>
           <Image style={{width:50, height: 50, rotate: 180,}} pointerEvents="none" source={require('../../assets/icons/exponent-icon.png')}/>
         </View>
+        <MapView.Marker
+          title="TESTTitle"
+          description="test descriptionp"
+          coordinate={this.state.region}
+        />
       </MapView>
     );
   }

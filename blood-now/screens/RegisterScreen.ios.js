@@ -68,7 +68,8 @@ export default class RegisterScreen extends Component {
           />;
       }
 
-      return(       
+      return(
+        <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>       
         <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
           <View style={{marginTop: 20}}/>
           <Text style={{color: '#E84A5F'}}>● ○</Text>
@@ -135,13 +136,14 @@ export default class RegisterScreen extends Component {
           <View style={{marginTop: 20}}/>
           {ButtonSubmit}
         </View>
+        </ScrollView>
       );
     }
     
     _goToRegister2 = () => {
       console.log(this.state);
-      console.log(addressServer./*IPMac*/localhost.toString() + '/checkregis');
-      const api = addressServer./*IPMac*/localhost.toString() + '/checkregis';
+      console.log(addressServer.IPMac.toString() + '/checkregis');
+      const api = addressServer.IPMac.toString() + '/checkregis';
       const myRequest = new Request(
           api,
           {

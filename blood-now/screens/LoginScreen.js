@@ -124,6 +124,7 @@ export default class LoginScreen extends Component {
         fetch(myRequest)
         .then((response) => response.text())
         .then((responseText) => {
+            console.log(responseText)
             if( responseText != 'login fail')
             {
                 userData = JSON.parse(responseText);

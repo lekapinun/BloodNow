@@ -1,86 +1,73 @@
 import React, { Component } from 'react';
-import { ScrollView,
-          View,
-          Text,
-          TextInput,
-          Modal,
-          TouchableOpacity,
-          Button,
-          Picker,
-          StyleSheet,
-        } from 'react-native';
+import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet, } from 'react-native';
 import { Font } from 'expo';
 import { StackNavigation } from '@expo/ex-navigation';
-import { Map } from '../components/common';
+import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button} from '../components/common';
+import Colors from '../constants/Colors';
 
 export default class RequestBloodScreen extends Component {
   static route = {
     navigationBar: {
-    }
+      title: 'คำร้องขอรับบริจาค',
+      backgroundColor: Colors.routeColor,
+      titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
+      tintColor: 'white',
+    },
   };
+
   state = {
     name: '',
     patientID: '',
-    bloodType: '',
+    blood: '',
+    blood_type: '',
     bloodUnit: '',
     description: '',
     hostpital: '',
-    bloodTypeModalVisible: false,
+    bloodTemp: 'A',
+    blood_Temp: '+',
+    lat: 18.788488,
+    lng: 98.971420,
+    modalBloodVisible: false,
     ConfirmationModalVisible: false,
     confirm: false,
   }
-  setBloodTypeModalVisible(visible) {
-    this.setState({bloodTypeModalVisible: visible});
+  setModalBloodVisible(visible) {
+    this.setState({modalBloodVisible: visible});
   }
   setConfrimationModalVisible(visible) {
     this.setState({ConfirmationModalVisible: visible});
   }
   render() {
+
+    if(this.state.blood !== ''){
+        blood = <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{this.state.blood + this.state.blood_type }</Text>;
+      }else{
+        blood = <Text />
+      }
+
     return(
-      <ScrollView style={{ }}>
-          <Modal
-            styles={{ paddingTop: 300 }}
-            animationType={"slide"}
-            transparent={true}
-            visible={this.state.bloodTypeModalVisible}
-            >
-            <View style={{ flex: 1 , }}>
-              <TouchableOpacity style={{ flex: 0.65 }} onPress={()=>{this.setModalVisible(!this.state.ConfirmationModalVisible)}} />
-              <View style={{ flex: 0.35, backgroundColor:'white', borderColor:'grey', borderWidth: 1 ,}} >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' , alignItems:'flex-start',  }}>
-                  <Button title='Cancel' onPress={() => {
-                    this.setBloodTypeModalVisible(!this.state.bloodTypeModalVisible)
-                  }}/>
-                  <Button title='Confirm' onPress={() => {
-                    this.setState({bloodType: this.state.bloodTypeTemp});
-                    this.setBloodTypeModalVisible(!this.state.bloodTypeModalVisible);
-                  }}/>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row',  justifyContent: 'space-around'}} >
-                  <Picker
-                    style={{ flex: 0.3 }}
-                    selectedValue={this.state.bloodTypeTemp}
-                    onValueChange={(itemValue, itemIndex) => this.setState({bloodTypeTemp: itemValue})}
-                  >
-                    <Picker.Item label="A" value="A" />
-                    <Picker.Item label="B" value="B" />
-                    <Picker.Item label="AB" value="AB" />
-                    <Picker.Item label="O" value="O" />
-                  </Picker>
-                  <Picker
-                    style={{ flex: 0.3 }}
-                    selectedValue={this.state.bloodTypeTemp}
-                    onValueChange={(itemValue, itemIndex) => this.setState({bloodTypeTemp: itemValue})}
-                  >
-                    <Picker.Item label="A" value="A" />
-                    <Picker.Item label="B" value="B" />
-                    <Picker.Item label="AB" value="AB" />
-                    <Picker.Item label="O" value="O" />
-                  </Picker>
-                </View>
-            </View>
-           </View>
-          </Modal>
+      <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>
+          <PickerModalBlood
+                pickerVisible = {this.state.modalBloodVisible}
+                onPressCancel = {() => { this.setModalBloodVisible(!this.state.modalBloodVisible)}}
+                onPressSubmit = {() => {
+                    if(this.state.bloodTemp === ''){
+                      this.setState({blood: 'A'});
+                    }else{
+                      this.setState({blood: this.state.bloodTemp});
+                    }  
+                    if(this.state.blood_typeTemp === ''){
+                      this.setState({blood_type: '+'});
+                    }else{
+                      this.setState({blood_type: this.state.blood_typeTemp});
+                    }          
+                    this.setModalBloodVisible(!this.state.modalBloodVisible);
+                }}
+                selectOne = {this.state.bloodTemp}
+                onChangeOne = {(itemValue, itemIndex) => this.setState({bloodTemp: itemValue})}
+                selectTwo = {this.state.blood_typeTemp}
+                onChangeTwo = {(itemValue2, itemIndex2) => this.setState({blood_typeTemp: itemValue2})}
+            />
 
 
           <Modal
@@ -136,68 +123,81 @@ export default class RequestBloodScreen extends Component {
           </View>
           </Modal>
 
-
-          <View style={styles.headerContainerStyle}>
-            <Text style={styles.headerStyle}>
-              คำร้องขอรับบริจาค
-            </Text>
-          </View>
-          <View style={styles.bodyContainerStyle}>
-            <TextInput
-              style={[Font.style('CmPrasanmit'),styles.inputStyle]}
-              placeholder="ชื่อผู้ขอรับบริจาค"
-              onChangeText={(name) => this.setState({name})}
-              value={this.state.name}
+          <View style={{alignItems: 'center'}}>
+            <View style={{width: 310,marginTop:15}}>
+              <InputText
+                label = 'ชื่อผู้ป่วย'
+                onChangeText={(name) => this.setState({name})}
+                value={this.state.name}
+              />
+              <InputText
+                label = 'รหัสผู้ป่วย'
+                onChangeText={(patientID) => this.setState({patientID})}
+                value={this.state.patientID}
+              />
+              <PickerPartTouch
+                label='กรุ๊ปเลือด'
+                onPress={() => this.setModalBloodVisible(true)}
+                information={blood}
+              />
+              <InputText
+                label = 'จำนวนเลือดที่ต้องการ(ยูนิต)'
+                onChangeText={(bloodUnit) => this.setState({bloodUnit})}
+                value={this.state.bloodUnit}
+                keyboardType='number-pad'
+              />
+              <InputTextLarge
+                label = 'รายละเอียด'
+                onChangeText={(description) => this.setState({description})}
+                value={this.state.description}
+              />
+              <InputText
+                label = 'สถานพยาบาล'
+                onChangeText={(hostpital) => this.setState({hostpital})}
+                value={this.state.hostpital}
+                onEndEditing={this._findLocation}
+              />
+            </View>
+            <View style={{marginTop:40}}></View>
+            <Map marker={{ latitude: this.state.lat, longitude: this.state.lng }}/>
+            <View style={{marginTop:40}}></View>
+            <Button
+              title="ส่งคำร้องขอ"
+              onPress={() => { this.props.navigator.push('requestBloodSubmit')}}
+              buttonColor='#E84A5F'
+              sizeFont={25}
+              ButtonWidth={300}
+              ButtonHeight={50}
+              colorFont='white'
             />
-          </View>
-
-          <View style={styles.bodyContainerStyle}>
-            <TextInput
-              style={[Font.style('CmPrasanmit'),styles.inputStyle]}
-              placeholder="รหัสผู้ป่วย"
-              onChangeText={(patientID) => this.setState({patientID})}
-              value={this.state.patientID}
-            />
-          </View>
-
-          <TouchableOpacity
-            onPress={() => { this.setModalVisible(true) }}
-          >
-            <View style={styles.pickerContainer}>
-                <Text style={[Font.style('CmPrasanmit'), styles.pickerText]}>{'Blood Type: '+this.state.bloodType}</Text>
-              </View>
-          </TouchableOpacity>
-
-          <View style={styles.bodyContainerStyle}>
-            <TextInput
-              style={[Font.style('CmPrasanmit'),styles.inputStyle]}
-              placeholder="จำนวนเลือดที่ต้องการ(ยูนิต)"
-              keyboardType= "numeric"
-              onChangeText={(bloodUnit) => this.setState({bloodUnit})}
-              value={this.state.bloodUnit}
-            />
-          </View>
-          <TextInput
-            multiline
-            style={[Font.style('CmPrasanmit'),styles.bodyMultiLineContainerStyle]}
-            placeholder="รายละเอียด"
-            onChangeText={(description) => this.setState({description})}
-            value={this.state.description}
-          />
-
-          <View style={styles.bodyContainerStyle}>
-            <TextInput
-              style={[Font.style('CmPrasanmit'),styles.inputStyle]}
-              placeholder="สถานพยาบาล"
-              onChangeText={(hostpital) => this.setState({hostpital})}
-              value={this.state.hostpital}
-            />
+<<<<<<< HEAD
           </View>
 
 
           <Button  title="ขอรับบริจาคเลือด" onPress={() => {this.setConfrimationModalVisible(true)}} />
+=======
+            </View>
+>>>>>>> master
       </ScrollView>
     );
+  }
+   _findLocation = () => {
+    let nameLocation = this.state.hostpital
+    const API_KEY = 'AIzaSyAuyEycAxVaRvLY5CuQ84d3eFXU0PSf1Jg&libraries=places'
+    let APIGeocodingRequest = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + nameLocation + '&key=' + API_KEY
+    console.log(APIGeocodingRequest)
+    fetch(APIGeocodingRequest)
+    .then((response) => response.json())
+    .then((responseJSON) => {
+      console.log(responseJSON.results[0].geometry.location.lat)
+      console.log(responseJSON.results[0].geometry.location.lng)
+      this.setState({lat : responseJSON.results[0].geometry.location.lat});
+      this.setState({lng : responseJSON.results[0].geometry.location.lng});
+      console.log(this.state)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 }
 
