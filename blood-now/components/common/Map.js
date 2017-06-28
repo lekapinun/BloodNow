@@ -1,19 +1,15 @@
 import React from 'react';
-import { Linking } from 'react-native';
+import { Linking, Image, View } from 'react-native';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 
 export class Map extends React.Component {
   state = {
     region: {
-      latitude: this.props.marker.latitude, // 18.792636,
-      longitude: this.props.marker.longitude, // 98.953058,
+      latitude: 18.792636,
+      longitude: 98.953058,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     },
-    x: {
-      latitude: 18.792636,
-      longitude:  98.953058,
-    }
   };
 
   onRegionChange(region) {
@@ -31,12 +27,18 @@ export class Map extends React.Component {
         onRegionChange={this.onRegionChange.bind(this)}
         onPress={() => Linking.openURL(url)}
       >
-        <MapView.Marker
-          title="TESTTitle"
-          description="test descriptionp"
-          coordinate={this.state.region}
-        />
+        <View pointerEvents="none" style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent'}}>
+          <Image style={{width:50, height: 50}} pointerEvents="none" source={require('../../assets/icons/exponent-icon.png')}/>
+        </View>
       </MapView>
     );
   }
+
 }
+/*  Marker with animation 
+<MapView.Marker
+  title="TEST"
+  description="test descriptionp"
+  coordinate={this.state.region}
+/>
+*/
