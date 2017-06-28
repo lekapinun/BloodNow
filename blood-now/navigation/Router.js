@@ -6,6 +6,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import RootNavigation from './RootNavigation';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import RegisterScreen2 from '../screens/RegisterScreen2';
 import InformationScreen from '../screens/InformationScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 import FriendScreen from '../screens/FriendScreen';
@@ -20,6 +21,7 @@ export default createRouter(() => ({
   rootNavigation: () => RootNavigation,
   login: () => LoginScreen,
   register: () => RegisterScreen,
+  register2: () => RegisterScreen2,
   information: () => InformationScreen,
   notification: () => NotificationScreen,
   friend: () => FriendScreen,

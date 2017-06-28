@@ -25,12 +25,12 @@ class AppContainer extends React.Component {
     console.log('START TEST');
     this._loadAssetsAsync();
     //this._userData();
-    this._checkLogin();
+    //this._checkLogin();
   }
 
   async _checkLogin() {
       try {
-            const name = await AsyncStorage.getItem('@name:key');
+            const name = await AsyncStorage.getItem('@userData:key');
             if (name !== null) {
                 console.log(name);
                 this.setState({init: 'rootNavigation'});
@@ -56,7 +56,8 @@ class AppContainer extends React.Component {
           require('./assets/images/expo-wordmark.png'),
           require('./assets/icons/logo.png'),
           require('./assets/images/expo-icon@2x.png'),
-          require('./assets/icons/correct.png'),
+          require('./assets/icons/cr.png'),
+          require('./assets/icons/ex.png'),
           require('./assets/icons/exponent-icon.png'),
         ],
         fonts: [
