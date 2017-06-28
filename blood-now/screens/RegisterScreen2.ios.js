@@ -145,6 +145,7 @@ export default class RegisterScreen extends Component {
       }
 
       return(
+        <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}> 
         <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
             <ModalRegister
                   pickerVisible = {this.state.modalRegisterVisible}
@@ -237,6 +238,7 @@ export default class RegisterScreen extends Component {
                 {ButtonSubmit}
             {/*</View>*/}
         </View>
+        </ScrollView>
       );
     }
 

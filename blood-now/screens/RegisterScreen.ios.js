@@ -68,7 +68,8 @@ export default class RegisterScreen extends Component {
           />;
       }
 
-      return(       
+      return(
+        <ScrollView style={{flex: 1,flexDirection: 'column', backgroundColor: '#FAFAFA'}}>       
         <View style={{flex: 1,flexDirection: 'column',alignItems: 'center', backgroundColor: '#FAFAFA'}}>
           <View style={{marginTop: 20}}/>
           <Text style={{color: '#E84A5F'}}>● ○</Text>
@@ -135,6 +136,7 @@ export default class RegisterScreen extends Component {
           <View style={{marginTop: 20}}/>
           {ButtonSubmit}
         </View>
+        </ScrollView>
       );
     }
     
