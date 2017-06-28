@@ -1,4 +1,4 @@
 export default {
-    localhost: 'http://localhost:8000',
+    localhost: 'http://localhost/serverblood/public',
     IPMac: 'http://192.168.31.163/serverblood/public',
 };

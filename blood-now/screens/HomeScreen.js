@@ -66,14 +66,11 @@ export default class HomeScreen extends React.Component {
 
   async _userData(){
     try {
-      const name = await AsyncStorage.getItem('@name:key');
-      if (name !== null){ console.log(name); } else { console.log('O_O'); }
-      const email = await AsyncStorage.getItem('@email:key');
-      if (email !== null){ console.log(email); } else { console.log('O_O'); }
-      const blood = await AsyncStorage.getItem('@blood:key');
-      if (blood !== null){ console.log(blood); } else { console.log('O_O'); }
-      const phone = await AsyncStorage.getItem('@phone:key');
-      if (phone !== null){ console.log(phone); } else { console.log('O_O'); }
+      const name = await AsyncStorage.getItem('@userData:key');
+      let data = await JSON.parse(name);
+      console.log(data.name);
+      console.log(data.phone);
+      console.log(data.blood + data.blood_type);
     } catch ( error ) {
       console.log('error');
     }
