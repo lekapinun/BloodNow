@@ -22,7 +22,7 @@ import registerForPushNotificationsAsync
   from '../api/registerForPushNotificationsAsync';
 import { TestButton, NavigatorBackground } from '../components/common';
 
-export default class RootNAvigationSliding extends Component {
+export default class RootNavigationSliding extends Component {
     componentDidMount() {
         this._notificationSubscription = this._registerForPushNotifications();
         this.props.navigator.updateCurrentRouteParams({name: 'โปรไฟล์'})
@@ -118,7 +118,7 @@ export default class RootNAvigationSliding extends Component {
 
     render() {
         return (
-        <View style={styles.container}>
+        /*<View style={styles.container}>*/
             <SlidingTabNavigation
                 id="sliding-tab-navigation"
                 navigatorUID="sliding-tab-navigation"
@@ -143,7 +143,7 @@ export default class RootNAvigationSliding extends Component {
                     <StackNavigation initialRoute="home" />
                 </SlidingTabNavigationItem>
             </SlidingTabNavigation>
-        </View>
+        /*</View>*/
         );
     }
 }
