@@ -15,6 +15,7 @@ import DonorScreen from '../screens/DonorScreen';
 import RequestBloodScreen from '../screens/RequestBloodScreen';
 import RequestBloodHistoryScreen from '../screens/RequestBloodHistoryScreen';
 import RequestBloodSubmitScreen from '../screens/RequestBloodSubmitScreen'
+import RootNavigationSliding from './RootNavigationSliding';
 
 export default createRouter(() => ({
   home: () => HomeScreen,
@@ -32,4 +33,5 @@ export default createRouter(() => ({
   requestBlood: () => RequestBloodScreen,
   requestBloodHistory: () => RequestBloodHistoryScreen,
   requestBloodSubmit: () => RequestBloodSubmitScreen,
+  rootNavigationSliding: () => RootNavigationSliding,
 }));

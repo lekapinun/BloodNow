@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet, } from 'react-native';
+import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage } from 'react-native';
 import { Font } from 'expo';
 import { StackNavigation } from '@expo/ex-navigation';
 import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button} from '../components/common';
 import Colors from '../constants/Colors';
+import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 
 export default class RequestBloodScreen extends Component {
   static route = {
@@ -25,8 +26,12 @@ export default class RequestBloodScreen extends Component {
     hostpital: '',
     bloodTemp: 'A',
     blood_Temp: '+',
-    lat: 18.788488,
-    lng: 98.971420,
+    region: {
+      latitude: 18.788488, 
+      longitude: 98.971420, 
+      latitudeDelta: 0.00922, 
+      longitudeDelta: 0.00421
+    },
     modalBloodVisible: false,
     ConfirmationModalVisible: false,
     confirm: false,
@@ -77,7 +82,7 @@ export default class RequestBloodScreen extends Component {
           >
             <View
               style={{backgroundColor:'rgba(131, 145, 146,0.7)', flex:1,flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-            <View style={{ backgroundColor:'white',flexDirection: 'column', justifyContent: 'space-between', }}>
+            <View style={{ backgroundColor:'white', width: 300, height: 300,flexDirection: 'column', justifyContent: 'space-between', }}>
               <View style={{ paddingTop: 15}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start'}}>
                   <Text>{"ชื่อผู้ป่วย"}</Text>
@@ -102,13 +107,6 @@ export default class RequestBloodScreen extends Component {
                   <Text>{"สถานพยาบาล"}</Text>
                   <Text>{this.state.hostpital}</Text>
                 </View>
-              </View>
-
-              <View>
-                <Map marker={{
-                  //ขอlat, long จากระบบ
-                  latitude: 18.788488,
-                  longitude: 98.971420,}}/>
               </View>
               <View style={{flexDirection: 'row', justifyContent: 'space-around' , alignItems:'flex-start', borderColor: 'black', borderWidth: 1}}>
                 <Button title='Cancel' onPress={() => {
@@ -159,41 +157,59 @@ export default class RequestBloodScreen extends Component {
               />
             </View>
             <View style={{marginTop:40}}></View>
-            <Map marker={{ latitude: this.state.lat, longitude: this.state.lng }}/>
+            <Map
+              region={this.state.region}
+              onRegionChange={(region) => {this.setState({region})}}
+            />
+            {/*<MapView
+              style={{height: 250, width: 300, alignSelf: 'center' }}
+              provider={PROVIDER_GOOGLE}
+              region={{latitude: this.state.lat, longitude: this.state.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421} }
+            >
+              <MapView.Marker
+                title="TESTTitle"
+                description="test descriptionp"
+                coordinate={{latitude: this.state.lat, longitude: this.state.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421} }
+              />
+            </MapView>*/}
             <View style={{marginTop:40}}></View>
             <Button
               title="ส่งคำร้องขอ"
-              onPress={() => { this.props.navigator.push('requestBloodSubmit')}}
+              onPress={this._goToConfirmRequest}
               buttonColor='#E84A5F'
               sizeFont={25}
               ButtonWidth={300}
               ButtonHeight={50}
               colorFont='white'
             />
-<<<<<<< HEAD
-          </View>
-
-
-          <Button  title="ขอรับบริจาคเลือด" onPress={() => {this.setConfrimationModalVisible(true)}} />
-=======
             </View>
->>>>>>> master
       </ScrollView>
     );
   }
+
+  _goToConfirmRequest = () => {
+    AsyncStorage.setItem('@RequestData:key', JSON.stringify(this.state))
+    .then(() => {
+      this.props.navigator.push('requestBloodSubmit')
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
    _findLocation = () => {
     let nameLocation = this.state.hostpital
     const API_KEY = 'AIzaSyAuyEycAxVaRvLY5CuQ84d3eFXU0PSf1Jg&libraries=places'
     let APIGeocodingRequest = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + nameLocation + '&key=' + API_KEY
-    console.log(APIGeocodingRequest)
+    //console.log(APIGeocodingRequest)
     fetch(APIGeocodingRequest)
     .then((response) => response.json())
     .then((responseJSON) => {
-      console.log(responseJSON.results[0].geometry.location.lat)
-      console.log(responseJSON.results[0].geometry.location.lng)
-      this.setState({lat : responseJSON.results[0].geometry.location.lat});
-      this.setState({lng : responseJSON.results[0].geometry.location.lng});
-      console.log(this.state)
+      //console.log(responseJSON.results[0].geometry.location.lat)
+      //console.log(responseJSON.results[0].geometry.location.lng)
+      this.setState({region : { latitude: responseJSON.results[0].geometry.location.lat, longitude: responseJSON.results[0].geometry.location.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421}});
+      //this.setState({lng : responseJSON.results[0].geometry.location.lng});
+      //console.log(this.state)
     })
     .catch((error) => {
       console.log(error)

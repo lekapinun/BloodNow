@@ -10,11 +10,5 @@ export * from './BloodModal'
 export * from './PickerModalProvince'
 export * from './ProvincePicker'
 export * from './Map'
-<<<<<<< HEAD
-export * from './Countdown'
-export * from './CardDetail'
-export * from './CardList'
-=======
 export * from './InputText'
 export * from './InputTextLarge'
->>>>>>> master

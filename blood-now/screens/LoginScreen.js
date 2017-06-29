@@ -25,7 +25,7 @@ export default class LoginScreen extends Component {
             const name = await AsyncStorage.getItem('@name:key');
             if (name !== null) {
                 console.log(name);
-                this.props.navigator.push('rootNavigation');
+                this.props.navigator.push('rootNavigation'); 
             }
         } catch ( error ) {
             console.log('error');
@@ -92,7 +92,7 @@ export default class LoginScreen extends Component {
                         colorFont='white'
                     />
                 </View>
-            </View>
+            </View> 
         );
     }
 
@@ -141,7 +141,7 @@ export default class LoginScreen extends Component {
         })
         .catch((error) => {
             console.warn(error);
-        });
+        });  
     };
 
     _register = () => {

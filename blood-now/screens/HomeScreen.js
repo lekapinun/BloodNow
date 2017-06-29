@@ -22,11 +22,7 @@ import Colors from '../constants/Colors';
     this.props.navigator.push('requestBlood');
   };
 
-<<<<<<< HEAD
-  /*_logOut = () => {
-=======
 /*  _logOut = () => {
->>>>>>> master
     this.props.navigation.performAction(({ tabs, stacks }) => {
       tabs('tab-navigation').jumpToTab('second');
     });

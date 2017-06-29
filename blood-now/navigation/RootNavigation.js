@@ -10,7 +10,8 @@ import {
 import {
   FontAwesome,
   MaterialCommunityIcons,
-  Ionicons
+  Ionicons,
+  SimpleLineIcons, 
  } from '@expo/vector-icons';
 import Alerts from '../constants/Alerts';
 import Colors from '../constants/Colors';
@@ -29,29 +30,35 @@ export default class RootNavigation extends React.Component {
 
   render() {
     return (
-      <TabNavigation tabBarHeight={56} initialTab="home">
+      <TabNavigation tabBarHeight={56} initialTab="profile">
         <TabNavigationItem
-          id="home"
-          renderIcon={isSelected => this._renderIconMaterialCommunityIcons('book-open-variant', isSelected)}>
-          <StackNavigation initialRoute="home" />
+          id="profile"
+          renderIcon={isSelected => this._renderIconSimpleLineIcons('user', isSelected)}>
+          <StackNavigation initialRoute="profile" />
         </TabNavigationItem>
 
         <TabNavigationItem
-          id="notification"
-          renderIcon={isSelected => this._renderIconMaterialCommunityIcons('earth', isSelected)}>
+          id="requestBloodHistory"
+          renderIcon={isSelected => this._renderIconSimpleLineIcons('heart', isSelected)}>
+          <StackNavigation initialRoute="requestBloodHistory" />
+        </TabNavigationItem>
+
+        <TabNavigationItem
+          id="donor"
+          renderIcon={isSelected => this._renderIconSimpleLineIconsHead('drop', isSelected)}>
           <StackNavigation initialRoute="donor" />
         </TabNavigationItem>
 
         <TabNavigationItem
           id="friend"
-          renderIcon={isSelected => this._renderIconIonicons('md-contacts', isSelected)}>
+          renderIcon={isSelected => this._renderIconSimpleLineIcons('globe', isSelected)}>
           <StackNavigation initialRoute="friend" />
         </TabNavigationItem>
 
         <TabNavigationItem
-          id="profile"
-          renderIcon={isSelected => this._renderIconIonicons('md-person', isSelected)}>
-          <StackNavigation initialRoute="profile" />
+          id="home"
+          renderIcon={isSelected => this._renderIconSimpleLineIcons('notebook', isSelected)}>
+          <StackNavigation initialRoute="home" />
         </TabNavigationItem>
 
       </TabNavigation>
@@ -81,6 +88,26 @@ export default class RootNavigation extends React.Component {
   _renderIconIonicons(name, isSelected) {
     return (
       <Ionicons
+        name={name}
+        size={32}
+        color={isSelected ? Colors.tabIconSelected : Colors.tabIconDefault}
+      />
+    );
+  }
+
+  _renderIconSimpleLineIcons(name, isSelected){
+    return (
+      <SimpleLineIcons
+        name={name}
+        size={20}
+        color={isSelected ? Colors.tabIconSelected : Colors.tabIconDefault}
+      />
+    );
+  }
+
+    _renderIconSimpleLineIconsHead(name, isSelected){
+    return (
+      <SimpleLineIcons
         name={name}
         size={32}
         color={isSelected ? Colors.tabIconSelected : Colors.tabIconDefault}
