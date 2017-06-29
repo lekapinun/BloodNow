@@ -130,8 +130,7 @@ export default class LoginScreen extends Component {
                 userData = JSON.parse(responseText);
                 console.log('login success');
                 this._userData(userData);
-                this.props.navigator.push('rootNavigationSliding');
-                this.props.navigator.pop();
+                this.props.navigator.replace('rootNavigationSliding');
             }
             else
             {
