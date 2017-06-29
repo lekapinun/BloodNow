@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { Notifications } from 'expo';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { Notifications, Font } from 'expo';
 import {
   StackNavigation,
   TabNavigation,
@@ -8,6 +8,7 @@ import {
   ExNavigationState,
   SlidingTabNavigation,
   SlidingTabNavigationItem,
+  withNavigation
 } from '@expo/ex-navigation';
 import {
   FontAwesome,
@@ -24,11 +25,11 @@ import { TestButton, NavigatorBackground } from '../components/common';
 export default class RootNAvigationSliding extends Component {
     componentDidMount() {
         this._notificationSubscription = this._registerForPushNotifications();
+        this.props.navigator.updateCurrentRouteParams({name: 'โปรไฟล์'})
     }
 
     componentWillUnmount() {
         this._notificationSubscription && this._notificationSubscription.remove();
-        this.props.navigator.updateCurrentRouteParams({name: "Jon Doe"})
     }
 
     _registerForPushNotifications() {
@@ -53,15 +54,15 @@ export default class RootNAvigationSliding extends Component {
 
     static route = {
         navigationBar: {
-            title(params) { return `Hello ${params.name}`; }
-            /*title: 'Sliding Tab Navigation',
+        title(params) { return <Text style={[Font.style('CmPrasanmitBold'),{fontSize:25}]}>{params.name}</Text> },
+        renderRight: (route) => {
+            if(route.params.name === "ขอเลือด"){ return <ExponentButton />}
+        }/*<Text>{route.params.name}</Text>*/
+            /*renderRight(params) { if(params.name == "ขอเลือด") return <ExponentButton /> }*/
+            /*title: 'Sliding Tab Navigation',`${params.name}`
             ...SlidingTabNavigation.navigationBarStyles,*/
         },
     };
-
-    state = {
-        test: 'xxxxxx'
-    }
 
     _goToFirstTab = () => {
         this.props.navigation.performAction(({ tabs, stacks }) => {
@@ -101,15 +102,18 @@ export default class RootNAvigationSliding extends Component {
         );
     }
 
-    _testOn(key){
-        if (key === 'third') {
-            this.callMeLatter()
-             /*this.props.navigator.updateCurrentRouteParams({name: "Jon Doe"})*/
+    _renderTitle(key){
+        if (key === 'first') {
+            this.props.navigator.updateCurrentRouteParams({name: "โปรไฟล์"})
+        } else if (key === 'second') {
+            this.props.navigator.updateCurrentRouteParams({name: "ขอเลือด"})
+        } else if (key === 'third') {
+            this.props.navigator.updateCurrentRouteParams({name: "ให้เลือด"})
+        } else if (key === 'forth') {
+            this.props.navigator.updateCurrentRouteParams({name: "เพื่อน"})
+        } else if (key === 'fifth') {
+            this.props.navigator.updateCurrentRouteParams({name: "คำแนะนำ"})
         }
-    }
-
-    callMeLatter() {
-        this.props.navigator.updateCurrentRouteParams({name: "Jon Doe"})
     }
 
     render() {
@@ -121,30 +125,22 @@ export default class RootNAvigationSliding extends Component {
                 initialTab="first"
                 renderLabel={this._renderLabel}
                 barBackgroundColor="black"
-                onChangeTab={this._testOn}
+                onChangeTab={(key) => this._renderTitle(key)}
                 indicatorStyle={styles.tabIndicator}>
                 <SlidingTabNavigationItem id="first">
                     <StackNavigation initialRoute="profile" />
                 </SlidingTabNavigationItem>
                 <SlidingTabNavigationItem id="second">
-                    <Text style={styles.quoteText}>
-                        2
-                    </Text>
+                    <StackNavigation initialRoute="requestBloodHistory" />
                 </SlidingTabNavigationItem>
                 <SlidingTabNavigationItem id="third">
-                    <Text style={styles.quoteText}>
-                        3
-                    </Text>
+                    <StackNavigation initialRoute="donor" />
                 </SlidingTabNavigationItem>
                 <SlidingTabNavigationItem id="forth">
-                    <Text style={styles.quoteText}>
-                        4
-                    </Text>
+                    <StackNavigation initialRoute="friend" />
                 </SlidingTabNavigationItem>
                 <SlidingTabNavigationItem id="fifth">
-                    <Text style={styles.quoteText}>
-                        5
-                    </Text>
+                    <StackNavigation initialRoute="home" />
                 </SlidingTabNavigationItem>
             </SlidingTabNavigation>
         </View>
@@ -168,42 +164,38 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
 
-    quoteContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 24,
-    },
-
-    quoteMarks: {
-        alignSelf: 'flex-start',
-        color: '#E91E63',
-        fontSize: 36,
-        left: -8,
-        bottom: -42,
-        marginTop: -64,
-    },
-
-    quoteText: {
-        color: '#222',
-        fontSize: 18,
-        lineHeight: 27,
-        textAlign: 'center',
-        margin: 8,
-    },
-
-    quoteAuthor: {
-        color: '#888',
-        fontSize: 12,
-        fontStyle: 'italic',
-    },
-
-    button: {
-        margin: 16,
-        color: '#0084FF',
-    },
-
     selectedTab: {
         backgroundColor: '#0084FF',
     },
 });
+
+@withNavigation class ExponentButton extends Component {
+  _handlePress = () => {
+    this.props.navigator.push('requestBlood');
+  };
+
+/*  _logOut = () => {
+    this.props.navigation.performAction(({ tabs, stacks }) => {
+      tabs('tab-navigation').jumpToTab('second');
+    });
+  };*/
+
+  render() {
+    return (
+      <TouchableOpacity
+        onPress={this._handlePress}
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginRight: 10,
+          paddingTop: 1,
+        }}>
+        <Image
+          source={require('../assets/icons/exponent-icon.png')}
+          style={{ width: 21, height: 17 }}
+        />
+      </TouchableOpacity>
+    );
+  }
+}

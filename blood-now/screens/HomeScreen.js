@@ -49,7 +49,7 @@ import Colors from '../constants/Colors';
 }
 
 export default class HomeScreen extends React.Component {
-  static route = {
+  /*static route = {
     navigationBar: {
       title: 'ข้อควรรู้เกี่ยวกับการบริจาคโลหิต',
       backgroundColor: Colors.routeColor,
@@ -57,7 +57,7 @@ export default class HomeScreen extends React.Component {
       tintColor: 'white',
       renderRight: () => <ExponentButton />,
     },
-  };
+  };*/
 
 
   async _userData(){
