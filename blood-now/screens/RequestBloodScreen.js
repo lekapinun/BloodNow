@@ -4,6 +4,7 @@ import { Font } from 'expo';
 import { StackNavigation } from '@expo/ex-navigation';
 import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button} from '../components/common';
 import Colors from '../constants/Colors';
+import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 
 export default class RequestBloodScreen extends Component {
   static route = {
@@ -25,6 +26,12 @@ export default class RequestBloodScreen extends Component {
     hostpital: '',
     bloodTemp: 'A',
     blood_Temp: '+',
+    region: {
+      latitude: 18.788488, 
+      longitude: 98.971420, 
+      latitudeDelta: 0.00922, 
+      longitudeDelta: 0.00421
+    },
     lat: 18.788488,
     lng: 98.971420,
     modalBloodVisible: false,
@@ -152,7 +159,21 @@ export default class RequestBloodScreen extends Component {
               />
             </View>
             <View style={{marginTop:40}}></View>
-            <Map marker={{ latitude: this.state.lat, longitude: this.state.lng }}/>
+            <Map
+              region={this.state.region}
+              onRegionChange={(region) => {this.setState({region});console.log(region)}}
+            />
+            {/*<MapView
+              style={{height: 250, width: 300, alignSelf: 'center' }}
+              provider={PROVIDER_GOOGLE}
+              region={{latitude: this.state.lat, longitude: this.state.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421} }
+            >
+              <MapView.Marker
+                title="TESTTitle"
+                description="test descriptionp"
+                coordinate={{latitude: this.state.lat, longitude: this.state.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421} }
+              />
+            </MapView>*/}
             <View style={{marginTop:40}}></View>
             <Button
               title="ส่งคำร้องขอ"
@@ -177,8 +198,8 @@ export default class RequestBloodScreen extends Component {
     .then((responseJSON) => {
       console.log(responseJSON.results[0].geometry.location.lat)
       console.log(responseJSON.results[0].geometry.location.lng)
-      this.setState({lat : responseJSON.results[0].geometry.location.lat});
-      this.setState({lng : responseJSON.results[0].geometry.location.lng});
+      this.setState({region : { latitude: responseJSON.results[0].geometry.location.lat, longitude: responseJSON.results[0].geometry.location.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421}});
+      //this.setState({lng : responseJSON.results[0].geometry.location.lng});
       console.log(this.state)
     })
     .catch((error) => {

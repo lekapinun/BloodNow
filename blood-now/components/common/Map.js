@@ -2,7 +2,28 @@ import React from 'react';
 import { Linking } from 'react-native';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 
-export class Map extends React.Component {
+const Map = (props) => {
+  console.log(props)
+  return(
+    <MapView
+      style={{height: 250, width: 300, alignSelf: 'center' }}
+      provider={PROVIDER_GOOGLE}
+      region={props.region}
+      onRegionChange={props.onRegionChange}
+    >
+    <MapView.Marker
+      title="TESTTitle"
+      description="test descriptionp"
+      coordinate={props.region}
+      />
+    </MapView>
+  );
+}
+
+
+export {Map}
+
+/*export class Map extends React.Component {
   state = {
     region: {
       latitude: this.props.marker.latitude, // 18.792636,
@@ -36,4 +57,4 @@ export class Map extends React.Component {
       </MapView>
     );
   }
-}
+}*/
