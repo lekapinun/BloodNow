@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet, } from 'react-native';
+import { ScrollView, View, Text, TextInput, Modal, TouchableOpacity, Picker, StyleSheet,AsyncStorage } from 'react-native';
 import { Font } from 'expo';
 import { StackNavigation } from '@expo/ex-navigation';
 import { Map, InputText, InputTextLarge , PickerPartTouch, PickerModalDate, PickerModalBlood, Button} from '../components/common';
@@ -32,8 +32,6 @@ export default class RequestBloodScreen extends Component {
       latitudeDelta: 0.00922, 
       longitudeDelta: 0.00421
     },
-    lat: 18.788488,
-    lng: 98.971420,
     modalBloodVisible: false,
     ConfirmationModalVisible: false,
     confirm: false,
@@ -161,7 +159,7 @@ export default class RequestBloodScreen extends Component {
             <View style={{marginTop:40}}></View>
             <Map
               region={this.state.region}
-              onRegionChange={(region) => {this.setState({region});console.log(region)}}
+              onRegionChange={(region) => {this.setState({region})}}
             />
             {/*<MapView
               style={{height: 250, width: 300, alignSelf: 'center' }}
@@ -177,7 +175,7 @@ export default class RequestBloodScreen extends Component {
             <View style={{marginTop:40}}></View>
             <Button
               title="ส่งคำร้องขอ"
-              onPress={() => { this.props.navigator.push('requestBloodSubmit')}}
+              onPress={this._goToConfirmRequest}
               buttonColor='#E84A5F'
               sizeFont={25}
               ButtonWidth={300}
@@ -188,19 +186,30 @@ export default class RequestBloodScreen extends Component {
       </ScrollView>
     );
   }
+
+  _goToConfirmRequest = () => {
+    AsyncStorage.setItem('@RequestData:key', JSON.stringify(this.state))
+    .then(() => {
+      this.props.navigator.push('requestBloodSubmit')
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
    _findLocation = () => {
     let nameLocation = this.state.hostpital
     const API_KEY = 'AIzaSyAuyEycAxVaRvLY5CuQ84d3eFXU0PSf1Jg&libraries=places'
     let APIGeocodingRequest = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + nameLocation + '&key=' + API_KEY
-    console.log(APIGeocodingRequest)
+    //console.log(APIGeocodingRequest)
     fetch(APIGeocodingRequest)
     .then((response) => response.json())
     .then((responseJSON) => {
-      console.log(responseJSON.results[0].geometry.location.lat)
-      console.log(responseJSON.results[0].geometry.location.lng)
+      //console.log(responseJSON.results[0].geometry.location.lat)
+      //console.log(responseJSON.results[0].geometry.location.lng)
       this.setState({region : { latitude: responseJSON.results[0].geometry.location.lat, longitude: responseJSON.results[0].geometry.location.lng, latitudeDelta: 0.00922, longitudeDelta: 0.00421}});
       //this.setState({lng : responseJSON.results[0].geometry.location.lng});
-      console.log(this.state)
+      //console.log(this.state)
     })
     .catch((error) => {
       console.log(error)

@@ -3,7 +3,7 @@ import { Linking } from 'react-native';
 import MapView, {PROVIDER_GOOGLE } from 'react-native-maps';
 
 const Map = (props) => {
-  console.log(props)
+  //console.log(props)
   return(
     <MapView
       style={{height: 250, width: 300, alignSelf: 'center' }}

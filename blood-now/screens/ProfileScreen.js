@@ -53,6 +53,10 @@ export default class ProfileScreen extends Component {
         },
     };
 
+    componentWillUnmount() {
+        this.props.navigator.updateCurrentRouteParams({name: "Profile"})
+    }
+
     render() {
         return(
             <View style={{marginTop:30}}>
