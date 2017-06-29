@@ -43,7 +43,7 @@ import Colors from '../constants/Colors';
 
 export default class RequestBloodHistoryScreen extends Component {
 
-    static route = {
+    /*static route = {
         navigationBar: {
         title: 'โปรไฟล์',
         backgroundColor: Colors.routeColor,
@@ -51,7 +51,7 @@ export default class RequestBloodHistoryScreen extends Component {
         tintColor: 'white',
         renderRight: () => <ExponentButton />,
         },
-    };
+    };*/
 
     render() {
         return(
