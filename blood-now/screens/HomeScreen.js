@@ -80,7 +80,6 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={{marginTop:30}}>
          <Text>HOME SCREEN</Text>
-
          <Button
           title='ออกจากระบบ'
           buttonColor='#9FAC9B'
@@ -94,13 +93,14 @@ export default class HomeScreen extends React.Component {
   }
 
   _logout = (navigation) => {
+    //const rootNavigator = this.props.navigation.getNavigator('root');
     const rootNavigator = this.props.navigation.getNavigator('root');
     console.log(this.props);
     //console.log(navigator);
     this._clearUserData();
     //this.props.navigator.pop();
     //this.props.navigator.replace('login');
-    rootNavigator.replace("login");
+    rootNavigator.push("login");
   }
 
   async _clearUserData(){

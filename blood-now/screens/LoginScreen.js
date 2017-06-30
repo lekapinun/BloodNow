@@ -7,6 +7,8 @@ import addressServer from '../utilities/addressServer';
 
 import { Button } from '../components/common';
 
+import Router from '../navigation/Router';
+
 export default class LoginScreen extends Component {
 
     state = {
@@ -130,8 +132,9 @@ export default class LoginScreen extends Component {
                 userData = JSON.parse(responseText);
                 console.log('login success');
                 this._userData(userData);
-                this.props.navigator.push('rootNavigationSliding');
-                this.props.navigator.pop();
+                //this.props.navigator.push(Router.getRoute('test'));
+                const rootNavigator = this.props.navigation.getNavigator('root');
+                rootNavigator.replace('rootNavigationSliding');
             }
             else
             {
@@ -144,6 +147,7 @@ export default class LoginScreen extends Component {
             console.warn(error);
         });  
     };
+
 
     _register = () => {
         this.props.navigator.push("register");

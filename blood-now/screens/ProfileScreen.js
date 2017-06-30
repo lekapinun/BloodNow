@@ -11,9 +11,9 @@ import {
   AsyncStorage
 } from 'react-native';
 import { Font } from 'expo'
-
-import { withNavigation } from '@expo/ex-navigation';
-import { TestButton, NavigatorBackground,ExNavigationState} from '../components/common';
+import { Router } from '../navigation/Router';
+import { withNavigation, getNavigator } from '@expo/ex-navigation';
+import { TestButton, NavigatorBackground,ExNavigationState, Button} from '../components/common';
 import { MonoText } from '../components/StyledText';
 import Colors from '../constants/Colors';
 
@@ -43,26 +43,55 @@ import Colors from '../constants/Colors';
 
 export default class ProfileScreen extends Component {
 
-    /*static route = {
-        navigationBar: {
-        title: 'โปรไฟล์',
-        backgroundColor: Colors.routeColor,
-        titleStyle: [Font.style('CmPrasanmitBold'),{fontSize:25}],
-        tintColor: 'white',
-        renderRight: () => <ExponentButton />,
-        },
-    };*/
-
-    componentWillUnmount() {
-        this.props.navigator.updateCurrentRouteParams({name: "Profile"})
+  async _userData(){
+    try {
+      const name = await AsyncStorage.getItem('@userData:key');
+      let data = await JSON.parse(name);
+      console.log(data.name);
+      console.log(data.phone);
+      console.log(data.blood + data.blood_type);
+    } catch ( error ) {
+      console.log('error');
     }
+  }
 
-    render() {
-        return(
-            <View style={{marginTop:30}}>
-                <Text>PROFILE SCREEN</Text>
-            </View>
-        );
+  componentWillMount() {
+    this._userData();
+  }
+
+  render() {
+    return (
+      <View style={{marginTop:30}}>
+         <Text>PROFILE SCREEN</Text>
+         <Button
+          title='ออกจากระบบ'
+          buttonColor='#9FAC9B'
+          sizeFont={25}
+          onPress={ () => this._logout(navigation=this.props.navigation) } //console.log(this.props.navigation)// }
+          ButtonWidth={260}
+          ButtonHeight={50}
+          />
+      </View>
+    );
+  }
+
+  _logout = (navigation) => {
+    //const rootNavigator = this.props.navigation.getNavigator('root');
+    const rootNavigator = this.props.navigation.getNavigator('root');
+    console.log(this.props);
+    //console.log(navigator);
+    this._clearUserData();
+    //this.props.navigator.pop();
+    //this.props.navigator.replace('login');
+    rootNavigator.push("login");
+  }
+
+  async _clearUserData(){
+    try {
+      await AsyncStorage.removeItem('@userData:key');
+    } catch ( error ) {
+      console.log('error');
     }
+  }
 
 }

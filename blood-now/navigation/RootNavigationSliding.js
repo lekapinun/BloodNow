@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, AsyncStorage } from 'react-native';
 import { Notifications, Font } from 'expo';
 import {
   StackNavigation,
@@ -8,7 +8,8 @@ import {
   ExNavigationState,
   SlidingTabNavigation,
   SlidingTabNavigationItem,
-  withNavigation
+  withNavigation,
+  getNavigator
 } from '@expo/ex-navigation';
 import {
   FontAwesome,
@@ -20,12 +21,29 @@ import Alerts from '../constants/Alerts';
 import Colors from '../constants/Colors';
 import registerForPushNotificationsAsync
   from '../api/registerForPushNotificationsAsync';
-import { TestButton, NavigatorBackground } from '../components/common';
+import { TestButton, NavigatorBackground, Button } from '../components/common';
 
 export default class RootNavigationSliding extends Component {
+    componentWillMount() {
+        AsyncStorage.getItem('@userData:key')
+        .then(( response ) => {
+            console.log(response)
+            if(response === null){
+                //const rootNavigator = this.props.navigation.getNavigator('root');
+                //rootNavigator.replace("login");
+                this.props.navigation.replace('login')
+            }
+        })
+    }
+
     componentDidMount() {
         this._notificationSubscription = this._registerForPushNotifications();
-        this.props.navigator.updateCurrentRouteParams({name: 'โปรไฟล์'})
+        this.props.navigator.updateCurrentRouteParams({name: 'โปรไฟล์'}) 
+        //const Navigator = this.props.navigation.getNavigator('root')
+        //Navigator.replace('rootNavigationSliding')
+        /*this.props.navigation.performAction(({ tabs, stacks }) => {
+            tabs('sliding-tab-navigation').jumpToTab('first')
+        })*/
     }
 
     componentWillUnmount() {
@@ -57,7 +75,9 @@ export default class RootNavigationSliding extends Component {
         title(params) { return <Text style={[Font.style('CmPrasanmitBold'),{fontSize:25}]}>{params.name}</Text> },
         renderRight: (route) => {
             if(route.params.name === "ขอเลือด"){ return <ExponentButton />}
-        }/*<Text>{route.params.name}</Text>*/
+        },
+        renderLeft: () => null,
+        /*<Text>{route.params.name}</Text>*/
             /*renderRight(params) { if(params.name == "ขอเลือด") return <ExponentButton /> }*/
             /*title: 'Sliding Tab Navigation',`${params.name}`
             ...SlidingTabNavigation.navigationBarStyles,*/
@@ -78,7 +98,7 @@ export default class RootNavigationSliding extends Component {
 
     _renderLabel = ({ route }) => {
         let title;
-        if (route.key === 'first') {
+        if (route.key === 'profile') {
             title = this._renderIconSimpleLineIcons('user')
         } else if (route.key === 'second') {
             title = this._renderIconSimpleLineIcons('heart')
@@ -103,7 +123,7 @@ export default class RootNavigationSliding extends Component {
     }
 
     _renderTitle(key){
-        if (key === 'first') {
+        if (key === 'profile') {
             this.props.navigator.updateCurrentRouteParams({name: "โปรไฟล์"})
         } else if (key === 'second') {
             this.props.navigator.updateCurrentRouteParams({name: "ขอเลือด"})
@@ -116,18 +136,20 @@ export default class RootNavigationSliding extends Component {
         }
     }
 
+
     render() {
+        
         return (
         /*<View style={styles.container}>*/
             <SlidingTabNavigation
                 id="sliding-tab-navigation"
                 navigatorUID="sliding-tab-navigation"
-                initialTab="first"
+                initialTab="profile"
                 renderLabel={this._renderLabel}
                 barBackgroundColor="black"
                 onChangeTab={(key) => this._renderTitle(key)}
                 indicatorStyle={styles.tabIndicator}>
-                <SlidingTabNavigationItem id="first">
+                <SlidingTabNavigationItem id="profile">
                     <StackNavigation initialRoute="profile" />
                 </SlidingTabNavigationItem>
                 <SlidingTabNavigationItem id="second">

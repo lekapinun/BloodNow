@@ -106,7 +106,8 @@ class AppContainer extends React.Component {
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
       {Platform.OS === 'android' &&
         <View style={styles.statusBarUnderlay} />}
-    </View>);
+    </View>
+      );
     } else {
       return <Expo.AppLoading />;
     }
